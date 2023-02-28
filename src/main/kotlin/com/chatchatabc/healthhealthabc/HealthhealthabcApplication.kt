@@ -7,6 +7,5 @@ import org.springframework.boot.runApplication
 class HealthhealthabcApplication
 
 fun main(args: Array<String>) {
-    println("Hello, World!")
     runApplication<HealthhealthabcApplication>(*args)
 }

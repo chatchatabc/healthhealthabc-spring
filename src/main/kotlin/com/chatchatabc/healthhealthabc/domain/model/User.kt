@@ -19,10 +19,10 @@ open class User : UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    var id: String? = null
+    open var id: String? = null
 
     @Column(unique = true)
-    var email: String? = null
+    open var email: String? = null
 
     @Column(unique = true)
     private var username: String? = null
@@ -31,7 +31,7 @@ open class User : UserDetails {
     private var password: String? = null
 
     @Column
-    var createdAt: Instant? = null
+    open var createdAt: Instant? = null
 
     // TODO: Add Roles
 

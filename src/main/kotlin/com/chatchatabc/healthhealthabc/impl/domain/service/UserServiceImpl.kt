@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Value
 import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
+import java.util.*
 
 @Service
 class UserServiceImpl (
@@ -20,12 +21,27 @@ class UserServiceImpl (
 
     override fun register(user: User): User {
         // Encrypt password
-        user.password = passwordEncoder?.encode(user.password)
+        user.password = passwordEncoder.encode(user.password)
         // TODO: Add role of user
         return userRepository.save(user)
     }
 
-    override fun loadUserByUsername(username: String?): UserDetails {
-        TODO("Not yet implemented")
+    /**
+     * Load a user by their username.
+     */
+    override fun loadUserByUsername(username: String): UserDetails {
+        val user: Optional<User> = userRepository.findByUsername(username)
+        if (user.isEmpty) {
+            throw Exception("User not found")
+        }
+        return org.springframework.security.core.userdetails.User(
+            user.get().username,
+            user.get().password,
+            user.get().isEnabled,
+            user.get().isAccountNonExpired,
+            user.get().isCredentialsNonExpired,
+            user.get().isAccountNonLocked,
+            user.get().authorities
+        )
     }
 }
