@@ -1,5 +1,6 @@
 package com.chatchatabc.healthhealthabc.application.rest
 
+import com.chatchatabc.healthhealthabc.application.dto.ErrorContent
 import com.chatchatabc.healthhealthabc.application.dto.auth.LoginRequest
 import com.chatchatabc.healthhealthabc.application.dto.auth.LoginResponse
 import com.chatchatabc.healthhealthabc.application.dto.auth.RegisterResponse
@@ -76,14 +77,18 @@ class AuthController(
         } catch (e: DataIntegrityViolationException) {
             val cause = e.cause
             var column: String? = null
+            var message: String? = null
+            var errorContent : ErrorContent? = null
             if (cause is ConstraintViolationException) {
                 val sqlException = cause.cause as? SQLIntegrityConstraintViolationException
                 if (sqlException != null) {
-                    val message = sqlException.message
-                    column = extractColumnFromMessage(message)
+                    val sqlMessage = sqlException.message
+                    column = extractColumnFromMessage(sqlMessage)
+                    message = "is already taken"
+                    errorContent = column?.let { ErrorContent(it, message) }
                 }
             }
-            val registerResponse = RegisterResponse(null, null, column)
+            val registerResponse = RegisterResponse(null, null, errorContent)
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(registerResponse)
         } catch (e: Exception) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null)

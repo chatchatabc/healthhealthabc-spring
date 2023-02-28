@@ -1,4 +1,6 @@
 package com.chatchatabc.healthhealthabc.application.dto.auth
 
-class RegisterResponse(var username: String?, var email: String?, var errorValue: String?) {
+import com.chatchatabc.healthhealthabc.application.dto.ErrorContent
+
+class RegisterResponse(var username: String?, var email: String?, var errorContent: ErrorContent?) {
 }
