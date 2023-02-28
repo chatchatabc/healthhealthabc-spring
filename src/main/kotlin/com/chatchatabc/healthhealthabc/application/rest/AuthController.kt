@@ -3,6 +3,7 @@ package com.chatchatabc.healthhealthabc.application.rest
 import com.chatchatabc.healthhealthabc.application.dto.auth.LoginRequest
 import com.chatchatabc.healthhealthabc.application.dto.auth.LoginResponse
 import com.chatchatabc.healthhealthabc.application.dto.auth.RegisterResponse
+import com.chatchatabc.healthhealthabc.domain.model.Role
 import com.chatchatabc.healthhealthabc.domain.model.User
 import com.chatchatabc.healthhealthabc.domain.repository.UserRepository
 import com.chatchatabc.healthhealthabc.domain.service.JwtService
@@ -49,8 +50,9 @@ class AuthController(
                 throw Exception("User not found")
             }
             val token: String = jwtService.generateToken(queriedUser.get())
+            val role : Role = queriedUser.get().roles.elementAt(0)
             val loginResponse: LoginResponse? = queriedUser.get().username?.let {
-                queriedUser.get().email?.let { it1 -> LoginResponse(token, it, it1) }
+                queriedUser.get().email?.let { it1 -> LoginResponse(token, it, it1, role.name) }
             }
             return ResponseEntity.ok(loginResponse)
         } catch (e: Exception) {
@@ -59,13 +61,17 @@ class AuthController(
     }
 
     /**
-     * Register a new user.
+     * Register a new user either doctor or patient.
      */
-    @PostMapping("/register")
-    fun register(@RequestBody user: User): ResponseEntity<RegisterResponse> {
-        return try {
-            val registeredUser: User = userService.register(user)
-            val registerResponse = RegisterResponse(registeredUser, null)
+    @PostMapping("/register/{roleParams}")
+    fun register(@RequestBody user: User, @PathVariable roleParams : String): ResponseEntity<RegisterResponse> {
+        try {
+            var roleName = "ROLE_PATIENT"
+            if (roleParams == "doctor") {
+                roleName = "ROLE_DOCTOR"
+            }
+            val registeredUser: User = userService.register(user, roleName)
+            val registerResponse = RegisterResponse(registeredUser.username, registeredUser.email, null)
             return ResponseEntity.status(HttpStatus.CREATED).body(registerResponse)
         } catch (e: DataIntegrityViolationException) {
             val cause = e.cause
@@ -77,10 +83,10 @@ class AuthController(
                     column = extractColumnFromMessage(message)
                 }
             }
-            val registerResponse = RegisterResponse(null, column)
+            val registerResponse = RegisterResponse(null, null, column)
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(registerResponse)
         } catch (e: Exception) {
-            ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null)
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null)
         }
     }
 

@@ -34,7 +34,6 @@ open class User : UserDetails {
     @Column
     open var createdAt: Instant? = null
 
-    // TODO: Add Roles
     @ManyToMany(fetch = FetchType.EAGER, cascade = [CascadeType.ALL])
     @JoinTable(
         name = "user_roles",

@@ -10,6 +10,6 @@ interface UserService : UserDetailsService {
     /**
      * Register a new user.
      */
-    fun register(user: User) : User
+    fun register(user: User, roleName: String = "ROLE_PATIENT"): User
 
 }
