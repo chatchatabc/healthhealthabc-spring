@@ -1,6 +1,5 @@
 package com.chatchatabc.healthhealthabc.impl.domain.service
 
-import com.chatchatabc.healthhealthabc.domain.model.Role
 import com.chatchatabc.healthhealthabc.domain.model.User
 import com.chatchatabc.healthhealthabc.domain.repository.RoleRepository
 import com.chatchatabc.healthhealthabc.domain.repository.UserRepository
@@ -23,15 +22,15 @@ class UserServiceImpl(
     private val adminEmail: String? = null
 
     override fun register(user: User, roleName: String): User {
-        // Encrypt password
-        user.password = passwordEncoder.encode(user.password)
 
-        // Find role by name
-        val role: Role = roleRepository.findRoleByName(roleName)
-        // Add role of user
-        user.roles.add(role)
-
-        return userRepository.save(user)
+        user.apply {
+            // Encrypt password
+            password = passwordEncoder.encode(password)
+            // Add role of user
+            roles.add(roleRepository.findRoleByName(roleName))
+        }.let {
+            return userRepository.save(it)
+        }
     }
 
     /**
