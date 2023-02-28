@@ -65,7 +65,7 @@ class AuthController(
     fun register(@RequestBody user: User): ResponseEntity<RegisterResponse> {
         return try {
             val registeredUser: User = userService.register(user)
-            val registerResponse: RegisterResponse? = RegisterResponse(registeredUser, null)
+            val registerResponse = RegisterResponse(registeredUser, null)
             return ResponseEntity.status(HttpStatus.CREATED).body(registerResponse)
         } catch (e: DataIntegrityViolationException) {
             val cause = e.cause

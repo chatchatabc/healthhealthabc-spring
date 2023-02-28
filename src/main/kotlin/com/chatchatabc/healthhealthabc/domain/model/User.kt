@@ -15,6 +15,7 @@ import java.time.Instant
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@Table(name = "users")
 open class User : UserDetails {
 
     @Id
@@ -34,13 +35,19 @@ open class User : UserDetails {
     open var createdAt: Instant? = null
 
     // TODO: Add Roles
+    @ManyToMany(fetch = FetchType.EAGER, cascade = [CascadeType.ALL])
+    @JoinTable(
+        name = "user_roles",
+        joinColumns = [JoinColumn(name = "user_id")],
+        inverseJoinColumns = [JoinColumn(name = "role_id")]
+    )
+    open var roles: MutableSet<Role> = mutableSetOf()
 
     /**
      * Get the roles of the user.
      */
     override fun getAuthorities(): MutableCollection<out GrantedAuthority> {
-        // TODO: Implement logic to get roles
-        return emptyList<GrantedAuthority>().toMutableList()
+        return this.roles.stream().map { role -> role as GrantedAuthority }.toList().toMutableList()
     }
 
     /**
