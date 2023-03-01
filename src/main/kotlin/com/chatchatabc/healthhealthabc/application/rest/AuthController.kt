@@ -11,6 +11,7 @@ import com.chatchatabc.healthhealthabc.domain.service.JwtService
 import com.chatchatabc.healthhealthabc.domain.service.UserService
 import org.hibernate.exception.ConstraintViolationException
 import org.springframework.dao.DataIntegrityViolationException
+import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.security.authentication.AuthenticationManager
@@ -51,11 +52,13 @@ class AuthController(
                 throw Exception("User not found")
             }
             val token: String = jwtService.generateToken(queriedUser.get())
-            val role : Role = queriedUser.get().roles.elementAt(0)
+            val role: Role = queriedUser.get().roles.elementAt(0)
             val loginResponse: LoginResponse? = queriedUser.get().username?.let {
-                queriedUser.get().email?.let { it1 -> LoginResponse(token, it, it1, role.name) }
+                queriedUser.get().email?.let { it1 -> LoginResponse(it, it1, role.name) }
             }
-            return ResponseEntity.ok(loginResponse)
+            val headers = HttpHeaders()
+            headers.set("X-Access-Token", token)
+            return ResponseEntity.ok().headers(headers).body(loginResponse)
         } catch (e: Exception) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null)
         }
@@ -65,7 +68,7 @@ class AuthController(
      * Register a new user either doctor or patient.
      */
     @PostMapping("/register/{roleParams}")
-    fun register(@RequestBody user: User, @PathVariable roleParams : String): ResponseEntity<RegisterResponse> {
+    fun register(@RequestBody user: User, @PathVariable roleParams: String): ResponseEntity<RegisterResponse> {
         try {
             var roleName = "ROLE_PATIENT"
             if (roleParams == "doctor") {
@@ -78,7 +81,7 @@ class AuthController(
             val cause = e.cause
             var column: String? = null
             var message: String? = null
-            var errorContent : ErrorContent? = null
+            var errorContent: ErrorContent? = null
             if (cause is ConstraintViolationException) {
                 val sqlException = cause.cause as? SQLIntegrityConstraintViolationException
                 if (sqlException != null) {
