@@ -65,7 +65,6 @@ class AuthController(
             }
             val headers = HttpHeaders()
             headers.set("X-Access-Token", token)
-            headers.set("Access-Control-Expose-Headers", "X-Access-Token")
 
             // Save to log in logs with successful login
             loginLogService.createLog(queriedUser.get(), true, queriedUser.get().email!!, ipAddress)

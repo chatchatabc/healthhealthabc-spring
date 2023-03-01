@@ -52,6 +52,8 @@ class SecurityConfig {
         configuration.allowedOrigins = listOf("http://localhost:3000", "http://192.168.1.4:3000")
         configuration.allowedMethods = listOf("GET", "POST", "PUT", "DELETE", "OPTIONS")
         configuration.allowedHeaders = listOf("authorization", "content-type", "x-auth-token", "X-Access-Token")
+        // Allow client to write to header
+        configuration.exposedHeaders = listOf("x-auth-token", "X-Access-Token")
         val source = UrlBasedCorsConfigurationSource()
         source.registerCorsConfiguration("/**", configuration)
         return source
