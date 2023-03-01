@@ -12,6 +12,19 @@ interface UserService : UserDetailsService {
      */
     fun register(user: User, roleName: String = "ROLE_PATIENT"): User
 
+    /**
+     * Confirm a user's registration.
+     */
     fun confirmRegistration(emailConfirmationId: String): User
+
+    /**
+     * Generate recovery code for user to use.
+     */
+    fun forgotPassword(email: String): User
+
+    /**
+     * Reset user's password.
+     */
+    fun resetPassword(email: String, password: String, recoveryCode: String): User
 
 }

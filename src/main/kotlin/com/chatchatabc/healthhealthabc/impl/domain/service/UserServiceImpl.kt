@@ -1,6 +1,7 @@
 package com.chatchatabc.healthhealthabc.impl.domain.service
 
 import com.chatchatabc.healthhealthabc.domain.event.user.UserCreatedEvent
+import com.chatchatabc.healthhealthabc.domain.event.user.UserForgotPasswordEvent
 import com.chatchatabc.healthhealthabc.domain.model.User
 import com.chatchatabc.healthhealthabc.domain.repository.RoleRepository
 import com.chatchatabc.healthhealthabc.domain.repository.UserRepository
@@ -45,6 +46,9 @@ class UserServiceImpl(
         }
     }
 
+    /**
+     * Confirm a user's registration.
+     */
     override fun confirmRegistration(emailConfirmationId: String): User {
         val user: Optional<User> = userRepository.findByEmailConfirmationId(emailConfirmationId)
         if (user.isEmpty) {
@@ -55,6 +59,46 @@ class UserServiceImpl(
         }
         user.get().apply {
             emailConfirmedAt = Instant.now()
+        }.let {
+            return userRepository.save(it)
+        }
+    }
+
+    /**
+     * Generate recovery code for user to use.
+     */
+    override fun forgotPassword(email: String): User {
+        val user: Optional<User> = userRepository.findByEmail(email)
+        if (user.isEmpty) {
+            throw Exception("User not found")
+        }
+        if (user.get().emailConfirmedAt == null) {
+            throw Exception("User not confirmed")
+        }
+        // Generate recovery code 6-digit
+        val recoveryCode = String.format("%06d", (Math.random() * 1000000).toInt())
+        user.get().apply {
+            this.recoveryCode = recoveryCode
+        }.let {
+            eventPublisher.publishEvent(UserForgotPasswordEvent(user.get(), this))
+            return userRepository.save(it)
+        }
+    }
+
+    /**
+     * Reset user's password.
+     */
+    override fun resetPassword(email: String, password: String, recoveryCode: String): User {
+        val user: Optional<User> = userRepository.findByEmail(email)
+        if (user.isEmpty) {
+            throw Exception("User not found")
+        }
+        if (user.get().recoveryCode != recoveryCode) {
+            throw Exception("Recovery code is incorrect")
+        }
+        user.get().apply {
+            this.password = passwordEncoder.encode(password)
+            this.recoveryCode = null
         }.let {
             return userRepository.save(it)
         }

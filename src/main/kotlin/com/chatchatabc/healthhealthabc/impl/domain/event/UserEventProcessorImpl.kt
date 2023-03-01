@@ -2,6 +2,7 @@ package com.chatchatabc.healthhealthabc.impl.domain.event
 
 import com.chatchatabc.healthhealthabc.domain.event.user.UserCreatedEvent
 import com.chatchatabc.healthhealthabc.domain.event.user.UserEventProcessor
+import com.chatchatabc.healthhealthabc.domain.event.user.UserForgotPasswordEvent
 import com.chatchatabc.healthhealthabc.infra.schedule.user.UserSchedule
 import org.springframework.context.event.EventListener
 import org.springframework.scheduling.annotation.Async
@@ -25,6 +26,25 @@ class UserEventProcessorImpl(private val userSchedule: UserSchedule) : UserEvent
         }
         else {
             throw Exception("User email, username, or email confirmation id is null.")
+        }
+    }
+
+    /**
+     * Handle user forgot password event.
+     */
+    @Async
+    @EventListener
+    override fun handleUserForgotPasswordEvent(event: UserForgotPasswordEvent) {
+        val email = event.user.email
+        val username = event.user.username
+        val recoveryCode = event.user.recoveryCode
+
+        // Run Quartz job to send email confirmation
+        if (email != null && username != null && recoveryCode != null) {
+            userSchedule.onForgotPasswordSendEmail(email, username, recoveryCode)
+        }
+        else {
+            throw Exception("User email, username, or recovery code is null.")
         }
     }
 }

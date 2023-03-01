@@ -17,4 +17,9 @@ interface UserRepository : JpaRepository<User, String> {
      * Find a user by their email confirmation id.
      */
     fun findByEmailConfirmationId(emailConfirmationId: String): Optional<User>
+
+    /**
+     * Find a user by their email.
+     */
+    fun findByEmail(email: String): Optional<User>
 }

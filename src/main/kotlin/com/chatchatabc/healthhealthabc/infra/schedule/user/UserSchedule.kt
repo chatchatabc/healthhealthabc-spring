@@ -1,5 +1,6 @@
 package com.chatchatabc.healthhealthabc.infra.schedule.user
 
+import com.chatchatabc.healthhealthabc.infra.schedule.user.jobs.UserForgotPasswordSendEmailJob
 import com.chatchatabc.healthhealthabc.infra.schedule.user.jobs.UserRegistrationSendEmailConfirmationJob
 import org.quartz.JobBuilder
 import org.quartz.JobDetail
@@ -19,6 +20,20 @@ class UserSchedule(var scheduler: Scheduler) {
             .usingJobData("email", email)
             .usingJobData("username", username)
             .usingJobData("emailConfirmationId", emailConfirmationId)
+            .build()
+        val trigger = TriggerBuilder.newTrigger().startNow().build()
+        scheduler.scheduleJob(job, trigger)
+    }
+
+    /**
+     * Schedule a job to send email to user to reset password.
+     */
+    fun onForgotPasswordSendEmail(email: String, username: String, recoveryCode: String) {
+        val job: JobDetail = JobBuilder.newJob(UserForgotPasswordSendEmailJob::class.java)
+            .withIdentity("onForgotPasswordSendEmail", "userGroup")
+            .usingJobData("email", email)
+            .usingJobData("username", username)
+            .usingJobData("recoveryCode", recoveryCode)
             .build()
         val trigger = TriggerBuilder.newTrigger().startNow().build()
         scheduler.scheduleJob(job, trigger)

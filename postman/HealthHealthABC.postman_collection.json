@@ -1,0 +1,223 @@
+{
+	"info": {
+		"_postman_id": "2be528ac-0a2e-4b61-aadd-aa5ca3b20592",
+		"name": "HealthHealthABC",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "Confirm User",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{address}}/api/auth/confirm-email/b997059b-d144-4287-983f-c9cdb7d87c27",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"confirm-email",
+								"b997059b-d144-4287-983f-c9cdb7d87c27"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Register Patient",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"Raphile\",\r\n    \"email\": \"rllddalangin@gmail.com\",\r\n    \"password\": \"123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{address}}/api/auth/register/patient",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"register",
+								"patient"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Register Doctor",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"Dr. Raphile\",\r\n    \"email\": \"drrllddalangin@gmail.com\",\r\n    \"password\": \"123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{address}}/api/auth/register/doctor",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"register",
+								"doctor"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login Patient",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"Raphile\",\r\n    \"password\": \"123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{address}}/api/auth/login",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login Doctor",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"Dr. Raphile\",\r\n    \"password\": \"123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{address}}/api/auth/login",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Doctor Forgot Password",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"drrllddalangin@gmail.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{address}}/api/auth/forgot-password",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"forgot-password"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Doctor Reset Password",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"drrllddalangin@gmail.com\",\r\n    \"password\": \"1234\",\r\n    \"recoveryCode\": \"530115\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{address}}/api/auth/reset-password",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"reset-password"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "test",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{address}}/api/auth/hello",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"hello"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

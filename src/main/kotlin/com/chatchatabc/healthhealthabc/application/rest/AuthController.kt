@@ -1,10 +1,7 @@
 package com.chatchatabc.healthhealthabc.application.rest
 
 import com.chatchatabc.healthhealthabc.application.dto.ErrorContent
-import com.chatchatabc.healthhealthabc.application.dto.auth.EmailConfirmationResponse
-import com.chatchatabc.healthhealthabc.application.dto.auth.LoginRequest
-import com.chatchatabc.healthhealthabc.application.dto.auth.LoginResponse
-import com.chatchatabc.healthhealthabc.application.dto.auth.RegisterResponse
+import com.chatchatabc.healthhealthabc.application.dto.auth.*
 import com.chatchatabc.healthhealthabc.domain.model.Role
 import com.chatchatabc.healthhealthabc.domain.model.User
 import com.chatchatabc.healthhealthabc.domain.repository.UserRepository
@@ -107,6 +104,9 @@ class AuthController(
         }
     }
 
+    /**
+     * Extract column name from SQL exception message.
+     */
     fun extractColumnFromMessage(message: String?): String? {
         val pattern = "entry '(.+)' for key".toRegex()
         val matchResult = pattern.find(message ?: "")
@@ -123,9 +123,47 @@ class AuthController(
             val emailConfirmationResponse = EmailConfirmationResponse(user.username, user.email, null)
             ResponseEntity.status(HttpStatus.OK).body(emailConfirmationResponse)
         } catch (e: Exception) {
-            val errorContent = ErrorContent("Email Confirmation Error", "User already confirmed or user does not exist")
+            val errorContent = ErrorContent("Email Confirmation Error", e.message)
             val emailConfirmationResponse = EmailConfirmationResponse(null, null, errorContent)
             ResponseEntity.status(HttpStatus.BAD_REQUEST).body(emailConfirmationResponse)
+        }
+    }
+
+    /**
+     * Create error code and send to email to reset password.
+     */
+    @PostMapping("/forgot-password")
+    fun forgotPassword(@RequestBody user: User): ResponseEntity<ForgotPasswordResponse> {
+        return try {
+            userService.forgotPassword(user.email!!)
+            val forgotPasswordResponse = ForgotPasswordResponse(null)
+            ResponseEntity.status(HttpStatus.OK).body(forgotPasswordResponse)
+        } catch (e: Exception) {
+            e.printStackTrace()
+            val errorContent = ErrorContent("Forgot Password Error", e.message)
+            val forgotPasswordResponse = ForgotPasswordResponse(errorContent)
+            ResponseEntity.status(HttpStatus.BAD_REQUEST).body(forgotPasswordResponse)
+        }
+    }
+
+    /**
+     * Reset password using recovery code and email.
+     */
+    @PostMapping("/reset-password")
+    fun resetPassword(@RequestBody resetPasswordRequest: ResetPasswordRequest): ResponseEntity<ResetPasswordResponse> {
+        return try {
+            val user: User = userService.resetPassword(
+                resetPasswordRequest.email,
+                resetPasswordRequest.password,
+                resetPasswordRequest.recoveryCode
+            )
+            val resetPasswordResponse = ResetPasswordResponse(user.email, user.username, null)
+            ResponseEntity.status(HttpStatus.OK).body(resetPasswordResponse)
+        } catch (e: Exception) {
+            e.printStackTrace()
+            val errorContent = ErrorContent("Reset Password Error", e.message)
+            val resetPasswordResponse = ResetPasswordResponse(null, null, errorContent)
+            ResponseEntity.status(HttpStatus.BAD_REQUEST).body(resetPasswordResponse)
         }
     }
 }

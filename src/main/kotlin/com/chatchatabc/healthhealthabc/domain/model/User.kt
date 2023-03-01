@@ -43,6 +43,9 @@ open class User : UserDetails {
     @Column
     open var emailConfirmedAt: Instant? = null
 
+    @Column
+    open var recoveryCode: String? = null
+
     @ManyToMany(fetch = FetchType.EAGER, cascade = [CascadeType.ALL])
     @JoinTable(
         name = "user_roles",
