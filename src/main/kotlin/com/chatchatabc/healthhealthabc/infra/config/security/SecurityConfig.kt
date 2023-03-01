@@ -1,5 +1,6 @@
 package com.chatchatabc.healthhealthabc.infra.config.security
 
+import com.chatchatabc.healthhealthabc.infra.config.security.filter.JwtRequestFilter
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.security.authentication.AuthenticationManager
@@ -10,13 +11,16 @@ import org.springframework.security.config.http.SessionCreationPolicy
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.security.web.SecurityFilterChain
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter
 import org.springframework.web.cors.CorsConfiguration
 import org.springframework.web.cors.CorsConfigurationSource
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource
 
 @Configuration
 @EnableWebSecurity
-class SecurityConfig {
+class SecurityConfig(
+    private val jtwRequestFilter: JwtRequestFilter
+) {
 
     /**
      * Security filter chain bean definition.
@@ -37,8 +41,7 @@ class SecurityConfig {
             .sessionManagement { session ->
                 session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             }
-            // TODO: add JWT filter here
-            // .addFilterBefore(jtwRequestFilter, UsernamePasswordAuthenticationFilter::class.java)
+            .addFilterBefore(jtwRequestFilter, UsernamePasswordAuthenticationFilter::class.java)
             .build()
     }
 
