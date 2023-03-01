@@ -121,7 +121,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"username\": \"Dr. Raphile\",\r\n    \"password\": \"123\"\r\n}",
+							"raw": "{\r\n    \"username\": \"Dr. Raphile\",\r\n    \"password\": \"1234\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -212,6 +212,62 @@
 								"api",
 								"auth",
 								"hello"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Check if Email is Taken",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"drrllddalangin@gmail.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{address}}/api/auth/check-email",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"check-email"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Check if Username is Taken",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"Dr. Raphile\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{address}}/api/auth/check-username",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"check-username"
 							]
 						}
 					},

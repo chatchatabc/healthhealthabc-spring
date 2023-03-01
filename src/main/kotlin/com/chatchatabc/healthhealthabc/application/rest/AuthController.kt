@@ -150,7 +150,6 @@ class AuthController(
             val forgotPasswordResponse = ForgotPasswordResponse(null)
             ResponseEntity.status(HttpStatus.OK).body(forgotPasswordResponse)
         } catch (e: Exception) {
-            e.printStackTrace()
             val errorContent = ErrorContent("Forgot Password Error", e.message)
             val forgotPasswordResponse = ForgotPasswordResponse(errorContent)
             ResponseEntity.status(HttpStatus.BAD_REQUEST).body(forgotPasswordResponse)
@@ -171,14 +170,47 @@ class AuthController(
             val resetPasswordResponse = ResetPasswordResponse(user.email, user.username, null)
             ResponseEntity.status(HttpStatus.OK).body(resetPasswordResponse)
         } catch (e: Exception) {
-            e.printStackTrace()
             val errorContent = ErrorContent("Reset Password Error", e.message)
             val resetPasswordResponse = ResetPasswordResponse(null, null, errorContent)
             ResponseEntity.status(HttpStatus.BAD_REQUEST).body(resetPasswordResponse)
         }
     }
 
-    // TODO: Check if email is taken by another user
+    /**
+     * Check if email is taken by another user.
+     */
+    @PostMapping("/check-email")
+    fun checkEmail(@RequestBody user: User): ResponseEntity<CheckEmailResponse> {
+        return try {
+            val queriedUser = userRepository.findByEmail(user.email!!)
+            if (queriedUser.isPresent) {
+                throw Exception("Email already taken")
+            }
+            val checkEmailResponse = CheckEmailResponse(false, null)
+            ResponseEntity.status(HttpStatus.OK).body(checkEmailResponse)
+        } catch (e: Exception) {
+            val errorContent = ErrorContent("Check Email Error", e.message)
+            val checkEmailResponse = CheckEmailResponse(true, errorContent)
+            ResponseEntity.status(HttpStatus.BAD_REQUEST).body(checkEmailResponse)
+        }
+    }
 
-    // TODO: Check if username is taken by another user
+    /**
+     * Check if username is taken by another user.
+     */
+    @PostMapping("/check-username")
+    fun checkUsername(@RequestBody user: User): ResponseEntity<CheckUsernameResponse> {
+        return try {
+            val queriedUser = userRepository.findByUsername(user.username!!)
+            if (queriedUser.isPresent) {
+                throw Exception("Username already taken")
+            }
+            val checkUsernameResponse = CheckUsernameResponse(false, null)
+            ResponseEntity.status(HttpStatus.OK).body(checkUsernameResponse)
+        } catch (e: Exception) {
+            val errorContent = ErrorContent("Check Username Error", e.message)
+            val checkUsernameResponse = CheckUsernameResponse(true, errorContent)
+            ResponseEntity.status(HttpStatus.BAD_REQUEST).body(checkUsernameResponse)
+        }
+    }
 }
