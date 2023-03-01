@@ -40,7 +40,7 @@ class AuthController(
 
     @PostMapping("/login")
     fun login(request: HttpServletRequest, @RequestBody loginRequest: LoginRequest): ResponseEntity<LoginResponse> {
-        var queriedUser : Optional<User>? = null;
+        var queriedUser: Optional<User>? = null;
         try {
             queriedUser = userRepository.findByUsername(loginRequest.username)
             authenticationManager.authenticate(
@@ -57,7 +57,8 @@ class AuthController(
 //            if (queriedUser.get().emailConfirmedAt == null) {
 //                throw Exception("Email not confirmed")
 //            }
-            val token: String = jwtService.generateToken(queriedUser.get())
+            val ipAddress: String = request.remoteAddr
+            val token: String = jwtService.generateToken(queriedUser.get(), ipAddress)
             val role: Role = queriedUser.get().roles.elementAt(0)
             val loginResponse: LoginResponse? = queriedUser.get().username?.let {
                 queriedUser.get().email?.let { it1 -> LoginResponse(it, it1, role.name, null) }
@@ -67,7 +68,7 @@ class AuthController(
             headers.set("Access-Control-Expose-Headers", "X-Access-Token")
 
             // Save to log in logs with successful login
-            loginLogService.createLog(queriedUser.get(), true, queriedUser.get().email!!, request.remoteAddr)
+            loginLogService.createLog(queriedUser.get(), true, queriedUser.get().email!!, ipAddress)
             return ResponseEntity.ok().headers(headers).body(loginResponse)
         } catch (e: Exception) {
             // Save to log in logs with failed login

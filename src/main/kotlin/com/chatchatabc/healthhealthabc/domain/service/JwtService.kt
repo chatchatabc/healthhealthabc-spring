@@ -9,7 +9,7 @@ interface JwtService {
     /**
      * Generate a token for the given user
      */
-    fun generateToken(user: User): String
+    fun generateToken(user: User, ipAddress: String): String
 
     /**
      * Validate the given token
