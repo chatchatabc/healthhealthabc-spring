@@ -34,6 +34,9 @@ open class User : UserDetails {
     @Column
     open var createdAt: Instant? = null
 
+    @Column
+    open var updatedAt: Instant? = null
+
     @ManyToMany(fetch = FetchType.EAGER, cascade = [CascadeType.ALL])
     @JoinTable(
         name = "user_roles",
@@ -95,6 +98,13 @@ open class User : UserDetails {
     @PrePersist
     protected fun onCreate() {
         this.createdAt = Instant.now()
+        this.updatedAt = Instant.now()
+    }
+
+    // Update
+    @PreUpdate
+    protected fun onUpdate() {
+        this.updatedAt = Instant.now()
     }
 
     /**
