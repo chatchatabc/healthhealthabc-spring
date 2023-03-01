@@ -7,6 +7,8 @@ import com.chatchatabc.healthhealthabc.domain.model.User
 import com.chatchatabc.healthhealthabc.domain.repository.UserRepository
 import com.chatchatabc.healthhealthabc.domain.service.JwtService
 import com.chatchatabc.healthhealthabc.domain.service.UserService
+import com.chatchatabc.healthhealthabc.domain.service.log.user.LoginLogService
+import jakarta.servlet.http.HttpServletRequest
 import org.hibernate.exception.ConstraintViolationException
 import org.springframework.dao.DataIntegrityViolationException
 import org.springframework.http.HttpHeaders
@@ -24,7 +26,8 @@ class AuthController(
     private val userService: UserService,
     private val userRepository: UserRepository,
     private val jwtService: JwtService,
-    private val authenticationManager: AuthenticationManager
+    private val authenticationManager: AuthenticationManager,
+    private val loginLogService: LoginLogService
 ) {
 
     /**
@@ -36,15 +39,16 @@ class AuthController(
     }
 
     @PostMapping("/login")
-    fun login(@RequestBody loginRequest: LoginRequest): ResponseEntity<LoginResponse> {
+    fun login(request: HttpServletRequest, @RequestBody loginRequest: LoginRequest): ResponseEntity<LoginResponse> {
+        var queriedUser : Optional<User>? = null;
         try {
+            queriedUser = userRepository.findByUsername(loginRequest.username)
             authenticationManager.authenticate(
                 UsernamePasswordAuthenticationToken(
                     loginRequest.username,
                     loginRequest.password
                 )
             )
-            val queriedUser: Optional<User> = userRepository.findByUsername(loginRequest.username)
 
             if (queriedUser.isEmpty) {
                 throw Exception("User not found")
@@ -61,8 +65,15 @@ class AuthController(
             val headers = HttpHeaders()
             headers.set("X-Access-Token", token)
             headers.set("Access-Control-Expose-Headers", "X-Access-Token")
+
+            // Save to log in logs with successful login
+            loginLogService.createLog(queriedUser.get(), true, queriedUser.get().email!!, request.remoteAddr)
             return ResponseEntity.ok().headers(headers).body(loginResponse)
         } catch (e: Exception) {
+            // Save to log in logs with failed login
+            if (queriedUser != null && queriedUser.isPresent) {
+                loginLogService.createLog(queriedUser.get(), false, queriedUser.get().email!!, request.remoteAddr)
+            }
             // Get error message
             val errorContent = ErrorContent("Login Error", e.message)
             val loginResponse = LoginResponse(null, null, null, errorContent)
@@ -166,4 +177,8 @@ class AuthController(
             ResponseEntity.status(HttpStatus.BAD_REQUEST).body(resetPasswordResponse)
         }
     }
+
+    // TODO: Check if email is taken by another user
+
+    // TODO: Check if username is taken by another user
 }
