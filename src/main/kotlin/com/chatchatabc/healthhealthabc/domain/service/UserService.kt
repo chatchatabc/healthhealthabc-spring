@@ -12,4 +12,6 @@ interface UserService : UserDetailsService {
      */
     fun register(user: User, roleName: String = "ROLE_PATIENT"): User
 
+    fun confirmRegistration(emailConfirmationId: String): User
+
 }

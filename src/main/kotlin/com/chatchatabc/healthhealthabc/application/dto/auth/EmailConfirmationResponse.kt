@@ -2,5 +2,5 @@ package com.chatchatabc.healthhealthabc.application.dto.auth
 
 import com.chatchatabc.healthhealthabc.application.dto.ErrorContent
 
-data class LoginResponse(var username: String?, var email: String?, var role: String?, var errorContent: ErrorContent?) {
+data class EmailConfirmationResponse(var username: String?, var email: String?, var errorContent: ErrorContent?) {
 }

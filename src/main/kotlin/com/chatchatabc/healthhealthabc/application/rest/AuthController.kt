@@ -1,6 +1,7 @@
 package com.chatchatabc.healthhealthabc.application.rest
 
 import com.chatchatabc.healthhealthabc.application.dto.ErrorContent
+import com.chatchatabc.healthhealthabc.application.dto.auth.EmailConfirmationResponse
 import com.chatchatabc.healthhealthabc.application.dto.auth.LoginRequest
 import com.chatchatabc.healthhealthabc.application.dto.auth.LoginResponse
 import com.chatchatabc.healthhealthabc.application.dto.auth.RegisterResponse
@@ -51,16 +52,24 @@ class AuthController(
             if (queriedUser.isEmpty) {
                 throw Exception("User not found")
             }
+            // TODO: Uncomment after email confirmation is implemented by Bon
+//            if (queriedUser.get().emailConfirmedAt == null) {
+//                throw Exception("Email not confirmed")
+//            }
             val token: String = jwtService.generateToken(queriedUser.get())
             val role: Role = queriedUser.get().roles.elementAt(0)
             val loginResponse: LoginResponse? = queriedUser.get().username?.let {
-                queriedUser.get().email?.let { it1 -> LoginResponse(it, it1, role.name) }
+                queriedUser.get().email?.let { it1 -> LoginResponse(it, it1, role.name, null) }
             }
             val headers = HttpHeaders()
             headers.set("X-Access-Token", token)
+            headers.set("Access-Control-Expose-Headers", "X-Access-Token")
             return ResponseEntity.ok().headers(headers).body(loginResponse)
         } catch (e: Exception) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null)
+            // Get error message
+            val errorContent = ErrorContent("Login Error", e.message)
+            val loginResponse = LoginResponse(null, null, null, errorContent)
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(loginResponse)
         }
     }
 
@@ -102,5 +111,21 @@ class AuthController(
         val pattern = "entry '(.+)' for key".toRegex()
         val matchResult = pattern.find(message ?: "")
         return matchResult?.groups?.get(1)?.value
+    }
+
+    /**
+     * Confirm email using email confirmation id.
+     */
+    @GetMapping("/confirm-email/{emailConfirmationId}")
+    fun confirmEmail(@PathVariable emailConfirmationId: String): ResponseEntity<EmailConfirmationResponse> {
+        return try {
+            val user: User = userService.confirmRegistration(emailConfirmationId)
+            val emailConfirmationResponse = EmailConfirmationResponse(user.username, user.email, null)
+            ResponseEntity.status(HttpStatus.OK).body(emailConfirmationResponse)
+        } catch (e: Exception) {
+            val errorContent = ErrorContent("Email Confirmation Error", "User already confirmed or user does not exist")
+            val emailConfirmationResponse = EmailConfirmationResponse(null, null, errorContent)
+            ResponseEntity.status(HttpStatus.BAD_REQUEST).body(emailConfirmationResponse)
+        }
     }
 }

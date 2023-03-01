@@ -49,9 +49,9 @@ class SecurityConfig {
     fun corsConfigurationSource(): CorsConfigurationSource {
         val configuration = CorsConfiguration()
         // TODO: Add this to application.properties
-        configuration.allowedOrigins = listOf("http://localhost:3000")
+        configuration.allowedOrigins = listOf("http://localhost:3000", "http://192.168.1.4:3000")
         configuration.allowedMethods = listOf("GET", "POST", "PUT", "DELETE", "OPTIONS")
-        configuration.allowedHeaders = listOf("authorization", "content-type", "x-auth-token")
+        configuration.allowedHeaders = listOf("authorization", "content-type", "x-auth-token", "X-Access-Token")
         val source = UrlBasedCorsConfigurationSource()
         source.registerCorsConfiguration("/**", configuration)
         return source
