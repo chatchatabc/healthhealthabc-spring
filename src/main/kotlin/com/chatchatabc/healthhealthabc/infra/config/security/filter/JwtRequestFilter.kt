@@ -30,14 +30,12 @@ class JwtRequestFilter(
         response: HttpServletResponse,
         filterChain: FilterChain
     ) {
-        // Log the path of the request
-        log.info("Request path: ${request.method} ${request.requestURL} from ${request.remoteAddr}")
-
         // Get X-Access-Token from the request header
         val header: String? = request.getHeader("X-Access-Token")
 
         if (header == null || !header.startsWith("Bearer ")) {
             filterChain.doFilter(request, response)
+            logRequest(request, response)
             return
         }
 
@@ -50,6 +48,7 @@ class JwtRequestFilter(
         // If the user is not found
         if (user.isEmpty) {
             filterChain.doFilter(request, response)
+            logRequest(request, response)
             return
         }
 
@@ -66,6 +65,15 @@ class JwtRequestFilter(
 
         // Continue flow with authenticated user
         filterChain.doFilter(request, response)
+        logRequest(request, response)
+    }
+
+    /**
+     * Log the request path and the response code
+     */
+    fun logRequest(request: HttpServletRequest, response: HttpServletResponse) {
+        // Log the path of the request
+        log.info("Request path: ${request.method} ${request.requestURL} from ${request.remoteAddr} with code ${response.status}")
     }
 
 }
