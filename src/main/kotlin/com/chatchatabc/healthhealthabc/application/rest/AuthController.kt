@@ -40,7 +40,7 @@ class AuthController(
 
     @PostMapping("/login")
     fun login(request: HttpServletRequest, @RequestBody loginRequest: LoginRequest): ResponseEntity<LoginResponse> {
-        var queriedUser: Optional<User>? = null;
+        var queriedUser: Optional<User>? = null
         try {
             queriedUser = userRepository.findByUsername(loginRequest.username)
             authenticationManager.authenticate(
@@ -66,11 +66,10 @@ class AuthController(
             val headers = HttpHeaders()
             headers.set("X-Access-Token", token)
 
-            // Save to log in logs with successful login
-            loginLogService.createLog(queriedUser.get(), true, queriedUser.get().email!!, ipAddress)
             return ResponseEntity.ok().headers(headers).body(loginResponse)
         } catch (e: Exception) {
             // Save to log in logs with failed login
+            // TODO: Transfer logic to JwtService?
             if (queriedUser != null && queriedUser.isPresent) {
                 loginLogService.createLog(queriedUser.get(), false, queriedUser.get().email!!, request.remoteAddr)
             }

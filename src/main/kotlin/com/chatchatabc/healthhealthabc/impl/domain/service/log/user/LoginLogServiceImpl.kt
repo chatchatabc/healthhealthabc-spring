@@ -13,7 +13,7 @@ class LoginLogServiceImpl(
     /**
      * Create a login log of a user login attempt.
      */
-    override fun createLog(user: User, success: Boolean, email: String, ipAddress: String) {
+    override fun createLog(user: User, success: Boolean, email: String, ipAddress: String): String {
         val loginLog = LoginLog()
         loginLog.apply {
             this.user = user
@@ -21,6 +21,7 @@ class LoginLogServiceImpl(
             this.email = email
             this.ipAddress = ipAddress
         }
-        loginLogRepository.save(loginLog)
+        val loginLogSaved = loginLogRepository.save(loginLog)
+        return loginLogSaved.id!!
     }
 }

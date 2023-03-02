@@ -9,5 +9,5 @@ interface LoginLogService {
     /**
      * Create a login log of a user login attempt.
      */
-    fun createLog(user: User, success: Boolean, email: String, ipAddress: String)
+    fun createLog(user: User, success: Boolean, email: String, ipAddress: String): String
 }
