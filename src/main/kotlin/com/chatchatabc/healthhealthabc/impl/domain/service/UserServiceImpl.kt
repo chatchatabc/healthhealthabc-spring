@@ -36,7 +36,7 @@ class UserServiceImpl(
         // Generate UUID for Confirmation ID
         val confirmationId = UUID.randomUUID().toString()
         // Save confirmationId to Redis
-        jedisService.set(confirmationId, user.email!!)
+        jedisService.set("email_confirmation_${confirmationId}", user.email!!)
 
         user.apply {
             // Encrypt password
@@ -56,7 +56,7 @@ class UserServiceImpl(
      */
     override fun confirmRegistration(emailConfirmationId: String): User {
         // Get email from Redis
-        val email = jedisService.get(emailConfirmationId) ?: throw Exception("Email not found")
+        val email = jedisService.get("email_confirmation_${emailConfirmationId}") ?: throw Exception("Email not found")
         val user: Optional<User> = userRepository.findByEmail(email)
         if (user.isEmpty) {
             throw Exception("User not found")
@@ -68,7 +68,7 @@ class UserServiceImpl(
             emailConfirmedAt = Instant.now()
         }.let {
             // Delete key value pair from Redis since it is already confirmed
-            jedisService.delete(emailConfirmationId)
+            jedisService.delete("email_confirmation_${emailConfirmationId}")
             return userRepository.save(it)
         }
     }
@@ -86,12 +86,10 @@ class UserServiceImpl(
         }
         // Generate recovery code 6-digit
         val recoveryCode = String.format("%06d", (Math.random() * 1000000).toInt())
-        user.get().apply {
-            this.recoveryCode = recoveryCode
-        }.let {
-            eventPublisher.publishEvent(UserForgotPasswordEvent(user.get(), this))
-            return userRepository.save(it)
-        }
+        // Save recovery code to Redis
+        jedisService.setTTL("password_recovery_${email}", recoveryCode, recoveryCodeExpiration)
+        eventPublisher.publishEvent(UserForgotPasswordEvent(user.get(), recoveryCode, this))
+        return user.get()
     }
 
     /**
@@ -102,13 +100,16 @@ class UserServiceImpl(
         if (user.isEmpty) {
             throw Exception("User not found")
         }
-        if (user.get().recoveryCode != recoveryCode) {
+        // Get recovery code from Redis
+        val redisRecoveryCode = jedisService.get("password_recovery_${email}")
+        if (redisRecoveryCode != recoveryCode) {
             throw Exception("Recovery code is incorrect")
         }
         user.get().apply {
             this.password = passwordEncoder.encode(password)
-            this.recoveryCode = null
         }.let {
+            // Jedis delete key value pair
+            jedisService.delete("password_recovery_${email}")
             return userRepository.save(it)
         }
     }

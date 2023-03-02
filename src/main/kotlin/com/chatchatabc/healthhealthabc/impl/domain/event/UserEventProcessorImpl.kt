@@ -37,10 +37,10 @@ class UserEventProcessorImpl(private val userSchedule: UserSchedule) : UserEvent
     override fun handleUserForgotPasswordEvent(event: UserForgotPasswordEvent) {
         val email = event.user.email
         val username = event.user.username
-        val recoveryCode = event.user.recoveryCode
+        val recoveryCode = event.recoveryCode
 
         // Run Quartz job to send email confirmation
-        if (email != null && username != null && recoveryCode != null) {
+        if (email != null && username != null) {
             userSchedule.onForgotPasswordSendEmail(email, username, recoveryCode)
         }
         else {

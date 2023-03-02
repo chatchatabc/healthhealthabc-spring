@@ -10,6 +10,11 @@ import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.userdetails.UserDetails
 import java.time.Instant
 
+// The user entity flag values arranged by index.
+enum class FlagValues {
+    EMAIL_CONFIRMED_0
+}
+
 @Entity
 @Data
 @Builder
@@ -41,7 +46,7 @@ open class User : UserDetails {
     open var emailConfirmedAt: Instant? = null
 
     @Column
-    open var recoveryCode: String? = null
+    open var flag: Int = 0b00000000_00000001_00000000_00000000
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = [CascadeType.ALL])
     @JoinTable(
