@@ -6,18 +6,21 @@ import com.chatchatabc.healthhealthabc.domain.service.JwtService
 import jakarta.servlet.FilterChain
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
+import org.slf4j.LoggerFactory
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource
 import org.springframework.stereotype.Component
 import org.springframework.web.filter.OncePerRequestFilter
-import java.util.Optional
+import java.util.*
 
 @Component
 class JwtRequestFilter(
     private val jwtService: JwtService,
     private val userRepository: UserRepository
 ) : OncePerRequestFilter() {
+
+    private val log = LoggerFactory.getLogger(JwtRequestFilter::class.java)
 
     /**
      * Filter the request and validate the token
@@ -27,6 +30,9 @@ class JwtRequestFilter(
         response: HttpServletResponse,
         filterChain: FilterChain
     ) {
+        // Log the path of the request
+        log.info("Request path: ${request.method} ${request.requestURL} from ${request.remoteAddr}")
+
         // Get X-Access-Token from the request header
         val header: String? = request.getHeader("X-Access-Token")
 
