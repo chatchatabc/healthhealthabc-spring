@@ -18,10 +18,10 @@ class UserEventProcessorImpl(private val userSchedule: UserSchedule) : UserEvent
     override fun handleUserCreatedEvent(event: UserCreatedEvent) {
         val email = event.user.email
         val username = event.user.username
-        val emailConfirmationId = event.user.emailConfirmationId
+        val emailConfirmationId = event.emailConfirmationId
 
         // Run Quartz job to send email confirmation
-        if (email != null && username != null && emailConfirmationId != null) {
+        if (email != null && username != null) {
             userSchedule.onRegisterSendEmailConfirmation(email, username, emailConfirmationId)
         }
         else {

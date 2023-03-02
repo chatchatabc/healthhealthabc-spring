@@ -38,9 +38,6 @@ open class User : UserDetails {
     open var updatedAt: Instant? = null
 
     @Column
-    open var emailConfirmationId: String? = null
-
-    @Column
     open var emailConfirmedAt: Instant? = null
 
     @Column
