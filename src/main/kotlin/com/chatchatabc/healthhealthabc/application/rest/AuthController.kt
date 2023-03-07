@@ -126,11 +126,11 @@ class AuthController(
     fun confirmEmail(@PathVariable emailConfirmationId: String): ResponseEntity<EmailConfirmationResponse> {
         return try {
             val user: User = userService.confirmRegistration(emailConfirmationId)
-            val emailConfirmationResponse = EmailConfirmationResponse(user.username, user.email, null)
+            val emailConfirmationResponse = EmailConfirmationResponse(user, null)
             ResponseEntity.status(HttpStatus.OK).body(emailConfirmationResponse)
         } catch (e: Exception) {
             val errorContent = ErrorContent("Email Confirmation Error", e.message)
-            val emailConfirmationResponse = EmailConfirmationResponse(null, null, errorContent)
+            val emailConfirmationResponse = EmailConfirmationResponse(null, errorContent)
             ResponseEntity.status(HttpStatus.BAD_REQUEST).body(emailConfirmationResponse)
         }
     }
