@@ -2,7 +2,6 @@ package com.chatchatabc.healthhealthabc.application.rest
 
 import com.chatchatabc.healthhealthabc.application.dto.ErrorContent
 import com.chatchatabc.healthhealthabc.application.dto.auth.*
-import com.chatchatabc.healthhealthabc.domain.model.Role
 import com.chatchatabc.healthhealthabc.domain.model.User
 import com.chatchatabc.healthhealthabc.domain.repository.UserRepository
 import com.chatchatabc.healthhealthabc.domain.service.JwtService
@@ -59,10 +58,7 @@ class AuthController(
 //            }
             val ipAddress: String = request.remoteAddr
             val token: String = jwtService.generateToken(queriedUser.get(), ipAddress)
-            val role: Role = queriedUser.get().roles.elementAt(0)
-            val loginResponse: LoginResponse? = queriedUser.get().username?.let {
-                queriedUser.get().email?.let { it1 -> LoginResponse(it, it1, role.name, null) }
-            }
+            val loginResponse = LoginResponse(queriedUser.get(), null)
             val headers = HttpHeaders()
             headers.set("X-Access-Token", token)
 
@@ -75,7 +71,7 @@ class AuthController(
             }
             // Get error message
             val errorContent = ErrorContent("Login Error", e.message)
-            val loginResponse = LoginResponse(null, null, null, errorContent)
+            val loginResponse = LoginResponse(null, errorContent)
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(loginResponse)
         }
     }

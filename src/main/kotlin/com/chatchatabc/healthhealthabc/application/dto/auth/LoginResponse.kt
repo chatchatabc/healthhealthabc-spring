@@ -1,6 +1,7 @@
 package com.chatchatabc.healthhealthabc.application.dto.auth
 
 import com.chatchatabc.healthhealthabc.application.dto.ErrorContent
+import com.chatchatabc.healthhealthabc.domain.model.User
 
-data class LoginResponse(var username: String?, var email: String?, var role: String?, var errorContent: ErrorContent?) {
+data class LoginResponse(var user: User?, var errorContent: ErrorContent?) {
 }
