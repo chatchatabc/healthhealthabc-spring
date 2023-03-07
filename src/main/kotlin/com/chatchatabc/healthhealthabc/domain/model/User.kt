@@ -1,5 +1,6 @@
 package com.chatchatabc.healthhealthabc.domain.model
 
+import com.fasterxml.jackson.annotation.JsonIgnore
 import com.fasterxml.jackson.annotation.JsonProperty
 import jakarta.persistence.*
 import lombok.AllArgsConstructor
@@ -43,9 +44,11 @@ open class User : UserDetails {
     @Column
     open var emailConfirmedAt: Instant? = null
 
+    @JsonIgnore
     @Column
     open var flag: Int = 0
 
+    @JsonIgnore
     @ManyToMany(fetch = FetchType.EAGER, cascade = [CascadeType.ALL])
     @JoinTable(
         name = "user_roles",
@@ -66,6 +69,13 @@ open class User : UserDetails {
      */
     override fun getUsername(): String? {
         return this.username
+    }
+
+    /**
+     * Set the username of the user.
+     */
+    open fun setUsername(username: String) {
+        this.username = username
     }
 
     /**

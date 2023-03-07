@@ -31,4 +31,9 @@ interface UserService : UserDetailsService {
      * Change user's password.
      */
     fun changePassword(id: String, oldPassword: String, newPassword: String)
+
+    /**
+     * Update user's profile.
+     */
+    fun updateProfile(id: String, user: User): User
 }

@@ -54,7 +54,24 @@ class UserController(
         }
     }
 
-    // TODO: Update Profile
+    // TODO: Change Email
+
+    /**
+     * Update User Profile
+     */
+    @PutMapping("/profile")
+    fun updateProfile(request: HttpServletRequest, @RequestBody user: User): ResponseEntity<User> {
+        return try {
+            // Get ID from request
+            val id = request.getAttribute("userId") as String
+            println("ID: $id")
+            val updatedUser = userService.updateProfile(id, user)
+            ResponseEntity.ok(updatedUser)
+        } catch (e: Exception) {
+            e.printStackTrace()
+            ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null)
+        }
+    }
 
     /**
      * Logout user record as log

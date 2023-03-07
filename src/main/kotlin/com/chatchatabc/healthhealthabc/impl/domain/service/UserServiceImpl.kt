@@ -138,6 +138,27 @@ class UserServiceImpl(
     }
 
     /**
+     * Update user's profile.
+     */
+    override fun updateProfile(id: String, user: User): User {
+        val queriedUser: Optional<User> = userRepository.findById(id)
+        if (queriedUser.isEmpty) {
+            throw Exception("User not found")
+        }
+        val innerQueriedUser = queriedUser.get()
+        // Update user's profile
+        // Username
+        innerQueriedUser.apply {
+            if (user.username != null) {
+                setUsername(user.username!!)
+            }
+            // TODO: Add more if more fields are added
+        }.let {
+            return userRepository.save(it)
+        }
+    }
+
+    /**
      * Load a user by their username.
      */
     override fun loadUserByUsername(username: String): UserDetails {
