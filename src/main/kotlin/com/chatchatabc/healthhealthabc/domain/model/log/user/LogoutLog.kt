@@ -13,20 +13,20 @@ import java.time.Instant
 open class LogoutLog {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    lateinit var id: String
+    open lateinit var id: String
 
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")
-    lateinit var user: User
+    open lateinit var user: User
 
     @Column
-    lateinit var email: String
+    open lateinit var email: String
 
     @Column
-    lateinit var ipAddress: String
+    open lateinit var ipAddress: String
 
     @Column
-    lateinit var createdAt: Instant
+    open lateinit var createdAt: Instant
 
     // Persists
     @PrePersist
