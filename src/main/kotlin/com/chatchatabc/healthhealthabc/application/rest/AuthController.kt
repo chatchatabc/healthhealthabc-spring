@@ -87,7 +87,7 @@ class AuthController(
                 roleName = "ROLE_DOCTOR"
             }
             val registeredUser: User = userService.register(user, roleName)
-            val registerResponse = RegisterResponse(registeredUser.username, registeredUser.email, null)
+            val registerResponse = RegisterResponse(registeredUser, null)
             return ResponseEntity.status(HttpStatus.CREATED).body(registerResponse)
         } catch (e: DataIntegrityViolationException) {
             val cause = e.cause
@@ -103,7 +103,7 @@ class AuthController(
                     errorContent = column?.let { ErrorContent(it, message) }
                 }
             }
-            val registerResponse = RegisterResponse(null, null, errorContent)
+            val registerResponse = RegisterResponse(null, errorContent)
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(registerResponse)
         } catch (e: Exception) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null)
