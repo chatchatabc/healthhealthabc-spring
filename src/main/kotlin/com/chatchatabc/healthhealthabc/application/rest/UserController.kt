@@ -8,6 +8,7 @@ import com.chatchatabc.healthhealthabc.application.dto.user.UserProfileResponse
 import com.chatchatabc.healthhealthabc.domain.model.User
 import com.chatchatabc.healthhealthabc.domain.repository.UserRepository
 import com.chatchatabc.healthhealthabc.domain.service.UserService
+import com.chatchatabc.healthhealthabc.domain.service.log.user.LogoutLogService
 import jakarta.servlet.http.HttpServletRequest
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -18,7 +19,8 @@ import java.util.*
 @RequestMapping("/api/user")
 class UserController(
     private val userRepository: UserRepository,
-    private val userService: UserService
+    private val userService: UserService,
+    private val logoutLogService: LogoutLogService
 ) {
 
     /**
@@ -55,6 +57,22 @@ class UserController(
     // TODO: Update Profile
 
     /**
+     * Logout user record as log
+     */
+    @PostMapping("/logout")
+    fun logout(request: HttpServletRequest): ResponseEntity<String> {
+        return try {
+            // Get ID from request
+            val id = request.getAttribute("userId") as String
+            logoutLogService.createLog(id, request.remoteAddr)
+            ResponseEntity.ok(null)
+        } catch (e: Exception) {
+            ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null)
+        }
+    }
+
+
+    /**
      * Change Password
      */
     @PostMapping("/change-password")
@@ -65,7 +83,11 @@ class UserController(
         return try {
             // Get ID from request
             val id = request.getAttribute("userId") as String
-            userService.changePassword(id, userChangePasswordRequest.oldPassword, userChangePasswordRequest.newPassword)
+            userService.changePassword(
+                id,
+                userChangePasswordRequest.oldPassword,
+                userChangePasswordRequest.newPassword
+            )
             val userChangePasswordResponse = UserChangePasswordResponse(null)
             ResponseEntity.ok(userChangePasswordResponse)
         } catch (e: Exception) {
