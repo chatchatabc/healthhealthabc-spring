@@ -1,5 +1,6 @@
 package com.chatchatabc.healthhealthabc.impl.domain.service
 
+import com.chatchatabc.healthhealthabc.domain.event.user.UserChangeEmailEvent
 import com.chatchatabc.healthhealthabc.domain.event.user.UserChangePasswordEvent
 import com.chatchatabc.healthhealthabc.domain.event.user.UserCreatedEvent
 import com.chatchatabc.healthhealthabc.domain.event.user.UserForgotPasswordEvent
@@ -154,6 +155,45 @@ class UserServiceImpl(
             }
             // TODO: Add more if more fields are added
         }.let {
+            return userRepository.save(it)
+        }
+    }
+
+    /**
+     * Change user's email.
+     */
+    override fun changeEmail(id: String, newEmail: String): User {
+        val user: Optional<User> = userRepository.findById(id)
+        if (user.isEmpty) {
+            throw Exception("User not found")
+        }
+        // Generate UUID for Confirmation ID
+        val confirmationId = UUID.randomUUID().toString()
+        // Save confirmationId to Redis
+        jedisService.set("email_change_original_${confirmationId}", user.get().email!!)
+        jedisService.set("email_change_new_${confirmationId}", newEmail)
+        // Publish event to send email
+        eventPublisher.publishEvent(UserChangeEmailEvent(newEmail, user.get().username, confirmationId, this))
+        return user.get()
+    }
+
+    /**
+     * Confirm user's email change.
+     */
+    override fun confirmEmailChange(emailConfirmationId: String): User {
+        // Get original and new email from Redis
+        val originalEmail = jedisService.get("email_change_original_${emailConfirmationId}") ?: throw Exception("Email not found")
+        val newEmail = jedisService.get("email_change_new_${emailConfirmationId}") ?: throw Exception("Email not found")
+        val user: Optional<User> = userRepository.findByEmail(originalEmail)
+        if (user.isEmpty) {
+            throw Exception("User not found")
+        }
+        user.get().apply {
+            email = newEmail
+        }.let {
+            // Delete key value pair from Redis since it is already confirmed
+            jedisService.delete("email_change_original_${emailConfirmationId}")
+            jedisService.delete("email_change_new_${emailConfirmationId}")
             return userRepository.save(it)
         }
     }

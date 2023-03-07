@@ -1,6 +1,7 @@
 package com.chatchatabc.healthhealthabc.application.rest
 
 import com.chatchatabc.healthhealthabc.application.dto.ErrorContent
+import com.chatchatabc.healthhealthabc.application.dto.user.UserChangeEmailResponse
 import com.chatchatabc.healthhealthabc.application.dto.user.UserChangePasswordRequest
 import com.chatchatabc.healthhealthabc.application.dto.user.UserChangePasswordResponse
 import com.chatchatabc.healthhealthabc.application.dto.user.UserProfileResponse
@@ -37,14 +38,29 @@ class UserController(
             val userProfileResponse = UserProfileResponse(user.get(), null)
             ResponseEntity.ok(userProfileResponse)
         } catch (e: Exception) {
-            e.printStackTrace()
             val errorContent = ErrorContent("Error", e.message)
             val userProfileResponse = UserProfileResponse(null, errorContent)
             ResponseEntity.status(HttpStatus.BAD_REQUEST).body(userProfileResponse)
         }
     }
 
-    // TODO: Change Email
+    /**
+     * Change User Password
+     */
+    @PostMapping("/change-email")
+    fun changeEmail(request: HttpServletRequest, @RequestBody user: User): ResponseEntity<UserChangeEmailResponse> {
+        return try {
+            // Get ID from request
+            val id = request.getAttribute("userId") as String
+            val updatedUser = userService.changeEmail(id, user.email!!)
+            val userChangeEmailResponse = UserChangeEmailResponse( updatedUser, null)
+            ResponseEntity.ok(userChangeEmailResponse)
+        } catch (e: Exception) {
+            val errorContent = ErrorContent("Error", e.message)
+            val userChangeEmailResponse = UserChangeEmailResponse(null, errorContent)
+            ResponseEntity.status(HttpStatus.BAD_REQUEST).body(userChangeEmailResponse)
+        }
+    }
 
     /**
      * Update User Profile
@@ -54,11 +70,9 @@ class UserController(
         return try {
             // Get ID from request
             val id = request.getAttribute("userId") as String
-            println("ID: $id")
             val updatedUser = userService.updateProfile(id, user)
             ResponseEntity.ok(updatedUser)
         } catch (e: Exception) {
-            e.printStackTrace()
             ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null)
         }
     }

@@ -120,6 +120,23 @@ class AuthController(
     }
 
     /**
+     * Confirm a change email request.
+     */
+    @GetMapping("/confirm-change-email/{emailConfirmationId}")
+    fun confirmChangeEmail(@PathVariable emailConfirmationId: String): ResponseEntity<EmailConfirmationResponse> {
+        return try {
+            val user: User = userService.confirmEmailChange(emailConfirmationId)
+            val emailConfirmationResponse = EmailConfirmationResponse(user, null)
+            ResponseEntity.status(HttpStatus.OK).body(emailConfirmationResponse)
+        } catch (e: Exception) {
+            val errorContent = ErrorContent("Email Confirmation Error", e.message)
+            val emailConfirmationResponse = EmailConfirmationResponse(null, errorContent)
+            ResponseEntity.status(HttpStatus.BAD_REQUEST).body(emailConfirmationResponse)
+        }
+    }
+
+
+    /**
      * Confirm email using email confirmation id.
      */
     @GetMapping("/confirm-email/{emailConfirmationId}")
@@ -136,7 +153,7 @@ class AuthController(
     }
 
     /**
-     * Create error code and send to email to reset password.
+     * Create recovery code and send to email to reset password.
      */
     @PostMapping("/forgot-password")
     fun forgotPassword(@RequestBody user: User): ResponseEntity<ForgotPasswordResponse> {

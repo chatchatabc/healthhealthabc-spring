@@ -1,5 +1,6 @@
 package com.chatchatabc.healthhealthabc.infra.schedule.user
 
+import com.chatchatabc.healthhealthabc.infra.schedule.user.jobs.UserChangeEmailEventJob
 import com.chatchatabc.healthhealthabc.infra.schedule.user.jobs.UserChangePasswordSendEmailJob
 import com.chatchatabc.healthhealthabc.infra.schedule.user.jobs.UserForgotPasswordSendEmailJob
 import com.chatchatabc.healthhealthabc.infra.schedule.user.jobs.UserRegistrationSendEmailConfirmationJob
@@ -48,6 +49,20 @@ class UserSchedule(var scheduler: Scheduler) {
             .withIdentity("onChangePasswordSendEmail", "userGroup")
             .usingJobData("email", email)
             .usingJobData("username", username)
+            .build()
+        val trigger = TriggerBuilder.newTrigger().startNow().build()
+        scheduler.scheduleJob(job, trigger)
+    }
+
+    /**
+     * Schedule a job to send email to user to notify email change.
+     */
+    fun onChangeEmailSendEmail(email: String, username: String, emailConfirmationId: String) {
+        val job: JobDetail = JobBuilder.newJob(UserChangeEmailEventJob::class.java)
+            .withIdentity("onChangeEmailSendEmail", "userGroup")
+            .usingJobData("email", email)
+            .usingJobData("username", username)
+            .usingJobData("emailConfirmationId", emailConfirmationId)
             .build()
         val trigger = TriggerBuilder.newTrigger().startNow().build()
         scheduler.scheduleJob(job, trigger)

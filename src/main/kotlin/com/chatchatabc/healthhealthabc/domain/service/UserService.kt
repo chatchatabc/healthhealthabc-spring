@@ -36,4 +36,14 @@ interface UserService : UserDetailsService {
      * Update user's profile.
      */
     fun updateProfile(id: String, user: User): User
+
+    /**
+     * Change user's email.
+     */
+    fun changeEmail(id: String, newEmail: String): User
+
+    /**
+     * Confirm user's email change.
+     */
+    fun confirmEmailChange(emailConfirmationId: String): User
 }
