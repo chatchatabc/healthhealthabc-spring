@@ -11,9 +11,7 @@ import org.springframework.security.core.userdetails.UserDetails
 import java.time.Instant
 
 // The user entity flag values arranged by index.
-enum class FlagValues {
-    EMAIL_CONFIRMED_0
-}
+const val USER_DEACTIVATED = 0
 
 @Entity
 @Data
@@ -46,7 +44,7 @@ open class User : UserDetails {
     open var emailConfirmedAt: Instant? = null
 
     @Column
-    open var flag: Int = 0b00000000_00000001_00000000_00000000
+    open var flag: Int = 0
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = [CascadeType.ALL])
     @JoinTable(
@@ -99,10 +97,24 @@ open class User : UserDetails {
     }
 
     /**
-     * TODO: Add logic to check if user is enabled.
+     * Check if the user is enabled.
      */
     override fun isEnabled(): Boolean {
-        return true
+        return getBitValue(USER_DEACTIVATED)
+    }
+
+    /**
+     * Deactivate the user.
+     */
+    fun deactivateUser() {
+        setBitValue(USER_DEACTIVATED, true)
+    }
+
+    /**
+     * Activate the user.
+     */
+    fun activateUser() {
+        setBitValue(USER_DEACTIVATED, false)
     }
 
     // Persists
@@ -123,5 +135,17 @@ open class User : UserDetails {
      */
     open fun setPassword(encodedPassword: String?) {
         this.password = encodedPassword
+    }
+
+    private fun getBitValue(bitIndex: Int): Boolean {
+        return this.flag and (1 shl bitIndex) != 0
+    }
+
+    private fun setBitValue(bitIndex: Int, value: Boolean) {
+        if (value) {
+            this.flag = this.flag or (1 shl bitIndex)
+        } else {
+            this.flag = this.flag and (1 shl bitIndex).inv()
+        }
     }
 }
