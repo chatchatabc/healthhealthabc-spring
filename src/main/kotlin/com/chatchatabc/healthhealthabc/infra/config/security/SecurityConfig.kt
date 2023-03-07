@@ -36,6 +36,10 @@ class SecurityConfig(
 //            }
             .authorizeHttpRequests {
                 it.requestMatchers("/api/auth/**").permitAll()
+                it.requestMatchers("/api/admin/**").hasRole("ADMIN")
+                it.requestMatchers("/api/doctor/**").hasRole("DOCTOR")
+                it.requestMatchers("/api/patient/**").hasRole("PATIENT")
+                it.requestMatchers("/api/user/**").authenticated()
                 it.anyRequest().authenticated()
             }
             .sessionManagement { session ->
