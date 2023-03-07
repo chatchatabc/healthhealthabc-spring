@@ -3,7 +3,6 @@ package com.chatchatabc.healthhealthabc.application.rest
 import com.chatchatabc.healthhealthabc.application.dto.ErrorContent
 import com.chatchatabc.healthhealthabc.application.dto.user.UserChangePasswordRequest
 import com.chatchatabc.healthhealthabc.application.dto.user.UserChangePasswordResponse
-import com.chatchatabc.healthhealthabc.application.dto.user.UserDTO
 import com.chatchatabc.healthhealthabc.application.dto.user.UserProfileResponse
 import com.chatchatabc.healthhealthabc.domain.model.User
 import com.chatchatabc.healthhealthabc.domain.repository.UserRepository
@@ -35,16 +34,7 @@ class UserController(
             if (user.isEmpty) {
                 throw Exception("User not found")
             }
-            // TODO: Improve this DTO
-            val userDTO = UserDTO(
-                user.get().id,
-                user.get().email,
-                user.get().username,
-                user.get().emailConfirmedAt,
-                user.get().createdAt,
-                user.get().updatedAt
-            )
-            val userProfileResponse = UserProfileResponse(userDTO, null)
+            val userProfileResponse = UserProfileResponse(user.get(), null)
             ResponseEntity.ok(userProfileResponse)
         } catch (e: Exception) {
             e.printStackTrace()
