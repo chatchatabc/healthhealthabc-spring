@@ -115,6 +115,26 @@ class UserServiceImpl(
     }
 
     /**
+     * Change user's password.
+     */
+    override fun changePassword(id: String, oldPassword: String, newPassword: String) {
+        val user: Optional<User> = userRepository.findById(id)
+        if (user.isEmpty) {
+            throw Exception("User not found")
+        }
+        // Check if old password is correct
+        if (!passwordEncoder.matches(oldPassword, user.get().password)) {
+            throw Exception("Old password is incorrect")
+        }
+        // Change password
+        user.get().apply {
+            this.password = passwordEncoder.encode(newPassword)
+        }.let {
+            userRepository.save(it)
+        }
+    }
+
+    /**
      * Load a user by their username.
      */
     override fun loadUserByUsername(username: String): UserDetails {
