@@ -1,5 +1,6 @@
 package com.chatchatabc.healthhealthabc.impl.domain.service
 
+import com.chatchatabc.healthhealthabc.domain.event.user.UserChangePasswordEvent
 import com.chatchatabc.healthhealthabc.domain.event.user.UserCreatedEvent
 import com.chatchatabc.healthhealthabc.domain.event.user.UserForgotPasswordEvent
 import com.chatchatabc.healthhealthabc.domain.model.User
@@ -130,6 +131,8 @@ class UserServiceImpl(
         user.get().apply {
             this.password = passwordEncoder.encode(newPassword)
         }.let {
+            // Publish event to send email
+            eventPublisher.publishEvent(UserChangePasswordEvent(user.get().email, user.get().username, this))
             userRepository.save(it)
         }
     }
