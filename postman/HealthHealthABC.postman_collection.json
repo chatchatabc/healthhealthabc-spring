@@ -29,6 +29,26 @@
 					"response": []
 				},
 				{
+					"name": "Confirm Change Email",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{address}}/api/auth/confirm-change-email/e3d444a7-a95b-4fb1-9fda-eb9cb6cc01a5",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"confirm-change-email",
+								"e3d444a7-a95b-4fb1-9fda-eb9cb6cc01a5"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "Register Patient",
 					"request": {
 						"method": "POST",
@@ -330,6 +350,40 @@
 					"response": []
 				},
 				{
+					"name": "Update Profile",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "X-Access-Token",
+								"value": "Bearer {{token}}",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"Dr. Raphile\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{address}}/api/user/profile",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"api",
+								"user",
+								"profile"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "Change Password",
 					"request": {
 						"method": "POST",
@@ -358,6 +412,65 @@
 								"api",
 								"user",
 								"change-password"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Change User Email",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "X-Access-Token",
+								"value": "Bearer {{token}}",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"drrllddalangin@gmail.com1\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{address}}/api/user/change-email",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"api",
+								"user",
+								"change-email"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Logout",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "X-Access-Token",
+								"value": "Bearer {{token}}",
+								"type": "default"
+							}
+						],
+						"url": {
+							"raw": "{{address}}/api/user/logout",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"api",
+								"user",
+								"logout"
 							]
 						}
 					},
