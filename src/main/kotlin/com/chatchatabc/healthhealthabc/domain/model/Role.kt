@@ -13,7 +13,7 @@ import org.springframework.security.core.GrantedAuthority
 open class Role (name: String) : GrantedAuthority {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    open var id: String? = null
+    open lateinit var id: String
 
     @Column(unique = true)
     open var name: String = name
