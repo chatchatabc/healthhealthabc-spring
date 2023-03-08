@@ -9,27 +9,24 @@ import java.time.Instant
 @Entity
 @Data
 @Builder
-@Table(name = "user_login_logs")
-open class LoginLog {
+@Table(name = "user_logout_logs")
+open class LogoutLog {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    open var id: String? = null
+    open lateinit var id: String
 
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")
-    open var user: User? = null
+    open lateinit var user: User
 
     @Column
-    open var email: String? = null
+    open lateinit var email: String
 
     @Column
-    open var ipAddress: String? = null
+    open lateinit var ipAddress: String
 
     @Column
-    open var createdAt: Instant? = null
-
-    @Column
-    open var success: Boolean? = null
+    open lateinit var createdAt: Instant
 
     // Persists
     @PrePersist

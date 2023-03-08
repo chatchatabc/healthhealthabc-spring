@@ -1,5 +1,6 @@
 package com.chatchatabc.healthhealthabc.domain.model
 
+import com.fasterxml.jackson.annotation.JsonIgnore
 import com.fasterxml.jackson.annotation.JsonProperty
 import jakarta.persistence.*
 import lombok.AllArgsConstructor
@@ -12,6 +13,10 @@ import java.time.Instant
 
 // The user entity flag values arranged by index.
 const val USER_DEACTIVATED = 0
+const val USER_LOCKED = 1
+const val USER_ACCOUNT_EXPIRED = 2
+const val USER_CREDENTIALS_EXPIRED = 3
+
 
 @Entity
 @Data
@@ -23,10 +28,10 @@ open class User : UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    open var id: String? = null
+    open lateinit var id: String
 
     @Column(unique = true)
-    open var email: String? = null
+    open lateinit var email: String
 
     @Column(unique = true)
     private var username: String? = null
@@ -35,17 +40,19 @@ open class User : UserDetails {
     private var password: String? = null
 
     @Column
-    open var createdAt: Instant? = null
+    open lateinit var createdAt: Instant
 
     @Column
-    open var updatedAt: Instant? = null
+    open lateinit var updatedAt: Instant
 
     @Column
     open var emailConfirmedAt: Instant? = null
 
+    @JsonIgnore
     @Column
     open var flag: Int = 0
 
+    @JsonIgnore
     @ManyToMany(fetch = FetchType.EAGER, cascade = [CascadeType.ALL])
     @JoinTable(
         name = "user_roles",
@@ -66,6 +73,13 @@ open class User : UserDetails {
      */
     override fun getUsername(): String? {
         return this.username
+    }
+
+    /**
+     * Set the username of the user.
+     */
+    open fun setUsername(username: String) {
+        this.username = username
     }
 
     /**

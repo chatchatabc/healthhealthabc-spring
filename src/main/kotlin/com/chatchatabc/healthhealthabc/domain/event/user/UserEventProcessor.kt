@@ -11,4 +11,14 @@ interface UserEventProcessor {
      * Handle user forgot password event.
      */
     fun handleUserForgotPasswordEvent(event: UserForgotPasswordEvent)
+
+    /**
+     * Handle user change password event.
+     */
+    fun handleUserChangePasswordEvent(event: UserChangePasswordEvent)
+
+    /**
+     * Handle user change email event.
+     */
+    fun handleUserChangeEmailEvent(event: UserChangeEmailEvent)
 }

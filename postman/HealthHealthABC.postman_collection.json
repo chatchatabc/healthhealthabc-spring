@@ -14,7 +14,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{address}}/api/auth/confirm-email/b997059b-d144-4287-983f-c9cdb7d87c27",
+							"raw": "{{address}}/api/auth/confirm-email/0c4d94d5-ab96-423e-ae52-0a5fb88c3c6a",
 							"host": [
 								"{{address}}"
 							],
@@ -22,7 +22,27 @@
 								"api",
 								"auth",
 								"confirm-email",
-								"b997059b-d144-4287-983f-c9cdb7d87c27"
+								"0c4d94d5-ab96-423e-ae52-0a5fb88c3c6a"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Confirm Change Email",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{address}}/api/auth/confirm-change-email/e3d444a7-a95b-4fb1-9fda-eb9cb6cc01a5",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"confirm-change-email",
+								"e3d444a7-a95b-4fb1-9fda-eb9cb6cc01a5"
 							]
 						}
 					},
@@ -88,6 +108,19 @@
 				},
 				{
 					"name": "Login Patient",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var token = pm.response.headers.get('X-Access-Token');\r",
+									"pm.environment.set('token', token);\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "POST",
 						"header": [],
@@ -116,12 +149,25 @@
 				},
 				{
 					"name": "Login Doctor",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var token = pm.response.headers.get('X-Access-Token');\r",
+									"pm.environment.set('token', token);\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"username\": \"Dr. Raphile\",\r\n    \"password\": \"1234\"\r\n}",
+							"raw": "{\r\n    \"username\": \"Dr. Raphile\",\r\n    \"password\": \"123\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -177,7 +223,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"email\": \"drrllddalangin@gmail.com\",\r\n    \"password\": \"1234\",\r\n    \"recoveryCode\": \"530115\"\r\n}",
+							"raw": "{\r\n    \"email\": \"drrllddalangin@gmail.com\",\r\n    \"password\": \"1234\",\r\n    \"recoveryCode\": \"919670\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -268,6 +314,163 @@
 								"api",
 								"auth",
 								"check-username"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "Profile",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-Access-Token",
+								"value": "Bearer {{token}}",
+								"type": "default"
+							}
+						],
+						"url": {
+							"raw": "{{address}}/api/user/profile",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"api",
+								"user",
+								"profile"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Profile",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "X-Access-Token",
+								"value": "Bearer {{token}}",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"Dr. Raphile\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{address}}/api/user/profile",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"api",
+								"user",
+								"profile"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Change Password",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "X-Access-Token",
+								"value": "Bearer {{token}}",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"oldPassword\":\"123\",\r\n    \"newPassword\":\"123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{address}}/api/user/change-password",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"api",
+								"user",
+								"change-password"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Change User Email",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "X-Access-Token",
+								"value": "Bearer {{token}}",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"drrllddalangin@gmail.com1\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{address}}/api/user/change-email",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"api",
+								"user",
+								"change-email"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Logout",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "X-Access-Token",
+								"value": "Bearer {{token}}",
+								"type": "default"
+							}
+						],
+						"url": {
+							"raw": "{{address}}/api/user/logout",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"api",
+								"user",
+								"logout"
 							]
 						}
 					},

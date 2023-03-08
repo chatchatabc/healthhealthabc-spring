@@ -27,4 +27,23 @@ interface UserService : UserDetailsService {
      */
     fun resetPassword(email: String, password: String, recoveryCode: String): User
 
+    /**
+     * Change user's password.
+     */
+    fun changePassword(id: String, oldPassword: String, newPassword: String)
+
+    /**
+     * Update user's profile.
+     */
+    fun updateProfile(id: String, user: User): User
+
+    /**
+     * Change user's email.
+     */
+    fun changeEmail(id: String, newEmail: String): User
+
+    /**
+     * Confirm user's email change.
+     */
+    fun confirmEmailChange(emailConfirmationId: String): User
 }

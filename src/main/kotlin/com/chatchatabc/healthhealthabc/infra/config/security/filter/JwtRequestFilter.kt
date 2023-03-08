@@ -65,7 +65,7 @@ class JwtRequestFilter(
 
         // Continue flow with authenticated user
         filterChain.doFilter(request, response)
-        logRequest(request, response)
+        logRequest(request, response, userId)
     }
 
     /**
@@ -74,6 +74,14 @@ class JwtRequestFilter(
     fun logRequest(request: HttpServletRequest, response: HttpServletResponse) {
         // Log the path of the request
         log.info("Request path: ${request.method} ${request.requestURL} from ${request.remoteAddr} with code ${response.status}")
+    }
+
+    /**
+     * Log the request path and the response code with user id
+     */
+    fun logRequest(request: HttpServletRequest, response: HttpServletResponse, userId:String) {
+        // Log the path of the request
+        log.info("Request path: ${request.method} ${request.requestURL} User ID $userId from ${request.remoteAddr} with code ${response.status}")
     }
 
 }
