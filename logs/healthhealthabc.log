@@ -1,0 +1,296 @@
+2023-03-08 15:16:53,118 INFO c.c.h.HealthhealthabcApplicationKt [restartedMain] Starting HealthhealthabcApplicationKt using Java 17.0.5 with PID 49812 (D:\Work\ChatChatABC\Projects\healthhealthabc-spring\healthhealthabc-service\target\classes started by Raphael Dalangin in D:\Work\ChatChatABC\Projects\healthhealthabc-spring)
+2023-03-08 15:16:53,121 DEBUG c.c.h.HealthhealthabcApplicationKt [restartedMain] Running with Spring Boot v3.0.3, Spring v6.0.5
+2023-03-08 15:16:53,122 INFO c.c.h.HealthhealthabcApplicationKt [restartedMain] No active profile set, falling back to 1 default profile: "default"
+2023-03-08 15:16:53,200 INFO o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor [restartedMain] Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2023-03-08 15:16:53,201 INFO o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor [restartedMain] For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2023-03-08 15:16:54,129 INFO o.s.d.r.c.RepositoryConfigurationDelegate [restartedMain] Multiple Spring Data modules found, entering strict repository configuration mode
+2023-03-08 15:16:54,131 INFO o.s.d.r.c.RepositoryConfigurationDelegate [restartedMain] Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2023-03-08 15:16:54,289 INFO o.s.d.r.c.RepositoryConfigurationDelegate [restartedMain] Finished Spring Data repository scanning in 149 ms. Found 4 JPA repository interfaces.
+2023-03-08 15:16:54,305 INFO o.s.d.r.c.RepositoryConfigurationDelegate [restartedMain] Multiple Spring Data modules found, entering strict repository configuration mode
+2023-03-08 15:16:54,306 INFO o.s.d.r.c.RepositoryConfigurationDelegate [restartedMain] Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2023-03-08 15:16:54,321 INFO o.s.d.r.c.RepositoryConfigurationExtensionSupport [restartedMain] Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.chatchatabc.healthhealthabc.domain.repository.log.user.LoginLogRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2023-03-08 15:16:54,321 INFO o.s.d.r.c.RepositoryConfigurationExtensionSupport [restartedMain] Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.chatchatabc.healthhealthabc.domain.repository.log.user.LogoutLogRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2023-03-08 15:16:54,321 INFO o.s.d.r.c.RepositoryConfigurationExtensionSupport [restartedMain] Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.chatchatabc.healthhealthabc.domain.repository.RoleRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2023-03-08 15:16:54,321 INFO o.s.d.r.c.RepositoryConfigurationExtensionSupport [restartedMain] Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.chatchatabc.healthhealthabc.domain.repository.UserRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2023-03-08 15:16:54,322 INFO o.s.d.r.c.RepositoryConfigurationDelegate [restartedMain] Finished Spring Data repository scanning in 8 ms. Found 0 Redis repository interfaces.
+2023-03-08 15:16:54,862 INFO o.s.b.w.e.t.TomcatWebServer [restartedMain] Tomcat initialized with port(s): 8080 (http)
+2023-03-08 15:16:54,870 INFO o.a.c.h.Http11NioProtocol [restartedMain] Initializing ProtocolHandler ["http-nio-8080"]
+2023-03-08 15:16:54,872 INFO o.a.c.c.StandardService [restartedMain] Starting service [Tomcat]
+2023-03-08 15:16:54,872 INFO o.a.c.c.StandardEngine [restartedMain] Starting Servlet engine: [Apache Tomcat/10.1.5]
+2023-03-08 15:16:54,926 INFO o.a.c.c.C.[.[.[/] [restartedMain] Initializing Spring embedded WebApplicationContext
+2023-03-08 15:16:54,926 INFO o.s.b.w.s.c.ServletWebServerApplicationContext [restartedMain] Root WebApplicationContext: initialization completed in 1725 ms
+2023-03-08 15:16:54,953 INFO c.z.h.HikariDataSource [restartedMain] HikariPool-1 - Starting...
+2023-03-08 15:16:55,338 INFO c.z.h.p.HikariPool [restartedMain] HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@74078004
+2023-03-08 15:16:55,340 INFO c.z.h.HikariDataSource [restartedMain] HikariPool-1 - Start completed.
+2023-03-08 15:16:55,347 INFO o.s.b.a.h.H2ConsoleAutoConfiguration [restartedMain] H2 console available at '/h2-console'. Database available at 'jdbc:mysql://localhost:3306/db_healthhealthabc?serverTimezone=UTC'
+2023-03-08 15:16:55,765 INFO o.h.j.i.u.LogHelper [restartedMain] HHH000204: Processing PersistenceUnitInfo [name: default]
+2023-03-08 15:16:55,829 INFO o.h.Version [restartedMain] HHH000412: Hibernate ORM core version 6.1.7.Final
+2023-03-08 15:16:56,131 INFO SQL dialect [restartedMain] HHH000400: Using dialect: org.hibernate.dialect.MySQLDialect
+2023-03-08 15:16:56,941 INFO o.h.e.t.j.p.i.JtaPlatformInitiator [restartedMain] HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2023-03-08 15:16:56,960 INFO o.s.o.j.LocalContainerEntityManagerFactoryBean [restartedMain] Initialized JPA EntityManagerFactory for persistence unit 'default'
+2023-03-08 15:16:57,517 DEBUG c.c.h.i.c.s.f.JwtRequestFilter [restartedMain] Filter 'jwtRequestFilter' configured for use
+2023-03-08 15:16:57,985 INFO o.q.i.StdSchedulerFactory [restartedMain] Using default implementation for ThreadExecutor
+2023-03-08 15:16:57,997 INFO o.q.c.SchedulerSignalerImpl [restartedMain] Initialized Scheduler Signaller of type: class org.quartz.core.SchedulerSignalerImpl
+2023-03-08 15:16:57,997 INFO o.q.c.QuartzScheduler [restartedMain] Quartz Scheduler v.2.3.2 created.
+2023-03-08 15:16:57,999 INFO o.s.s.q.LocalDataSourceJobStore [restartedMain] Using db table-based data access locking (synchronization).
+2023-03-08 15:16:58,001 INFO o.s.s.q.LocalDataSourceJobStore [restartedMain] JobStoreCMT initialized.
+2023-03-08 15:16:58,001 INFO o.q.c.QuartzScheduler [restartedMain] Scheduler meta-data: Quartz Scheduler (v2.3.2) 'quartzScheduler' with instanceId 'NON_CLUSTERED'
+  Scheduler class: 'org.quartz.core.QuartzScheduler' - running locally.
+  NOT STARTED.
+  Currently in standby mode.
+  Number of jobs executed: 0
+  Using thread pool 'org.quartz.simpl.SimpleThreadPool' - with 10 threads.
+  Using job-store 'org.springframework.scheduling.quartz.LocalDataSourceJobStore' - which supports persistence. and is not clustered.
+
+2023-03-08 15:16:58,001 INFO o.q.i.StdSchedulerFactory [restartedMain] Quartz scheduler 'quartzScheduler' initialized from an externally provided properties instance.
+2023-03-08 15:16:58,001 INFO o.q.i.StdSchedulerFactory [restartedMain] Quartz scheduler version: 2.3.2
+2023-03-08 15:16:58,001 INFO o.q.c.QuartzScheduler [restartedMain] JobFactory set to: org.springframework.scheduling.quartz.SpringBeanJobFactory@cc2b7a4
+2023-03-08 15:16:58,038 WARN o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration [restartedMain] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2023-03-08 15:16:58,302 INFO o.s.s.w.DefaultSecurityFilterChain [restartedMain] Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@559d04d0, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@2fd40e03, org.springframework.security.web.context.SecurityContextHolderFilter@46a6b9af, org.springframework.security.web.header.HeaderWriterFilter@625db9c1, org.springframework.web.filter.CorsFilter@195a1d5e, org.springframework.security.web.authentication.logout.LogoutFilter@4c85c500, com.chatchatabc.healthhealthabc.infra.config.security.filter.JwtRequestFilter@d2144b6, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@35018a7f, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@2e3988ec, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@5ba7461f, org.springframework.security.web.session.SessionManagementFilter@4fe640ec, org.springframework.security.web.access.ExceptionTranslationFilter@1b50aba4, org.springframework.security.web.access.intercept.AuthorizationFilter@33e93b43]
+2023-03-08 15:16:58,779 INFO o.s.b.d.a.OptionalLiveReloadServer [restartedMain] LiveReload server is running on port 35729
+2023-03-08 15:16:58,799 INFO o.a.c.h.Http11NioProtocol [restartedMain] Starting ProtocolHandler ["http-nio-8080"]
+2023-03-08 15:16:58,816 INFO o.s.b.w.e.t.TomcatWebServer [restartedMain] Tomcat started on port(s): 8080 (http) with context path ''
+2023-03-08 15:16:58,817 INFO o.s.s.q.SchedulerFactoryBean [restartedMain] Starting Quartz Scheduler now
+2023-03-08 15:16:58,828 INFO o.s.s.q.LocalDataSourceJobStore [restartedMain] Freed 0 triggers from 'acquired' / 'blocked' state.
+2023-03-08 15:16:58,830 INFO o.s.s.q.LocalDataSourceJobStore [restartedMain] Recovering 0 jobs that were in-progress at the time of the last shut-down.
+2023-03-08 15:16:58,831 INFO o.s.s.q.LocalDataSourceJobStore [restartedMain] Recovery complete.
+2023-03-08 15:16:58,831 INFO o.s.s.q.LocalDataSourceJobStore [restartedMain] Removed 0 'complete' triggers.
+2023-03-08 15:16:58,832 INFO o.s.s.q.LocalDataSourceJobStore [restartedMain] Removed 0 stale fired job entries.
+2023-03-08 15:16:58,833 INFO o.q.c.QuartzScheduler [restartedMain] Scheduler quartzScheduler_$_NON_CLUSTERED started.
+2023-03-08 15:16:58,842 INFO c.c.h.HealthhealthabcApplicationKt [restartedMain] Started HealthhealthabcApplicationKt in 6.103 seconds (process running for 7.212)
+2023-03-08 15:17:03,028 INFO o.q.c.QuartzScheduler [SpringApplicationShutdownHook] Scheduler quartzScheduler_$_NON_CLUSTERED paused.
+2023-03-08 15:17:03,060 INFO o.s.s.q.SchedulerFactoryBean [SpringApplicationShutdownHook] Shutting down Quartz Scheduler
+2023-03-08 15:17:03,060 INFO o.q.c.QuartzScheduler [SpringApplicationShutdownHook] Scheduler quartzScheduler_$_NON_CLUSTERED shutting down.
+2023-03-08 15:17:03,060 INFO o.q.c.QuartzScheduler [SpringApplicationShutdownHook] Scheduler quartzScheduler_$_NON_CLUSTERED paused.
+2023-03-08 15:17:03,060 INFO o.q.c.QuartzScheduler [SpringApplicationShutdownHook] Scheduler quartzScheduler_$_NON_CLUSTERED shutdown complete.
+2023-03-08 15:17:03,061 INFO o.s.o.j.LocalContainerEntityManagerFactoryBean [SpringApplicationShutdownHook] Closing JPA EntityManagerFactory for persistence unit 'default'
+2023-03-08 15:17:03,063 INFO c.z.h.HikariDataSource [SpringApplicationShutdownHook] HikariPool-1 - Shutdown initiated...
+2023-03-08 15:17:03,069 INFO c.z.h.HikariDataSource [SpringApplicationShutdownHook] HikariPool-1 - Shutdown completed.
+2023-03-08 15:17:32,696 INFO c.c.h.HealthhealthabcApplicationKt [restartedMain] Starting HealthhealthabcApplicationKt using Java 17.0.5 with PID 45804 (D:\Work\ChatChatABC\Projects\healthhealthabc-spring\healthhealthabc-service\target\classes started by Raphael Dalangin in D:\Work\ChatChatABC\Projects\healthhealthabc-spring)
+2023-03-08 15:17:32,698 DEBUG c.c.h.HealthhealthabcApplicationKt [restartedMain] Running with Spring Boot v3.0.3, Spring v6.0.5
+2023-03-08 15:17:32,699 INFO c.c.h.HealthhealthabcApplicationKt [restartedMain] No active profile set, falling back to 1 default profile: "default"
+2023-03-08 15:17:32,767 INFO o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor [restartedMain] Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2023-03-08 15:17:32,768 INFO o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor [restartedMain] For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2023-03-08 15:17:33,721 INFO o.s.d.r.c.RepositoryConfigurationDelegate [restartedMain] Multiple Spring Data modules found, entering strict repository configuration mode
+2023-03-08 15:17:33,722 INFO o.s.d.r.c.RepositoryConfigurationDelegate [restartedMain] Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2023-03-08 15:17:33,886 INFO o.s.d.r.c.RepositoryConfigurationDelegate [restartedMain] Finished Spring Data repository scanning in 157 ms. Found 4 JPA repository interfaces.
+2023-03-08 15:17:33,905 INFO o.s.d.r.c.RepositoryConfigurationDelegate [restartedMain] Multiple Spring Data modules found, entering strict repository configuration mode
+2023-03-08 15:17:33,907 INFO o.s.d.r.c.RepositoryConfigurationDelegate [restartedMain] Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2023-03-08 15:17:33,921 INFO o.s.d.r.c.RepositoryConfigurationExtensionSupport [restartedMain] Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.chatchatabc.healthhealthabc.domain.repository.log.user.LoginLogRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2023-03-08 15:17:33,922 INFO o.s.d.r.c.RepositoryConfigurationExtensionSupport [restartedMain] Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.chatchatabc.healthhealthabc.domain.repository.log.user.LogoutLogRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2023-03-08 15:17:33,922 INFO o.s.d.r.c.RepositoryConfigurationExtensionSupport [restartedMain] Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.chatchatabc.healthhealthabc.domain.repository.RoleRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2023-03-08 15:17:33,922 INFO o.s.d.r.c.RepositoryConfigurationExtensionSupport [restartedMain] Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.chatchatabc.healthhealthabc.domain.repository.UserRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2023-03-08 15:17:33,922 INFO o.s.d.r.c.RepositoryConfigurationDelegate [restartedMain] Finished Spring Data repository scanning in 8 ms. Found 0 Redis repository interfaces.
+2023-03-08 15:17:34,609 INFO o.s.b.w.e.t.TomcatWebServer [restartedMain] Tomcat initialized with port(s): 8080 (http)
+2023-03-08 15:17:34,620 INFO o.a.c.h.Http11NioProtocol [restartedMain] Initializing ProtocolHandler ["http-nio-8080"]
+2023-03-08 15:17:34,622 INFO o.a.c.c.StandardService [restartedMain] Starting service [Tomcat]
+2023-03-08 15:17:34,622 INFO o.a.c.c.StandardEngine [restartedMain] Starting Servlet engine: [Apache Tomcat/10.1.5]
+2023-03-08 15:17:34,680 INFO o.a.c.c.C.[.[.[/] [restartedMain] Initializing Spring embedded WebApplicationContext
+2023-03-08 15:17:34,681 INFO o.s.b.w.s.c.ServletWebServerApplicationContext [restartedMain] Root WebApplicationContext: initialization completed in 1913 ms
+2023-03-08 15:17:34,709 INFO c.z.h.HikariDataSource [restartedMain] HikariPool-1 - Starting...
+2023-03-08 15:17:35,003 INFO c.z.h.p.HikariPool [restartedMain] HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@4a51dce6
+2023-03-08 15:17:35,140 INFO c.z.h.HikariDataSource [restartedMain] HikariPool-1 - Start completed.
+2023-03-08 15:17:35,148 INFO o.s.b.a.h.H2ConsoleAutoConfiguration [restartedMain] H2 console available at '/h2-console'. Database available at 'jdbc:mysql://localhost:3306/db_healthhealthabc?serverTimezone=UTC'
+2023-03-08 15:17:35,542 INFO o.h.j.i.u.LogHelper [restartedMain] HHH000204: Processing PersistenceUnitInfo [name: default]
+2023-03-08 15:17:35,588 INFO o.h.Version [restartedMain] HHH000412: Hibernate ORM core version 6.1.7.Final
+2023-03-08 15:17:35,871 INFO SQL dialect [restartedMain] HHH000400: Using dialect: org.hibernate.dialect.MySQLDialect
+2023-03-08 15:17:36,689 INFO o.h.e.t.j.p.i.JtaPlatformInitiator [restartedMain] HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2023-03-08 15:17:36,700 INFO o.s.o.j.LocalContainerEntityManagerFactoryBean [restartedMain] Initialized JPA EntityManagerFactory for persistence unit 'default'
+2023-03-08 15:17:37,288 DEBUG c.c.h.i.c.s.f.JwtRequestFilter [restartedMain] Filter 'jwtRequestFilter' configured for use
+2023-03-08 15:17:37,522 INFO o.q.i.StdSchedulerFactory [restartedMain] Using default implementation for ThreadExecutor
+2023-03-08 15:17:37,533 INFO o.q.c.SchedulerSignalerImpl [restartedMain] Initialized Scheduler Signaller of type: class org.quartz.core.SchedulerSignalerImpl
+2023-03-08 15:17:37,533 INFO o.q.c.QuartzScheduler [restartedMain] Quartz Scheduler v.2.3.2 created.
+2023-03-08 15:17:37,535 INFO o.s.s.q.LocalDataSourceJobStore [restartedMain] Using db table-based data access locking (synchronization).
+2023-03-08 15:17:37,536 INFO o.s.s.q.LocalDataSourceJobStore [restartedMain] JobStoreCMT initialized.
+2023-03-08 15:17:37,537 INFO o.q.c.QuartzScheduler [restartedMain] Scheduler meta-data: Quartz Scheduler (v2.3.2) 'quartzScheduler' with instanceId 'NON_CLUSTERED'
+  Scheduler class: 'org.quartz.core.QuartzScheduler' - running locally.
+  NOT STARTED.
+  Currently in standby mode.
+  Number of jobs executed: 0
+  Using thread pool 'org.quartz.simpl.SimpleThreadPool' - with 10 threads.
+  Using job-store 'org.springframework.scheduling.quartz.LocalDataSourceJobStore' - which supports persistence. and is not clustered.
+
+2023-03-08 15:17:37,537 INFO o.q.i.StdSchedulerFactory [restartedMain] Quartz scheduler 'quartzScheduler' initialized from an externally provided properties instance.
+2023-03-08 15:17:37,537 INFO o.q.i.StdSchedulerFactory [restartedMain] Quartz scheduler version: 2.3.2
+2023-03-08 15:17:37,537 INFO o.q.c.QuartzScheduler [restartedMain] JobFactory set to: org.springframework.scheduling.quartz.SpringBeanJobFactory@124f8c73
+2023-03-08 15:17:37,573 WARN o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration [restartedMain] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2023-03-08 15:17:37,854 INFO o.s.s.w.DefaultSecurityFilterChain [restartedMain] Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@4f71e55d, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@797907ed, org.springframework.security.web.context.SecurityContextHolderFilter@632d93ce, org.springframework.security.web.header.HeaderWriterFilter@4d35ae0b, org.springframework.web.filter.CorsFilter@2cdd104e, org.springframework.security.web.authentication.logout.LogoutFilter@14b03710, com.chatchatabc.healthhealthabc.infra.config.security.filter.JwtRequestFilter@11dcf2d0, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@e6372f9, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@368c0cdc, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@746d717e, org.springframework.security.web.session.SessionManagementFilter@4bfe223a, org.springframework.security.web.access.ExceptionTranslationFilter@4185aebc, org.springframework.security.web.access.intercept.AuthorizationFilter@26d21d9b]
+2023-03-08 15:17:38,355 INFO o.s.b.d.a.OptionalLiveReloadServer [restartedMain] LiveReload server is running on port 35729
+2023-03-08 15:17:38,374 INFO o.a.c.h.Http11NioProtocol [restartedMain] Starting ProtocolHandler ["http-nio-8080"]
+2023-03-08 15:17:38,392 INFO o.s.b.w.e.t.TomcatWebServer [restartedMain] Tomcat started on port(s): 8080 (http) with context path ''
+2023-03-08 15:17:38,393 INFO o.s.s.q.SchedulerFactoryBean [restartedMain] Starting Quartz Scheduler now
+2023-03-08 15:17:38,405 INFO o.s.s.q.LocalDataSourceJobStore [restartedMain] Freed 0 triggers from 'acquired' / 'blocked' state.
+2023-03-08 15:17:38,408 INFO o.s.s.q.LocalDataSourceJobStore [restartedMain] Recovering 0 jobs that were in-progress at the time of the last shut-down.
+2023-03-08 15:17:38,408 INFO o.s.s.q.LocalDataSourceJobStore [restartedMain] Recovery complete.
+2023-03-08 15:17:38,409 INFO o.s.s.q.LocalDataSourceJobStore [restartedMain] Removed 0 'complete' triggers.
+2023-03-08 15:17:38,409 INFO o.s.s.q.LocalDataSourceJobStore [restartedMain] Removed 0 stale fired job entries.
+2023-03-08 15:17:38,411 INFO o.q.c.QuartzScheduler [restartedMain] Scheduler quartzScheduler_$_NON_CLUSTERED started.
+2023-03-08 15:17:38,421 INFO c.c.h.HealthhealthabcApplicationKt [restartedMain] Started HealthhealthabcApplicationKt in 6.087 seconds (process running for 7.738)
+2023-03-08 15:17:41,202 INFO o.q.c.QuartzScheduler [SpringApplicationShutdownHook] Scheduler quartzScheduler_$_NON_CLUSTERED paused.
+2023-03-08 15:17:41,235 INFO o.s.s.q.SchedulerFactoryBean [SpringApplicationShutdownHook] Shutting down Quartz Scheduler
+2023-03-08 15:17:41,235 INFO o.q.c.QuartzScheduler [SpringApplicationShutdownHook] Scheduler quartzScheduler_$_NON_CLUSTERED shutting down.
+2023-03-08 15:17:41,235 INFO o.q.c.QuartzScheduler [SpringApplicationShutdownHook] Scheduler quartzScheduler_$_NON_CLUSTERED paused.
+2023-03-08 15:17:41,235 INFO o.q.c.QuartzScheduler [SpringApplicationShutdownHook] Scheduler quartzScheduler_$_NON_CLUSTERED shutdown complete.
+2023-03-08 15:17:41,236 INFO o.s.o.j.LocalContainerEntityManagerFactoryBean [SpringApplicationShutdownHook] Closing JPA EntityManagerFactory for persistence unit 'default'
+2023-03-08 15:17:41,238 INFO c.z.h.HikariDataSource [SpringApplicationShutdownHook] HikariPool-1 - Shutdown initiated...
+2023-03-08 15:17:41,243 INFO c.z.h.HikariDataSource [SpringApplicationShutdownHook] HikariPool-1 - Shutdown completed.
+2023-03-08 15:49:17,933 INFO c.c.h.HealthhealthabcApplicationKt [restartedMain] Starting HealthhealthabcApplicationKt using Java 17.0.5 with PID 17268 (D:\Work\ChatChatABC\Projects\healthhealthabc-spring\healthhealthabc-service\target\classes started by Raphael Dalangin in D:\Work\ChatChatABC\Projects\healthhealthabc-spring)
+2023-03-08 15:49:17,936 DEBUG c.c.h.HealthhealthabcApplicationKt [restartedMain] Running with Spring Boot v3.0.3, Spring v6.0.5
+2023-03-08 15:49:17,937 INFO c.c.h.HealthhealthabcApplicationKt [restartedMain] No active profile set, falling back to 1 default profile: "default"
+2023-03-08 15:49:17,998 INFO o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor [restartedMain] Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2023-03-08 15:49:18,000 INFO o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor [restartedMain] For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2023-03-08 15:49:18,922 INFO o.s.d.r.c.RepositoryConfigurationDelegate [restartedMain] Multiple Spring Data modules found, entering strict repository configuration mode
+2023-03-08 15:49:18,924 INFO o.s.d.r.c.RepositoryConfigurationDelegate [restartedMain] Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2023-03-08 15:49:19,170 INFO o.s.d.r.c.RepositoryConfigurationDelegate [restartedMain] Finished Spring Data repository scanning in 240 ms. Found 4 JPA repository interfaces.
+2023-03-08 15:49:19,216 INFO o.s.d.r.c.RepositoryConfigurationDelegate [restartedMain] Multiple Spring Data modules found, entering strict repository configuration mode
+2023-03-08 15:49:19,218 INFO o.s.d.r.c.RepositoryConfigurationDelegate [restartedMain] Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2023-03-08 15:49:19,248 INFO o.s.d.r.c.RepositoryConfigurationExtensionSupport [restartedMain] Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.chatchatabc.healthhealthabc.domain.repository.log.user.LoginLogRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2023-03-08 15:49:19,248 INFO o.s.d.r.c.RepositoryConfigurationExtensionSupport [restartedMain] Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.chatchatabc.healthhealthabc.domain.repository.log.user.LogoutLogRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2023-03-08 15:49:19,249 INFO o.s.d.r.c.RepositoryConfigurationExtensionSupport [restartedMain] Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.chatchatabc.healthhealthabc.domain.repository.RoleRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2023-03-08 15:49:19,249 INFO o.s.d.r.c.RepositoryConfigurationExtensionSupport [restartedMain] Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.chatchatabc.healthhealthabc.domain.repository.UserRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2023-03-08 15:49:19,249 INFO o.s.d.r.c.RepositoryConfigurationDelegate [restartedMain] Finished Spring Data repository scanning in 14 ms. Found 0 Redis repository interfaces.
+2023-03-08 15:49:20,140 INFO o.s.b.w.e.t.TomcatWebServer [restartedMain] Tomcat initialized with port(s): 8080 (http)
+2023-03-08 15:49:20,148 INFO o.a.c.h.Http11NioProtocol [restartedMain] Initializing ProtocolHandler ["http-nio-8080"]
+2023-03-08 15:49:20,149 INFO o.a.c.c.StandardService [restartedMain] Starting service [Tomcat]
+2023-03-08 15:49:20,149 INFO o.a.c.c.StandardEngine [restartedMain] Starting Servlet engine: [Apache Tomcat/10.1.5]
+2023-03-08 15:49:20,213 INFO o.a.c.c.C.[.[.[/] [restartedMain] Initializing Spring embedded WebApplicationContext
+2023-03-08 15:49:20,213 INFO o.s.b.w.s.c.ServletWebServerApplicationContext [restartedMain] Root WebApplicationContext: initialization completed in 2212 ms
+2023-03-08 15:49:20,243 INFO c.z.h.HikariDataSource [restartedMain] HikariPool-1 - Starting...
+2023-03-08 15:49:21,070 INFO c.z.h.p.HikariPool [restartedMain] HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@74078004
+2023-03-08 15:49:21,075 INFO c.z.h.HikariDataSource [restartedMain] HikariPool-1 - Start completed.
+2023-03-08 15:49:21,092 INFO o.s.b.a.h.H2ConsoleAutoConfiguration [restartedMain] H2 console available at '/h2-console'. Database available at 'jdbc:mysql://localhost:3306/db_healthhealthabc?serverTimezone=UTC'
+2023-03-08 15:49:21,724 INFO o.h.j.i.u.LogHelper [restartedMain] HHH000204: Processing PersistenceUnitInfo [name: default]
+2023-03-08 15:49:21,771 INFO o.h.Version [restartedMain] HHH000412: Hibernate ORM core version 6.1.7.Final
+2023-03-08 15:49:22,107 INFO SQL dialect [restartedMain] HHH000400: Using dialect: org.hibernate.dialect.MySQLDialect
+2023-03-08 15:49:23,333 INFO o.h.e.t.j.p.i.JtaPlatformInitiator [restartedMain] HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2023-03-08 15:49:23,344 INFO o.s.o.j.LocalContainerEntityManagerFactoryBean [restartedMain] Initialized JPA EntityManagerFactory for persistence unit 'default'
+2023-03-08 15:49:24,032 DEBUG c.c.h.i.c.s.f.JwtRequestFilter [restartedMain] Filter 'jwtRequestFilter' configured for use
+2023-03-08 15:49:24,204 INFO o.q.i.StdSchedulerFactory [restartedMain] Using default implementation for ThreadExecutor
+2023-03-08 15:49:24,216 INFO o.q.c.SchedulerSignalerImpl [restartedMain] Initialized Scheduler Signaller of type: class org.quartz.core.SchedulerSignalerImpl
+2023-03-08 15:49:24,216 INFO o.q.c.QuartzScheduler [restartedMain] Quartz Scheduler v.2.3.2 created.
+2023-03-08 15:49:24,218 INFO o.s.s.q.LocalDataSourceJobStore [restartedMain] Using db table-based data access locking (synchronization).
+2023-03-08 15:49:24,219 INFO o.s.s.q.LocalDataSourceJobStore [restartedMain] JobStoreCMT initialized.
+2023-03-08 15:49:24,220 INFO o.q.c.QuartzScheduler [restartedMain] Scheduler meta-data: Quartz Scheduler (v2.3.2) 'quartzScheduler' with instanceId 'NON_CLUSTERED'
+  Scheduler class: 'org.quartz.core.QuartzScheduler' - running locally.
+  NOT STARTED.
+  Currently in standby mode.
+  Number of jobs executed: 0
+  Using thread pool 'org.quartz.simpl.SimpleThreadPool' - with 10 threads.
+  Using job-store 'org.springframework.scheduling.quartz.LocalDataSourceJobStore' - which supports persistence. and is not clustered.
+
+2023-03-08 15:49:24,220 INFO o.q.i.StdSchedulerFactory [restartedMain] Quartz scheduler 'quartzScheduler' initialized from an externally provided properties instance.
+2023-03-08 15:49:24,220 INFO o.q.i.StdSchedulerFactory [restartedMain] Quartz scheduler version: 2.3.2
+2023-03-08 15:49:24,220 INFO o.q.c.QuartzScheduler [restartedMain] JobFactory set to: org.springframework.scheduling.quartz.SpringBeanJobFactory@61480c48
+2023-03-08 15:49:24,269 WARN o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration [restartedMain] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2023-03-08 15:49:24,500 INFO o.s.s.w.DefaultSecurityFilterChain [restartedMain] Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@3d343b6a, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@2e7f19b6, org.springframework.security.web.context.SecurityContextHolderFilter@5e0a6f72, org.springframework.security.web.header.HeaderWriterFilter@edac50, org.springframework.web.filter.CorsFilter@60441127, org.springframework.security.web.authentication.logout.LogoutFilter@6a437ca1, com.chatchatabc.healthhealthabc.infra.config.security.filter.JwtRequestFilter@6a839e6f, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@9bdcd09, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@33e93b43, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@4b3eb2e8, org.springframework.security.web.session.SessionManagementFilter@283eed35, org.springframework.security.web.access.ExceptionTranslationFilter@6ff521f5, org.springframework.security.web.access.intercept.AuthorizationFilter@15f0d517]
+2023-03-08 15:49:24,980 WARN o.s.b.d.a.OptionalLiveReloadServer [restartedMain] Unable to start LiveReload server
+2023-03-08 15:49:25,002 INFO o.a.c.h.Http11NioProtocol [restartedMain] Starting ProtocolHandler ["http-nio-8080"]
+2023-03-08 15:49:25,007 WARN o.s.b.w.s.c.AnnotationConfigServletWebServerApplicationContext [restartedMain] Exception encountered during context initialization - cancelling refresh attempt: org.springframework.context.ApplicationContextException: Failed to start bean 'webServerStartStop'
+2023-03-08 15:49:25,019 INFO o.s.s.q.SchedulerFactoryBean [restartedMain] Shutting down Quartz Scheduler
+2023-03-08 15:49:25,019 INFO o.q.c.QuartzScheduler [restartedMain] Scheduler quartzScheduler_$_NON_CLUSTERED shutting down.
+2023-03-08 15:49:25,019 INFO o.q.c.QuartzScheduler [restartedMain] Scheduler quartzScheduler_$_NON_CLUSTERED paused.
+2023-03-08 15:49:25,020 INFO o.q.c.QuartzScheduler [restartedMain] Scheduler quartzScheduler_$_NON_CLUSTERED shutdown complete.
+2023-03-08 15:49:25,020 INFO o.s.o.j.LocalContainerEntityManagerFactoryBean [restartedMain] Closing JPA EntityManagerFactory for persistence unit 'default'
+2023-03-08 15:49:25,022 INFO c.z.h.HikariDataSource [restartedMain] HikariPool-1 - Shutdown initiated...
+2023-03-08 15:49:25,028 INFO c.z.h.HikariDataSource [restartedMain] HikariPool-1 - Shutdown completed.
+2023-03-08 15:49:25,032 INFO o.a.c.h.Http11NioProtocol [restartedMain] Pausing ProtocolHandler ["http-nio-8080"]
+2023-03-08 15:49:25,032 INFO o.a.c.c.StandardService [restartedMain] Stopping service [Tomcat]
+2023-03-08 15:49:25,035 INFO o.a.c.h.Http11NioProtocol [restartedMain] Stopping ProtocolHandler ["http-nio-8080"]
+2023-03-08 15:49:25,035 INFO o.a.c.h.Http11NioProtocol [restartedMain] Destroying ProtocolHandler ["http-nio-8080"]
+2023-03-08 15:49:25,042 INFO o.s.b.a.l.ConditionEvaluationReportLogger [restartedMain] 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2023-03-08 15:49:25,059 ERROR o.s.b.d.LoggingFailureAnalysisReporter [restartedMain] 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Web server failed to start. Port 8080 was already in use.
+
+Action:
+
+Identify and stop the process that's listening on port 8080 or configure this application to listen on another port.
+
+2023-03-08 15:49:46,118 INFO c.c.h.HealthhealthabcApplicationKt [restartedMain] Starting HealthhealthabcApplicationKt using Java 17.0.5 with PID 12308 (D:\Work\ChatChatABC\Projects\healthhealthabc-spring\healthhealthabc-service\target\classes started by Raphael Dalangin in D:\Work\ChatChatABC\Projects\healthhealthabc-spring)
+2023-03-08 15:49:46,123 DEBUG c.c.h.HealthhealthabcApplicationKt [restartedMain] Running with Spring Boot v3.0.3, Spring v6.0.5
+2023-03-08 15:49:46,125 INFO c.c.h.HealthhealthabcApplicationKt [restartedMain] No active profile set, falling back to 1 default profile: "default"
+2023-03-08 15:49:46,220 INFO o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor [restartedMain] Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2023-03-08 15:49:46,220 INFO o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor [restartedMain] For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2023-03-08 15:49:47,355 INFO o.s.d.r.c.RepositoryConfigurationDelegate [restartedMain] Multiple Spring Data modules found, entering strict repository configuration mode
+2023-03-08 15:49:47,356 INFO o.s.d.r.c.RepositoryConfigurationDelegate [restartedMain] Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2023-03-08 15:49:47,545 INFO o.s.d.r.c.RepositoryConfigurationDelegate [restartedMain] Finished Spring Data repository scanning in 182 ms. Found 4 JPA repository interfaces.
+2023-03-08 15:49:47,573 INFO o.s.d.r.c.RepositoryConfigurationDelegate [restartedMain] Multiple Spring Data modules found, entering strict repository configuration mode
+2023-03-08 15:49:47,575 INFO o.s.d.r.c.RepositoryConfigurationDelegate [restartedMain] Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2023-03-08 15:49:47,607 INFO o.s.d.r.c.RepositoryConfigurationExtensionSupport [restartedMain] Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.chatchatabc.healthhealthabc.domain.repository.log.user.LoginLogRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2023-03-08 15:49:47,607 INFO o.s.d.r.c.RepositoryConfigurationExtensionSupport [restartedMain] Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.chatchatabc.healthhealthabc.domain.repository.log.user.LogoutLogRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2023-03-08 15:49:47,608 INFO o.s.d.r.c.RepositoryConfigurationExtensionSupport [restartedMain] Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.chatchatabc.healthhealthabc.domain.repository.RoleRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2023-03-08 15:49:47,608 INFO o.s.d.r.c.RepositoryConfigurationExtensionSupport [restartedMain] Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.chatchatabc.healthhealthabc.domain.repository.UserRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2023-03-08 15:49:47,608 INFO o.s.d.r.c.RepositoryConfigurationDelegate [restartedMain] Finished Spring Data repository scanning in 13 ms. Found 0 Redis repository interfaces.
+2023-03-08 15:49:48,744 INFO o.s.b.w.e.t.TomcatWebServer [restartedMain] Tomcat initialized with port(s): 8080 (http)
+2023-03-08 15:49:48,756 INFO o.a.c.h.Http11NioProtocol [restartedMain] Initializing ProtocolHandler ["http-nio-8080"]
+2023-03-08 15:49:48,757 INFO o.a.c.c.StandardService [restartedMain] Starting service [Tomcat]
+2023-03-08 15:49:48,757 INFO o.a.c.c.StandardEngine [restartedMain] Starting Servlet engine: [Apache Tomcat/10.1.5]
+2023-03-08 15:49:48,849 INFO o.a.c.c.C.[.[.[/] [restartedMain] Initializing Spring embedded WebApplicationContext
+2023-03-08 15:49:48,849 INFO o.s.b.w.s.c.ServletWebServerApplicationContext [restartedMain] Root WebApplicationContext: initialization completed in 2629 ms
+2023-03-08 15:49:48,895 INFO c.z.h.HikariDataSource [restartedMain] HikariPool-1 - Starting...
+2023-03-08 15:49:49,369 INFO c.z.h.p.HikariPool [restartedMain] HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@585e6a70
+2023-03-08 15:49:49,371 INFO c.z.h.HikariDataSource [restartedMain] HikariPool-1 - Start completed.
+2023-03-08 15:49:49,382 INFO o.s.b.a.h.H2ConsoleAutoConfiguration [restartedMain] H2 console available at '/h2-console'. Database available at 'jdbc:mysql://localhost:3306/db_healthhealthabc?serverTimezone=UTC'
+2023-03-08 15:49:49,898 INFO o.h.j.i.u.LogHelper [restartedMain] HHH000204: Processing PersistenceUnitInfo [name: default]
+2023-03-08 15:49:49,961 INFO o.h.Version [restartedMain] HHH000412: Hibernate ORM core version 6.1.7.Final
+2023-03-08 15:49:50,537 INFO SQL dialect [restartedMain] HHH000400: Using dialect: org.hibernate.dialect.MySQLDialect
+2023-03-08 15:49:51,693 INFO o.h.e.t.j.p.i.JtaPlatformInitiator [restartedMain] HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2023-03-08 15:49:51,704 INFO o.s.o.j.LocalContainerEntityManagerFactoryBean [restartedMain] Initialized JPA EntityManagerFactory for persistence unit 'default'
+2023-03-08 15:49:52,305 DEBUG c.c.h.i.c.s.f.JwtRequestFilter [restartedMain] Filter 'jwtRequestFilter' configured for use
+2023-03-08 15:49:52,484 INFO o.q.i.StdSchedulerFactory [restartedMain] Using default implementation for ThreadExecutor
+2023-03-08 15:49:52,495 INFO o.q.c.SchedulerSignalerImpl [restartedMain] Initialized Scheduler Signaller of type: class org.quartz.core.SchedulerSignalerImpl
+2023-03-08 15:49:52,495 INFO o.q.c.QuartzScheduler [restartedMain] Quartz Scheduler v.2.3.2 created.
+2023-03-08 15:49:52,497 INFO o.s.s.q.LocalDataSourceJobStore [restartedMain] Using db table-based data access locking (synchronization).
+2023-03-08 15:49:52,501 INFO o.s.s.q.LocalDataSourceJobStore [restartedMain] JobStoreCMT initialized.
+2023-03-08 15:49:52,502 INFO o.q.c.QuartzScheduler [restartedMain] Scheduler meta-data: Quartz Scheduler (v2.3.2) 'quartzScheduler' with instanceId 'NON_CLUSTERED'
+  Scheduler class: 'org.quartz.core.QuartzScheduler' - running locally.
+  NOT STARTED.
+  Currently in standby mode.
+  Number of jobs executed: 0
+  Using thread pool 'org.quartz.simpl.SimpleThreadPool' - with 10 threads.
+  Using job-store 'org.springframework.scheduling.quartz.LocalDataSourceJobStore' - which supports persistence. and is not clustered.
+
+2023-03-08 15:49:52,502 INFO o.q.i.StdSchedulerFactory [restartedMain] Quartz scheduler 'quartzScheduler' initialized from an externally provided properties instance.
+2023-03-08 15:49:52,502 INFO o.q.i.StdSchedulerFactory [restartedMain] Quartz scheduler version: 2.3.2
+2023-03-08 15:49:52,503 INFO o.q.c.QuartzScheduler [restartedMain] JobFactory set to: org.springframework.scheduling.quartz.SpringBeanJobFactory@1f753bf
+2023-03-08 15:49:52,556 WARN o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration [restartedMain] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2023-03-08 15:49:52,934 INFO o.s.s.w.DefaultSecurityFilterChain [restartedMain] Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@454438b5, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@76fab796, org.springframework.security.web.context.SecurityContextHolderFilter@7ba25f28, org.springframework.security.web.header.HeaderWriterFilter@7e3c0c1, org.springframework.web.filter.CorsFilter@18cd3539, org.springframework.security.web.authentication.logout.LogoutFilter@2ebf167f, com.chatchatabc.healthhealthabc.infra.config.security.filter.JwtRequestFilter@4ed31ed6, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@5ab06ad5, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@2bfc8bb9, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@21acfde2, org.springframework.security.web.session.SessionManagementFilter@4b8f4ece, org.springframework.security.web.access.ExceptionTranslationFilter@795c47ff, org.springframework.security.web.access.intercept.AuthorizationFilter@5b9d1211]
+2023-03-08 15:49:53,480 WARN o.s.b.d.a.OptionalLiveReloadServer [restartedMain] Unable to start LiveReload server
+2023-03-08 15:49:53,503 INFO o.a.c.h.Http11NioProtocol [restartedMain] Starting ProtocolHandler ["http-nio-8080"]
+2023-03-08 15:49:53,507 WARN o.s.b.w.s.c.AnnotationConfigServletWebServerApplicationContext [restartedMain] Exception encountered during context initialization - cancelling refresh attempt: org.springframework.context.ApplicationContextException: Failed to start bean 'webServerStartStop'
+2023-03-08 15:49:53,523 INFO o.s.s.q.SchedulerFactoryBean [restartedMain] Shutting down Quartz Scheduler
+2023-03-08 15:49:53,523 INFO o.q.c.QuartzScheduler [restartedMain] Scheduler quartzScheduler_$_NON_CLUSTERED shutting down.
+2023-03-08 15:49:53,523 INFO o.q.c.QuartzScheduler [restartedMain] Scheduler quartzScheduler_$_NON_CLUSTERED paused.
+2023-03-08 15:49:53,523 INFO o.q.c.QuartzScheduler [restartedMain] Scheduler quartzScheduler_$_NON_CLUSTERED shutdown complete.
+2023-03-08 15:49:53,524 INFO o.s.o.j.LocalContainerEntityManagerFactoryBean [restartedMain] Closing JPA EntityManagerFactory for persistence unit 'default'
+2023-03-08 15:49:53,527 INFO c.z.h.HikariDataSource [restartedMain] HikariPool-1 - Shutdown initiated...
+2023-03-08 15:49:53,533 INFO c.z.h.HikariDataSource [restartedMain] HikariPool-1 - Shutdown completed.
+2023-03-08 15:49:53,536 INFO o.a.c.h.Http11NioProtocol [restartedMain] Pausing ProtocolHandler ["http-nio-8080"]
+2023-03-08 15:49:53,536 INFO o.a.c.c.StandardService [restartedMain] Stopping service [Tomcat]
+2023-03-08 15:49:53,539 INFO o.a.c.h.Http11NioProtocol [restartedMain] Stopping ProtocolHandler ["http-nio-8080"]
+2023-03-08 15:49:53,540 INFO o.a.c.h.Http11NioProtocol [restartedMain] Destroying ProtocolHandler ["http-nio-8080"]
+2023-03-08 15:49:53,549 INFO o.s.b.a.l.ConditionEvaluationReportLogger [restartedMain] 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2023-03-08 15:49:53,565 ERROR o.s.b.d.LoggingFailureAnalysisReporter [restartedMain] 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Web server failed to start. Port 8080 was already in use.
+
+Action:
+
+Identify and stop the process that's listening on port 8080 or configure this application to listen on another port.
+
