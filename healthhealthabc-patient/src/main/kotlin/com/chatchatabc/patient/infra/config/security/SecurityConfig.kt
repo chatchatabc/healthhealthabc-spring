@@ -26,13 +26,11 @@ class SecurityConfig(
      * CORS configuration bean definition.
      */
     @Bean
-    fun securitFilterChain(http: HttpSecurity): SecurityFilterChain {
+    fun securityFilterChain(http: HttpSecurity): SecurityFilterChain {
         return http
             .cors().and().csrf().disable()
             .authorizeHttpRequests {
                 it.requestMatchers("/api/auth/**").permitAll()
-                it.requestMatchers("/api/admin/**").hasRole("ADMIN")
-                it.requestMatchers("/api/doctor/**").hasRole("DOCTOR")
                 it.requestMatchers("/api/patient/**").hasRole("PATIENT")
                 it.requestMatchers("/api/user/**").authenticated()
                 it.anyRequest().authenticated()
