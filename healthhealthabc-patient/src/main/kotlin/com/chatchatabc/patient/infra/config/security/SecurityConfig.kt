@@ -1,6 +1,6 @@
-package com.chatchatabc.healthhealthabc.infra.config.security
+package com.chatchatabc.patient.infra.config.security
 
-import com.chatchatabc.healthhealthabc.infra.config.security.filter.JwtRequestFilter
+import com.chatchatabc.patient.infra.config.security.filter.JwtRequestFilter
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.security.authentication.AuthenticationManager
@@ -23,10 +23,10 @@ class SecurityConfig(
 ) {
 
     /**
-     * Security filter chain bean definition.
+     * CORS configuration bean definition.
      */
     @Bean
-    fun securityFilterChain(http: HttpSecurity): SecurityFilterChain {
+    fun securitFilterChain(http: HttpSecurity): SecurityFilterChain {
         return http
             .cors().and().csrf().disable()
             .authorizeHttpRequests {
@@ -65,7 +65,7 @@ class SecurityConfig(
      * Authentication manager bean definition.
      */
     @Bean
-    fun authenticationManager(configuration: AuthenticationConfiguration): AuthenticationManager {
+    fun authenticationManager(configuration: AuthenticationConfiguration) : AuthenticationManager {
         return configuration.authenticationManager
     }
 
