@@ -11,17 +11,17 @@ import com.chatchatabc.healthhealthabc.domain.model.User
 import com.chatchatabc.healthhealthabc.domain.repository.RoleRepository
 import com.chatchatabc.healthhealthabc.domain.repository.UserRepository
 import com.chatchatabc.healthhealthabc.domain.service.JedisService
+import org.apache.dubbo.config.annotation.DubboService
 import org.modelmapper.ModelMapper
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.ApplicationEventPublisher
 import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.security.crypto.password.PasswordEncoder
-import org.springframework.stereotype.Service
 import java.time.Instant
 import java.util.*
 
-@Service
+@DubboService
 class UserServiceImpl(
     private val passwordEncoder: PasswordEncoder,
     private val userRepository: UserRepository,
@@ -33,7 +33,7 @@ class UserServiceImpl(
     private var recoveryCodeExpiration: Long
 ) : UserService, UserDetailsService {
 
-    val modelMapper = ModelMapper()
+    private val modelMapper = ModelMapper()
 
     // Get admin.email value from application.properties
     @Value("\${admin.email}")

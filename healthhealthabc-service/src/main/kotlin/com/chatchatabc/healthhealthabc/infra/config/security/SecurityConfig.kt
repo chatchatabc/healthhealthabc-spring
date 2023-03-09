@@ -1,6 +1,7 @@
 package com.chatchatabc.healthhealthabc.infra.config.security
 
 import com.chatchatabc.healthhealthabc.infra.config.security.filter.JwtRequestFilter
+import com.fasterxml.jackson.databind.ObjectMapper
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.security.authentication.AuthenticationManager
@@ -10,6 +11,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.http.SessionCreationPolicy
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.security.crypto.password.PasswordEncoder
+import org.springframework.security.jackson2.CoreJackson2Module
 import org.springframework.security.web.SecurityFilterChain
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter
 import org.springframework.web.cors.CorsConfiguration
@@ -75,5 +77,15 @@ class SecurityConfig(
     @Bean
     fun passwordEncoder(): PasswordEncoder {
         return BCryptPasswordEncoder()
+    }
+
+    /**
+     * Jackson object mapper bean definition.
+     */
+    @Bean
+    fun objectMapper() : ObjectMapper {
+        val objectMapper = ObjectMapper()
+        objectMapper.registerModule(CoreJackson2Module())
+        return objectMapper
     }
 }
