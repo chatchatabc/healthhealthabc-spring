@@ -1,6 +1,6 @@
-package com.chatchatabc.healthhealthabc.infra.config.security
+package com.chatchatabc.doctor.infra.config.security
 
-import com.chatchatabc.healthhealthabc.infra.config.security.filter.JwtRequestFilter
+import com.chatchatabc.doctor.infra.config.security.filter.JwtRequestFilter
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.security.authentication.AuthenticationManager
@@ -9,9 +9,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
 import org.springframework.security.config.http.SessionCreationPolicy
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
-import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.security.web.SecurityFilterChain
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter
 import org.springframework.web.cors.CorsConfiguration
 import org.springframework.web.cors.CorsConfigurationSource
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource
@@ -19,11 +17,11 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource
 @Configuration
 @EnableWebSecurity
 class SecurityConfig(
-    private val jtwRequestFilter: JwtRequestFilter
+    private val jwtRequestFilter: JwtRequestFilter
 ) {
 
     /**
-     * Security filter chain bean definition.
+     * Configure the security filter chain
      */
     @Bean
     fun securityFilterChain(http: HttpSecurity): SecurityFilterChain {
@@ -31,16 +29,14 @@ class SecurityConfig(
             .cors().and().csrf().disable()
             .authorizeHttpRequests {
                 it.requestMatchers("/api/auth/**").permitAll()
-                it.requestMatchers("/api/admin/**").hasRole("ADMIN")
                 it.requestMatchers("/api/doctor/**").hasRole("DOCTOR")
-                it.requestMatchers("/api/patient/**").hasRole("PATIENT")
                 it.requestMatchers("/api/user/**").authenticated()
                 it.anyRequest().authenticated()
             }
             .sessionManagement { session ->
                 session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             }
-            .addFilterBefore(jtwRequestFilter, UsernamePasswordAuthenticationFilter::class.java)
+            .addFilterBefore(jwtRequestFilter, JwtRequestFilter::class.java)
             .build()
     }
 
@@ -65,7 +61,7 @@ class SecurityConfig(
      * Authentication manager bean definition.
      */
     @Bean
-    fun authenticationManager(configuration: AuthenticationConfiguration): AuthenticationManager {
+    fun authenticationManager(configuration: AuthenticationConfiguration) : AuthenticationManager {
         return configuration.authenticationManager
     }
 
@@ -73,7 +69,7 @@ class SecurityConfig(
      * Password encoder bean definition.
      */
     @Bean
-    fun passwordEncoder(): PasswordEncoder {
+    fun passwordEncoder(): BCryptPasswordEncoder {
         return BCryptPasswordEncoder()
     }
 }
