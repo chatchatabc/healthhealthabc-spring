@@ -1,7 +1,7 @@
 package com.chatchatabc.healthhealthabc.application.dto.user
 
+import com.chatchatabc.api.domain.dto.user.UserDTO
 import com.chatchatabc.healthhealthabc.application.dto.ErrorContent
-import com.chatchatabc.healthhealthabc.domain.model.User
 
-data class UserChangeEmailResponse(val user: User?, val errorContent: ErrorContent?) {
+data class UserChangeEmailResponse(val user: UserDTO?, val errorContent: ErrorContent?) {
 }

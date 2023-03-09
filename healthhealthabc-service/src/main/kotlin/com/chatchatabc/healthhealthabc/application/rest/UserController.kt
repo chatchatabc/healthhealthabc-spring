@@ -1,5 +1,7 @@
 package com.chatchatabc.healthhealthabc.application.rest
 
+import com.chatchatabc.api.domain.dto.user.UserDTO
+import com.chatchatabc.api.domain.service.UserService
 import com.chatchatabc.healthhealthabc.application.dto.ErrorContent
 import com.chatchatabc.healthhealthabc.application.dto.user.UserChangeEmailResponse
 import com.chatchatabc.healthhealthabc.application.dto.user.UserChangePasswordRequest
@@ -7,7 +9,6 @@ import com.chatchatabc.healthhealthabc.application.dto.user.UserChangePasswordRe
 import com.chatchatabc.healthhealthabc.application.dto.user.UserProfileResponse
 import com.chatchatabc.healthhealthabc.domain.model.User
 import com.chatchatabc.healthhealthabc.domain.repository.UserRepository
-import com.chatchatabc.healthhealthabc.domain.service.UserService
 import com.chatchatabc.healthhealthabc.domain.service.log.user.LogoutLogService
 import jakarta.servlet.http.HttpServletRequest
 import org.springframework.http.HttpStatus
@@ -66,7 +67,7 @@ class UserController(
      * Update User Profile
      */
     @PutMapping("/profile")
-    fun updateProfile(request: HttpServletRequest, @RequestBody user: User): ResponseEntity<User> {
+    fun updateProfile(request: HttpServletRequest, @RequestBody user: UserDTO): ResponseEntity<UserDTO> {
         return try {
             // Get ID from request
             val id = request.getAttribute("userId") as String

@@ -1,14 +1,18 @@
 package com.chatchatabc.healthhealthabc.application.rest
 
+import com.chatchatabc.api.domain.dto.user.UserDTO
+import com.chatchatabc.api.domain.dto.user.UserRegistrationDTO
+import com.chatchatabc.api.domain.service.UserService
 import com.chatchatabc.healthhealthabc.application.dto.ErrorContent
 import com.chatchatabc.healthhealthabc.application.dto.auth.*
 import com.chatchatabc.healthhealthabc.domain.model.User
 import com.chatchatabc.healthhealthabc.domain.repository.UserRepository
 import com.chatchatabc.healthhealthabc.domain.service.JwtService
-import com.chatchatabc.healthhealthabc.domain.service.UserService
+
 import com.chatchatabc.healthhealthabc.domain.service.log.user.LoginLogService
 import jakarta.servlet.http.HttpServletRequest
 import org.hibernate.exception.ConstraintViolationException
+import org.modelmapper.ModelMapper
 import org.springframework.dao.DataIntegrityViolationException
 import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpStatus
@@ -28,6 +32,7 @@ class AuthController(
     private val authenticationManager: AuthenticationManager,
     private val loginLogService: LoginLogService
 ) {
+    val modelMapper = ModelMapper()
 
     /**
      * Test endpoint.
@@ -58,12 +63,14 @@ class AuthController(
 //            }
             val ipAddress: String = request.remoteAddr
             val token: String = jwtService.generateToken(queriedUser.get(), ipAddress)
-            val loginResponse = LoginResponse(queriedUser.get(), null)
+            val userDTO = modelMapper.map(queriedUser.get(), UserDTO::class.java)
+            val loginResponse = LoginResponse(userDTO, null)
             val headers = HttpHeaders()
             headers.set("X-Access-Token", token)
 
             return ResponseEntity.ok().headers(headers).body(loginResponse)
         } catch (e: Exception) {
+            e.printStackTrace()
             // Save to log in logs with failed login
             // TODO: Transfer logic to JwtService?
             if (queriedUser != null && queriedUser.isPresent) {
@@ -80,13 +87,13 @@ class AuthController(
      * Register a new user either doctor or patient.
      */
     @PostMapping("/register/{roleParams}")
-    fun register(@RequestBody user: User, @PathVariable roleParams: String): ResponseEntity<RegisterResponse> {
+    fun register(@RequestBody user: UserRegistrationDTO, @PathVariable roleParams: String): ResponseEntity<RegisterResponse> {
         try {
             var roleName = "ROLE_PATIENT"
             if (roleParams == "doctor") {
                 roleName = "ROLE_DOCTOR"
             }
-            val registeredUser: User = userService.register(user, roleName)
+            val registeredUser: UserDTO = userService.register(user, roleName)
             val registerResponse = RegisterResponse(registeredUser, null)
             return ResponseEntity.status(HttpStatus.CREATED).body(registerResponse)
         } catch (e: DataIntegrityViolationException) {
@@ -125,7 +132,7 @@ class AuthController(
     @GetMapping("/confirm-change-email/{emailConfirmationId}")
     fun confirmChangeEmail(@PathVariable emailConfirmationId: String): ResponseEntity<EmailConfirmationResponse> {
         return try {
-            val user: User = userService.confirmEmailChange(emailConfirmationId)
+            val user: UserDTO = userService.confirmEmailChange(emailConfirmationId)
             val emailConfirmationResponse = EmailConfirmationResponse(user, null)
             ResponseEntity.status(HttpStatus.OK).body(emailConfirmationResponse)
         } catch (e: Exception) {
@@ -142,7 +149,8 @@ class AuthController(
     @GetMapping("/confirm-email/{emailConfirmationId}")
     fun confirmEmail(@PathVariable emailConfirmationId: String): ResponseEntity<EmailConfirmationResponse> {
         return try {
-            val user: User = userService.confirmRegistration(emailConfirmationId)
+            println("emailConfirmationId: $emailConfirmationId")
+            val user: UserDTO = userService.confirmRegistration(emailConfirmationId)
             val emailConfirmationResponse = EmailConfirmationResponse(user, null)
             ResponseEntity.status(HttpStatus.OK).body(emailConfirmationResponse)
         } catch (e: Exception) {
@@ -174,7 +182,7 @@ class AuthController(
     @PostMapping("/reset-password")
     fun resetPassword(@RequestBody resetPasswordRequest: ResetPasswordRequest): ResponseEntity<ResetPasswordResponse> {
         return try {
-            val user: User = userService.resetPassword(
+            val user: UserDTO = userService.resetPassword(
                 resetPasswordRequest.email,
                 resetPasswordRequest.password,
                 resetPasswordRequest.recoveryCode

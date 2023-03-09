@@ -152,7 +152,7 @@ open class User : UserDetails {
     }
 
     private fun getBitValue(bitIndex: Int): Boolean {
-        return this.flag and (1 shl bitIndex) != 0
+        return this.flag and (1 shl bitIndex) == 0
     }
 
     private fun setBitValue(bitIndex: Int, value: Boolean) {

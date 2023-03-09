@@ -1,5 +1,8 @@
 package com.chatchatabc.healthhealthabc.impl.domain.service
 
+import com.chatchatabc.api.domain.dto.user.UserDTO
+import com.chatchatabc.api.domain.dto.user.UserRegistrationDTO
+import com.chatchatabc.api.domain.service.UserService
 import com.chatchatabc.healthhealthabc.domain.event.user.UserChangeEmailEvent
 import com.chatchatabc.healthhealthabc.domain.event.user.UserChangePasswordEvent
 import com.chatchatabc.healthhealthabc.domain.event.user.UserCreatedEvent
@@ -8,10 +11,11 @@ import com.chatchatabc.healthhealthabc.domain.model.User
 import com.chatchatabc.healthhealthabc.domain.repository.RoleRepository
 import com.chatchatabc.healthhealthabc.domain.repository.UserRepository
 import com.chatchatabc.healthhealthabc.domain.service.JedisService
-import com.chatchatabc.healthhealthabc.domain.service.UserService
+import org.modelmapper.ModelMapper
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.ApplicationEventPublisher
 import org.springframework.security.core.userdetails.UserDetails
+import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
 import java.time.Instant
@@ -27,13 +31,16 @@ class UserServiceImpl(
 
     @Value("\${user.recoverycode.expiration}")
     private var recoveryCodeExpiration: Long
-) : UserService {
+) : UserService, UserDetailsService {
+
+    val modelMapper = ModelMapper()
 
     // Get admin.email value from application.properties
     @Value("\${admin.email}")
     private val adminEmail: String? = null
 
-    override fun register(user: User, roleName: String): User {
+    override fun register(userDTO: UserRegistrationDTO, roleName: String): UserDTO {
+        val user = modelMapper.map(userDTO, User::class.java)
 
         // Generate UUID for Confirmation ID
         val confirmationId = UUID.randomUUID().toString()
@@ -49,14 +56,15 @@ class UserServiceImpl(
             // Send Email Confirmation
             eventPublisher.publishEvent(UserCreatedEvent(user, confirmationId, this))
             // Save user to database
-            return userRepository.save(it)
+            userRepository.save(it)
+            return modelMapper.map(it, UserDTO::class.java)
         }
     }
 
     /**
      * Confirm a user's registration.
      */
-    override fun confirmRegistration(emailConfirmationId: String): User {
+    override fun confirmRegistration(emailConfirmationId: String): UserDTO {
         // Get email from Redis
         val email = jedisService.get("email_confirmation_${emailConfirmationId}") ?: throw Exception("Email not found")
         val user: Optional<User> = userRepository.findByEmail(email)
@@ -71,14 +79,15 @@ class UserServiceImpl(
         }.let {
             // Delete key value pair from Redis since it is already confirmed
             jedisService.delete("email_confirmation_${emailConfirmationId}")
-            return userRepository.save(it)
+            userRepository.save(it)
+            return modelMapper.map(it, UserDTO::class.java)
         }
     }
 
     /**
      * Generate recovery code for user to use.
      */
-    override fun forgotPassword(email: String): User {
+    override fun forgotPassword(email: String): UserDTO {
         val user: Optional<User> = userRepository.findByEmail(email)
         if (user.isEmpty) {
             throw Exception("User not found")
@@ -91,13 +100,14 @@ class UserServiceImpl(
         // Save recovery code to Redis
         jedisService.setTTL("password_recovery_${email}", recoveryCode, recoveryCodeExpiration)
         eventPublisher.publishEvent(UserForgotPasswordEvent(user.get(), recoveryCode, this))
-        return user.get()
+        user.get()
+        return modelMapper.map(user.get(), UserDTO::class.java)
     }
 
     /**
      * Reset user's password.
      */
-    override fun resetPassword(email: String, password: String, recoveryCode: String): User {
+    override fun resetPassword(email: String, password: String, recoveryCode: String): UserDTO {
         val user: Optional<User> = userRepository.findByEmail(email)
         if (user.isEmpty) {
             throw Exception("User not found")
@@ -112,7 +122,8 @@ class UserServiceImpl(
         }.let {
             // Jedis delete key value pair
             jedisService.delete("password_recovery_${email}")
-            return userRepository.save(it)
+            userRepository.save(it)
+            return modelMapper.map(it, UserDTO::class.java)
         }
     }
 
@@ -141,7 +152,7 @@ class UserServiceImpl(
     /**
      * Update user's profile.
      */
-    override fun updateProfile(id: String, user: User): User {
+    override fun updateProfile(id: String, user: UserDTO): UserDTO {
         val queriedUser: Optional<User> = userRepository.findById(id)
         if (queriedUser.isEmpty) {
             throw Exception("User not found")
@@ -155,14 +166,15 @@ class UserServiceImpl(
             }
             // TODO: Add more if more fields are added
         }.let {
-            return userRepository.save(it)
+            userRepository.save(it)
+            return modelMapper.map(it, UserDTO::class.java)
         }
     }
 
     /**
      * Change user's email.
      */
-    override fun changeEmail(id: String, newEmail: String): User {
+    override fun changeEmail(id: String, newEmail: String): UserDTO {
         val user: Optional<User> = userRepository.findById(id)
         if (user.isEmpty) {
             throw Exception("User not found")
@@ -174,13 +186,14 @@ class UserServiceImpl(
         jedisService.set("email_change_new_${confirmationId}", newEmail)
         // Publish event to send email
         eventPublisher.publishEvent(UserChangeEmailEvent(newEmail, user.get().username, confirmationId, this))
-        return user.get()
+        user.get()
+        return modelMapper.map(user.get(), UserDTO::class.java)
     }
 
     /**
      * Confirm user's email change.
      */
-    override fun confirmEmailChange(emailConfirmationId: String): User {
+    override fun confirmEmailChange(emailConfirmationId: String): UserDTO {
         // Get original and new email from Redis
         val originalEmail =
             jedisService.get("email_change_original_${emailConfirmationId}") ?: throw Exception("Email not found")
@@ -195,7 +208,8 @@ class UserServiceImpl(
             // Delete key value pair from Redis since it is already confirmed
             jedisService.delete("email_change_original_${emailConfirmationId}")
             jedisService.delete("email_change_new_${emailConfirmationId}")
-            return userRepository.save(it)
+            userRepository.save(it)
+            return modelMapper.map(it, UserDTO::class.java)
         }
     }
 

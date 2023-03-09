@@ -1,4 +1,4 @@
-package com.chatchatabc;
+package com.chatchatabc.api;
 
 public class Main {
     public static void main(String[] args) {
