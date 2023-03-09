@@ -182,7 +182,8 @@ class UserServiceImpl(
      */
     override fun confirmEmailChange(emailConfirmationId: String): User {
         // Get original and new email from Redis
-        val originalEmail = jedisService.get("email_change_original_${emailConfirmationId}") ?: throw Exception("Email not found")
+        val originalEmail =
+            jedisService.get("email_change_original_${emailConfirmationId}") ?: throw Exception("Email not found")
         val newEmail = jedisService.get("email_change_new_${emailConfirmationId}") ?: throw Exception("Email not found")
         val user: Optional<User> = userRepository.findByEmail(originalEmail)
         if (user.isEmpty) {

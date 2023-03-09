@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service
 
 @Service
 class RoleServiceImpl(
-    var roleRepository: RoleRepository
+    var roleRepository: RoleRepository,
 ) : RoleService {
 
     /**
