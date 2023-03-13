@@ -1,5 +1,6 @@
 package com.chatchatabc.healthhealthabc.domain.model
 
+import com.fasterxml.jackson.annotation.JsonIgnore
 import jakarta.persistence.*
 import lombok.Builder
 import lombok.Data
@@ -16,8 +17,8 @@ open class Role (name: String) {
     @Column(unique = true)
     open var name: String = name
 
-//    @JsonIgnore
-//    @ManyToMany(mappedBy = "roles")
-//    open var users: MutableSet<User> = mutableSetOf()
+    @JsonIgnore
+    @ManyToMany(mappedBy = "roles")
+    open var users: MutableSet<User> = mutableSetOf()
 
 }

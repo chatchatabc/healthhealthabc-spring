@@ -40,8 +40,8 @@ class UserServiceImpl(
         return value
     }
 
-    override fun register(userDTO: AuthRegisterRequest, roleName: String): UserDTO {
-        val user = modelMapper.map(userDTO, User::class.java)
+    override fun register(registerData: AuthRegisterRequest, roleName: String): UserDTO {
+        val user = modelMapper.map(registerData, User::class.java)
 
         // Generate UUID for Confirmation ID
         val confirmationId = UUID.randomUUID().toString()
@@ -49,10 +49,10 @@ class UserServiceImpl(
         jedisService.set("email_confirmation_${confirmationId}", user.email)
 
         user.apply {
-            // Encrypt password
+            // TODO: Encrypt password
 //            password = passwordEncoder.encode(password)
             // Add role of user
-//            roles.add(roleRepository.findRoleByName(roleName))
+            roles.add(roleRepository.findRoleByName(roleName))
         }.let {
             // Send Email Confirmation
             eventPublisher.publishEvent(UserCreatedEvent(user, confirmationId, this))

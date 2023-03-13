@@ -43,7 +43,6 @@ class AuthController(
             ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(AuthLoginResponse(null, ErrorContent("Login Error", e.message)))
         }
-
     }
 
     /**

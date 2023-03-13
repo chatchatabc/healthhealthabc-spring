@@ -50,14 +50,14 @@ open class User {
     @Column
     open var flag: Int = 0
 
-//    @JsonIgnore
-//    @ManyToMany(fetch = FetchType.EAGER, cascade = [CascadeType.ALL])
-//    @JoinTable(
-//        name = "user_roles",
-//        joinColumns = [JoinColumn(name = "user_id")],
-//        inverseJoinColumns = [JoinColumn(name = "role_id")]
-//    )
-//    open var roles: MutableSet<Role> = mutableSetOf()
+    @JsonIgnore
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+        name = "user_roles",
+        joinColumns = [JoinColumn(name = "user_id")],
+        inverseJoinColumns = [JoinColumn(name = "role_id")]
+    )
+    open var roles: MutableSet<Role> = mutableSetOf()
 
     /**
      * Deactivate the user.
