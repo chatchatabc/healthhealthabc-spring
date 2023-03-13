@@ -1,8 +1,10 @@
 package com.chatchatabc.healthhealthabc.impl.domain.service
 
 import com.chatchatabc.api.application.dto.auth.AuthLoginRequest
+import com.chatchatabc.api.application.dto.auth.AuthLoginServiceResponse
 import com.chatchatabc.api.application.dto.auth.AuthRegisterRequest
 import com.chatchatabc.api.application.dto.user.UserDTO
+import com.chatchatabc.api.domain.service.JwtService
 import com.chatchatabc.api.domain.service.UserService
 import com.chatchatabc.healthhealthabc.domain.event.user.UserChangeEmailEvent
 import com.chatchatabc.healthhealthabc.domain.event.user.UserChangePasswordEvent
@@ -26,6 +28,7 @@ class UserServiceImpl(
     private val roleRepository: RoleRepository,
     private val eventPublisher: ApplicationEventPublisher,
     private val jedisService: JedisService,
+    private val jwtService: JwtService,
 
     @Value("\${user.recoverycode.expiration}")
     private var recoveryCodeExpiration: Long
@@ -66,8 +69,37 @@ class UserServiceImpl(
     /**
      * Login a user
      */
-    override fun login(authLoginRequest: AuthLoginRequest?, ipAddress: String?): String {
-        TODO("Not yet implemented")
+    override fun login(authLoginRequest: AuthLoginRequest?, ipAddress: String?): AuthLoginServiceResponse {
+        val user = userRepository.findByUsername(authLoginRequest?.username)
+        if (user.isEmpty) {
+            throw Exception("User not found")
+        }
+        // TODO: Uncomment after email confirmation is implemented by Bon
+        // if (user.get().emailConfirmedAt == null) {
+        //     throw Exception("Email not confirmed")
+        // }
+        if (!BCryptUtil.checkPassword(authLoginRequest?.password!!, user.get().password)) {
+            throw Exception("Password is incorrect")
+        }
+        // Generate JWT here
+        val token = jwtService.generateToken(user.get().id, ipAddress)
+        // Map user to UserDTO
+        return AuthLoginServiceResponse(
+            token,
+            modelMapper.map(user.get(), UserDTO::class.java)
+        )
+    }
+
+    /**
+     * Get user by username
+     */
+    override fun getUserByUsername(username: String?): Optional<UserDTO> {
+        val queriedUser = userRepository.findByUsername(username)
+        return if (queriedUser.isPresent) {
+            Optional.of(modelMapper.map(queriedUser.get(), UserDTO::class.java))
+        } else {
+            Optional.empty()
+        }
     }
 
     /**

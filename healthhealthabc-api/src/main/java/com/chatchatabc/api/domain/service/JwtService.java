@@ -4,7 +4,7 @@ public interface JwtService {
     /**
      * Generate a token for the given user
      */
-    String generateToken(String username, String ipAddress);
+    String generateToken(String id, String ipAddress);
 
     /**
      * Validate a token

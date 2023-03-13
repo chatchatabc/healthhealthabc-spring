@@ -26,13 +26,13 @@ class JwtServiceImpl(
     /**
      * Generate a token for the given user
      */
-    override fun generateToken(username: String, ipAddress: String): String {
+    override fun generateToken(id: String, ipAddress: String): String {
         // Save to log in logs with successful login
 //        val sessionId = loginLogService.createLog(user, true, user.email, ipAddress)
         // TODO: Search for user here and use that
 
         return JWT.create()
-//            .withSubject(user.id)
+            .withSubject(id)
 //            .withClaim("sessionId", sessionId)
             .withExpiresAt(Date.from(Instant.now().plusSeconds(expiration.toLong())))
             .sign(hmac512)

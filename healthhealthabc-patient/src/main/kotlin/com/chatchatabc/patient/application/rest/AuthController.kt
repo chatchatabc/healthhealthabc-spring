@@ -6,6 +6,7 @@ import com.chatchatabc.api.application.dto.user.UserDTO
 import com.chatchatabc.api.domain.service.UserService
 import jakarta.servlet.http.HttpServletRequest
 import org.apache.dubbo.config.annotation.DubboReference
+import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
@@ -31,11 +32,19 @@ class AuthController(
         request: HttpServletRequest,
         @RequestBody loginData: AuthLoginRequest
     ): ResponseEntity<AuthLoginResponse> {
+        var user: UserDTO? = null
         return try {
-            // TODO: Create login logic
-            ResponseEntity.ok(AuthLoginResponse(null, null))
+            val authLoginResponse = userService.login(loginData, request.remoteAddr)
+            user = authLoginResponse.user
+            val headers = HttpHeaders()
+            headers.set("X-Access-Token", authLoginResponse.token)
+            ResponseEntity.ok().headers(headers).body(AuthLoginResponse(user, null))
         } catch (e: Exception) {
-            e.printStackTrace()
+            // Save to log in logs with failed login
+//            // TODO: Transfer logic to JwtService?
+//            if (queriedUser != null && queriedUser.isPresent) {
+//                loginLogService.createLog(queriedUser.get(), false, queriedUser.get().email, request.remoteAddr)
+//            }
             ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(AuthLoginResponse(null, ErrorContent("Login Error", e.message)))
         }

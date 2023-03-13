@@ -1,8 +1,11 @@
 package com.chatchatabc.api.domain.service;
 
 import com.chatchatabc.api.application.dto.auth.AuthLoginRequest;
+import com.chatchatabc.api.application.dto.auth.AuthLoginServiceResponse;
 import com.chatchatabc.api.application.dto.auth.AuthRegisterRequest;
 import com.chatchatabc.api.application.dto.user.UserDTO;
+
+import java.util.Optional;
 
 public interface UserService {
 
@@ -16,7 +19,12 @@ public interface UserService {
     /**
      * Login a user
      */
-    String login(AuthLoginRequest authLoginRequest, String ipAddress);
+    AuthLoginServiceResponse login(AuthLoginRequest authLoginRequest, String ipAddress);
+
+    /**
+     * Get user by username
+     */
+    Optional<UserDTO> getUserByUsername(String username);
 
     /**
      * Confirm registration
