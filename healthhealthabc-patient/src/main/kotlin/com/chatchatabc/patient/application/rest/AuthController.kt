@@ -1,10 +1,8 @@
 package com.chatchatabc.patient.application.rest
 
 import com.chatchatabc.api.application.dto.ErrorContent
-import com.chatchatabc.api.application.dto.auth.AuthLoginRequest
-import com.chatchatabc.api.application.dto.auth.AuthLoginResponse
-import com.chatchatabc.api.application.dto.auth.AuthRegisterRequest
-import com.chatchatabc.api.application.dto.auth.AuthRegisterResponse
+import com.chatchatabc.api.application.dto.auth.*
+import com.chatchatabc.api.application.dto.user.UserDTO
 import com.chatchatabc.api.domain.service.UserService
 import jakarta.servlet.http.HttpServletRequest
 import org.apache.dubbo.config.annotation.DubboReference
@@ -59,6 +57,21 @@ class AuthController(
             e.printStackTrace()
             ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(AuthRegisterResponse(null, ErrorContent("Registration Error", e.message)))
+        }
+    }
+
+    /**
+     * Confirm email using email confirmation id
+     */
+    @GetMapping("/confirm-email/{emailConfirmationId}")
+    fun confirmEmail(@PathVariable emailConfirmationId: String): ResponseEntity<AuthEmailConfirmationResponse> {
+        return try {
+            val user: UserDTO = userService.confirmRegistration(emailConfirmationId)
+            ResponseEntity.status(HttpStatus.OK).body(AuthEmailConfirmationResponse(user, null))
+        } catch (e: Exception) {
+            e.printStackTrace()
+            ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(AuthEmailConfirmationResponse(null, ErrorContent("Confirmation Error", e.message)))
         }
     }
 }
