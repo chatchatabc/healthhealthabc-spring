@@ -12,6 +12,7 @@ import com.chatchatabc.healthhealthabc.domain.model.User
 import com.chatchatabc.healthhealthabc.domain.repository.RoleRepository
 import com.chatchatabc.healthhealthabc.domain.repository.UserRepository
 import com.chatchatabc.healthhealthabc.domain.service.JedisService
+import com.chatchatabc.healthhealthabc.infra.util.BCryptUtil
 import org.apache.dubbo.config.annotation.DubboService
 import org.modelmapper.ModelMapper
 import org.springframework.beans.factory.annotation.Value
@@ -49,8 +50,8 @@ class UserServiceImpl(
         jedisService.set("email_confirmation_${confirmationId}", user.email)
 
         user.apply {
-            // TODO: Encrypt password
-//            password = passwordEncoder.encode(password)
+            // Encrypt password
+            password = BCryptUtil.hashPassword(password)
             // Add role of user
             roles.add(roleRepository.findRoleByName(roleName))
         }.let {
