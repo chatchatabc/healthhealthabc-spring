@@ -1,6 +1,7 @@
 package com.chatchatabc.healthhealthabc.infra.config.security
 
 import com.chatchatabc.healthhealthabc.infra.config.security.filter.JwtRequestFilter
+import com.fasterxml.jackson.databind.MapperFeature
 import com.fasterxml.jackson.databind.ObjectMapper
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -11,12 +12,12 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.http.SessionCreationPolicy
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.security.crypto.password.PasswordEncoder
-import org.springframework.security.jackson2.CoreJackson2Module
 import org.springframework.security.web.SecurityFilterChain
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter
 import org.springframework.web.cors.CorsConfiguration
 import org.springframework.web.cors.CorsConfigurationSource
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource
+
 
 @Configuration
 @EnableWebSecurity
@@ -32,11 +33,12 @@ class SecurityConfig(
         return http
             .cors().and().csrf().disable()
             .authorizeHttpRequests {
-                it.requestMatchers("/api/auth/**").permitAll()
-                it.requestMatchers("/api/admin/**").hasRole("ADMIN")
-                it.requestMatchers("/api/doctor/**").hasRole("DOCTOR")
-                it.requestMatchers("/api/patient/**").hasRole("PATIENT")
-                it.requestMatchers("/api/user/**").authenticated()
+//                it.requestMatchers("/api/auth/**").permitAll()
+//                it.requestMatchers("/dubbo/**").permitAll()
+//                it.requestMatchers("/api/admin/**").hasRole("ADMIN")
+//                it.requestMatchers("/api/doctor/**").hasRole("DOCTOR")
+//                it.requestMatchers("/api/patient/**").hasRole("PATIENT")
+//                it.requestMatchers("/api/user/**").authenticated()
                 it.anyRequest().authenticated()
             }
             .sessionManagement { session ->
@@ -80,12 +82,13 @@ class SecurityConfig(
     }
 
     /**
-     * Jackson object mapper bean definition.
+     * Object Mapper Bean
      */
     @Bean
-    fun objectMapper() : ObjectMapper {
+    fun objectMapper(): ObjectMapper? {
         val objectMapper = ObjectMapper()
-        objectMapper.registerModule(CoreJackson2Module())
+        objectMapper.findAndRegisterModules()
+//        objectMapper.disable(MapperFeature.IGNORE_DUPLICATE_MODULE_REGISTRATIONS)
         return objectMapper
     }
 }

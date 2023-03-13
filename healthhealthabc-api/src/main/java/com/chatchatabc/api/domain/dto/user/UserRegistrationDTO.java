@@ -1,14 +1,14 @@
 package com.chatchatabc.api.domain.dto.user;
 
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import com.fasterxml.jackson.annotation.JsonTypeName;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 
 @Data
-@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "@class")
-@JsonTypeName("userRegistration")
+@AllArgsConstructor
+@NoArgsConstructor
 public class UserRegistrationDTO implements Serializable {
     private String email;
     private String username;

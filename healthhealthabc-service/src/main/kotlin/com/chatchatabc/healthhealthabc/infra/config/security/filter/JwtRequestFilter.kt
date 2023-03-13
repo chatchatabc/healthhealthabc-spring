@@ -30,6 +30,7 @@ class JwtRequestFilter(
         response: HttpServletResponse,
         filterChain: FilterChain
     ) {
+        println("here")
         // Get X-Access-Token from the request header
         val header: String? = request.getHeader("X-Access-Token")
         logRequest(request, response)

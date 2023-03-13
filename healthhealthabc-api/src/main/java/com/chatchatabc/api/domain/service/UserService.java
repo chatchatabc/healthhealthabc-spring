@@ -5,6 +5,8 @@ import com.chatchatabc.api.domain.dto.user.UserRegistrationDTO;
 
 public interface UserService {
 
+    String test(String value);
+
     /**
      * Register a new user
      * @param userDTO

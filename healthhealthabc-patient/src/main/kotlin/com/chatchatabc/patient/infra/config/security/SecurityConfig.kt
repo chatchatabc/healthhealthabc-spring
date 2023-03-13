@@ -1,7 +1,6 @@
 package com.chatchatabc.patient.infra.config.security
 
 import com.chatchatabc.patient.infra.config.security.filter.JwtRequestFilter
-import com.fasterxml.jackson.databind.ObjectMapper
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.security.authentication.AuthenticationManager
@@ -11,15 +10,15 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.http.SessionCreationPolicy
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.security.crypto.password.PasswordEncoder
-import org.springframework.security.jackson2.CoreJackson2Module
 import org.springframework.security.web.SecurityFilterChain
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter
 import org.springframework.web.cors.CorsConfiguration
 import org.springframework.web.cors.CorsConfigurationSource
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource
 
+
 @Configuration
-@EnableWebSecurity
+@EnableWebSecurity()
 class SecurityConfig(
     private val jwtRequestFilter: JwtRequestFilter
 ) {
@@ -80,10 +79,14 @@ class SecurityConfig(
     /**
      * Jackson object mapper bean definition.
      */
-    @Bean
-    fun objectMapper() : ObjectMapper {
-        val objectMapper = ObjectMapper()
-        objectMapper.registerModule(CoreJackson2Module())
-        return objectMapper
-    }
+//    @Bean
+//    fun objectMapper() : ObjectMapper {
+//        val objectMapper = ObjectMapper()
+//        objectMapper.activateDefaultTyping(LaissezFaireSubTypeValidator.instance, ObjectMapper.DefaultTyping.EVERYTHING);
+//        objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+//        objectMapper.configure(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT, true);
+//        objectMapper.configure(DeserializationFeature.FAIL_ON_MISSING_CREATOR_PROPERTIES, false);
+//        objectMapper.configure(DeserializationFeature.READ_UNKNOWN_ENUM_VALUES_AS_NULL, true);
+//        return objectMapper
+//    }
 }

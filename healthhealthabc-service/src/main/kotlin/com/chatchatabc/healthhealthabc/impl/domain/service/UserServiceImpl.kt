@@ -38,6 +38,10 @@ class UserServiceImpl(
     // Get admin.email value from application.properties
     @Value("\${admin.email}")
     private val adminEmail: String? = null
+    override fun test(value: String): String {
+        println(value)
+        return value
+    }
 
     override fun register(userDTO: UserRegistrationDTO, roleName: String): UserDTO {
         val user = modelMapper.map(userDTO, User::class.java)
