@@ -1,7 +1,8 @@
 package com.chatchatabc.healthhealthabc.impl.domain.service
 
-import com.chatchatabc.api.application.dto.user.UserDTO
+import com.chatchatabc.api.application.dto.auth.AuthLoginRequest
 import com.chatchatabc.api.application.dto.auth.AuthRegisterRequest
+import com.chatchatabc.api.application.dto.user.UserDTO
 import com.chatchatabc.api.domain.service.UserService
 import com.chatchatabc.healthhealthabc.domain.event.user.UserChangeEmailEvent
 import com.chatchatabc.healthhealthabc.domain.event.user.UserChangePasswordEvent
@@ -59,6 +60,13 @@ class UserServiceImpl(
             userRepository.save(it)
             return modelMapper.map(it, UserDTO::class.java)
         }
+    }
+
+    /**
+     * Login a user
+     */
+    override fun login(authLoginRequest: AuthLoginRequest?, ipAddress: String?): String {
+        TODO("Not yet implemented")
     }
 
     /**

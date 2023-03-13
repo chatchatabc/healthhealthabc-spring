@@ -1,7 +1,8 @@
 package com.chatchatabc.api.domain.service;
 
-import com.chatchatabc.api.application.dto.user.UserDTO;
+import com.chatchatabc.api.application.dto.auth.AuthLoginRequest;
 import com.chatchatabc.api.application.dto.auth.AuthRegisterRequest;
+import com.chatchatabc.api.application.dto.user.UserDTO;
 
 public interface UserService {
 
@@ -11,6 +12,11 @@ public interface UserService {
      * Register a new user
      */
     UserDTO register(AuthRegisterRequest userDTO, String roleName);
+
+    /**
+     * Login a user
+     */
+    String login(AuthLoginRequest authLoginRequest, String ipAddress);
 
     /**
      * Confirm registration

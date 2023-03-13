@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class AuthRegisterResponse {
+public class AuthLoginResponse {
     private UserDTO user;
     private ErrorContent errorContent;
 }
