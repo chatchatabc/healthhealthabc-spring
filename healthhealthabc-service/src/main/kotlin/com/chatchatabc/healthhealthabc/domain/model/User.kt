@@ -7,8 +7,6 @@ import lombok.AllArgsConstructor
 import lombok.Builder
 import lombok.Data
 import lombok.NoArgsConstructor
-import org.springframework.security.core.GrantedAuthority
-import org.springframework.security.core.userdetails.UserDetails
 import java.time.Instant
 
 // The user entity flag values arranged by index.
@@ -24,7 +22,7 @@ const val USER_CREDENTIALS_EXPIRED = 3
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "users")
-open class User : UserDetails {
+open class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -34,10 +32,10 @@ open class User : UserDetails {
     open lateinit var email: String
 
     @Column(unique = true)
-    private var username: String? = null
+    open lateinit var username: String
 
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    private var password: String? = null
+    open lateinit var password: String
 
     @Column
     open lateinit var createdAt: Instant
@@ -52,70 +50,14 @@ open class User : UserDetails {
     @Column
     open var flag: Int = 0
 
-    @JsonIgnore
-    @ManyToMany(fetch = FetchType.EAGER, cascade = [CascadeType.ALL])
-    @JoinTable(
-        name = "user_roles",
-        joinColumns = [JoinColumn(name = "user_id")],
-        inverseJoinColumns = [JoinColumn(name = "role_id")]
-    )
-    open var roles: MutableSet<Role> = mutableSetOf()
-
-    /**
-     * Get the roles of the user.
-     */
-    override fun getAuthorities(): MutableCollection<out GrantedAuthority> {
-        return this.roles.stream().map { role -> role as GrantedAuthority }.toList().toMutableList()
-    }
-
-    /**
-     * Get the username of the user.
-     */
-    override fun getUsername(): String? {
-        return this.username
-    }
-
-    /**
-     * Set the username of the user.
-     */
-    open fun setUsername(username: String) {
-        this.username = username
-    }
-
-    /**
-     * Get the password of the user.
-     */
-    override fun getPassword(): String? {
-        return this.password
-    }
-
-    /**
-     * TODO: Add logic to check if user is expired.
-     */
-    override fun isAccountNonExpired(): Boolean {
-        return true
-    }
-
-    /**
-     * TODO: Add logic to check if user is locked.
-     */
-    override fun isAccountNonLocked(): Boolean {
-        return true
-    }
-
-    /**
-     * TODO: Add logic to check if user's credentials are expired.
-     */
-    override fun isCredentialsNonExpired(): Boolean {
-        return true
-    }
-
-    /**
-     * Check if the user is enabled.
-     */
-    override fun isEnabled(): Boolean {
-        return getBitValue(USER_DEACTIVATED)
-    }
+//    @JsonIgnore
+//    @ManyToMany(fetch = FetchType.EAGER, cascade = [CascadeType.ALL])
+//    @JoinTable(
+//        name = "user_roles",
+//        joinColumns = [JoinColumn(name = "user_id")],
+//        inverseJoinColumns = [JoinColumn(name = "role_id")]
+//    )
+//    open var roles: MutableSet<Role> = mutableSetOf()
 
     /**
      * Deactivate the user.
@@ -142,13 +84,6 @@ open class User : UserDetails {
     @PreUpdate
     protected fun onUpdate() {
         this.updatedAt = Instant.now()
-    }
-
-    /**
-     * Set the password of the user.
-     */
-    open fun setPassword(encodedPassword: String?) {
-        this.password = encodedPassword
     }
 
     private fun getBitValue(bitIndex: Int): Boolean {

@@ -4,13 +4,12 @@ import com.fasterxml.jackson.annotation.JsonIgnore
 import jakarta.persistence.*
 import lombok.Builder
 import lombok.Data
-import org.springframework.security.core.GrantedAuthority
 
 @Entity
 @Data
 @Builder
 @Table(name = "roles")
-open class Role (name: String) : GrantedAuthority {
+open class Role (name: String) {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     open lateinit var id: String
@@ -18,14 +17,8 @@ open class Role (name: String) : GrantedAuthority {
     @Column(unique = true)
     open var name: String = name
 
-    @JsonIgnore
-    @ManyToMany(mappedBy = "roles")
-    open var users: MutableSet<User> = mutableSetOf()
+//    @JsonIgnore
+//    @ManyToMany(mappedBy = "roles")
+//    open var users: MutableSet<User> = mutableSetOf()
 
-    /**
-     * Get the name of the role.
-     */
-    override fun getAuthority(): String? {
-        return this.name
-    }
 }

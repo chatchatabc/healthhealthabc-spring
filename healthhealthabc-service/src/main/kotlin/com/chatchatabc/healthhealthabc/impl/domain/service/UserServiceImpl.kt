@@ -15,15 +15,11 @@ import org.apache.dubbo.config.annotation.DubboService
 import org.modelmapper.ModelMapper
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.ApplicationEventPublisher
-import org.springframework.security.core.userdetails.UserDetails
-import org.springframework.security.core.userdetails.UserDetailsService
-import org.springframework.security.crypto.password.PasswordEncoder
 import java.time.Instant
 import java.util.*
 
 @DubboService
 class UserServiceImpl(
-    private val passwordEncoder: PasswordEncoder,
     private val userRepository: UserRepository,
     private val roleRepository: RoleRepository,
     private val eventPublisher: ApplicationEventPublisher,
@@ -31,7 +27,7 @@ class UserServiceImpl(
 
     @Value("\${user.recoverycode.expiration}")
     private var recoveryCodeExpiration: Long
-) : UserService, UserDetailsService {
+) : UserService {
 
     private val modelMapper = ModelMapper()
 
@@ -44,6 +40,7 @@ class UserServiceImpl(
     }
 
     override fun register(userDTO: UserRegistrationDTO, roleName: String): UserDTO {
+        println(userDTO)
         val user = modelMapper.map(userDTO, User::class.java)
 
         // Generate UUID for Confirmation ID
@@ -53,9 +50,9 @@ class UserServiceImpl(
 
         user.apply {
             // Encrypt password
-            password = passwordEncoder.encode(password)
+//            password = passwordEncoder.encode(password)
             // Add role of user
-            roles.add(roleRepository.findRoleByName(roleName))
+//            roles.add(roleRepository.findRoleByName(roleName))
         }.let {
             // Send Email Confirmation
             eventPublisher.publishEvent(UserCreatedEvent(user, confirmationId, this))
@@ -122,7 +119,7 @@ class UserServiceImpl(
             throw Exception("Recovery code is incorrect")
         }
         user.get().apply {
-            this.password = passwordEncoder.encode(password)
+//            this.password = passwordEncoder.encode(password)
         }.let {
             // Jedis delete key value pair
             jedisService.delete("password_recovery_${email}")
@@ -140,12 +137,12 @@ class UserServiceImpl(
             throw Exception("User not found")
         }
         // Check if old password is correct
-        if (!passwordEncoder.matches(oldPassword, user.get().password)) {
-            throw Exception("Old password is incorrect")
-        }
+//        if (!passwordEncoder.matches(oldPassword, user.get().password)) {
+//            throw Exception("Old password is incorrect")
+//        }
         // Change password
         user.get().apply {
-            this.password = passwordEncoder.encode(newPassword)
+//            this.password = passwordEncoder.encode(newPassword)
         }.let {
             // Publish event to send email
             eventPublisher.publishEvent(UserChangePasswordEvent(user.get().email, user.get().username, this))
@@ -166,7 +163,7 @@ class UserServiceImpl(
         // Username
         innerQueriedUser.apply {
             if (user.username != null) {
-                setUsername(user.username!!)
+//                setUsername(user.username!!)
             }
             // TODO: Add more if more fields are added
         }.let {
@@ -217,22 +214,22 @@ class UserServiceImpl(
         }
     }
 
-    /**
-     * Load a user by their username.
-     */
-    override fun loadUserByUsername(username: String): UserDetails {
-        val user: Optional<User> = userRepository.findByUsername(username)
-        if (user.isEmpty) {
-            throw Exception("User not found")
-        }
-        return org.springframework.security.core.userdetails.User(
-            user.get().username,
-            user.get().password,
-            user.get().isEnabled,
-            user.get().isAccountNonExpired,
-            user.get().isCredentialsNonExpired,
-            user.get().isAccountNonLocked,
-            user.get().authorities
-        )
-    }
+//    /**
+//     * Load a user by their username.
+//     */
+//    override fun loadUserByUsername(username: String): UserDetails {
+//        val user: Optional<User> = userRepository.findByUsername(username)
+//        if (user.isEmpty) {
+//            throw Exception("User not found")
+//        }
+//        return org.springframework.security.core.userdetails.User(
+//            user.get().username,
+//            user.get().password,
+//            user.get().isEnabled,
+//            user.get().isAccountNonExpired,
+//            user.get().isCredentialsNonExpired,
+//            user.get().isAccountNonLocked,
+//            user.get().authorities
+//        )
+//    }
 }
