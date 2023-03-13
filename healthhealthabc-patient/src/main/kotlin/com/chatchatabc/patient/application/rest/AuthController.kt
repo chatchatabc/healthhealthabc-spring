@@ -53,11 +53,28 @@ class AuthController(
             registerData.password = passwordEncoder.encode(registerData.password)
             val registeredUser = userService.register(registerData, "ROLE_PATIENT")
             ResponseEntity.ok(AuthRegisterResponse(registeredUser, null))
+        } catch (e: RuntimeException) {
+            val column: String? = extractColumnFromMessage(e.message)
+            var message: String? = null
+            if (column != null) {
+                message = "is already taken"
+            }
+            val errorContent: ErrorContent? = column?.let { ErrorContent(it, message) }
+            val registerResponse = AuthRegisterResponse(null, errorContent)
+            ResponseEntity.status(HttpStatus.BAD_REQUEST).body(registerResponse)
         } catch (e: Exception) {
-            e.printStackTrace()
             ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(AuthRegisterResponse(null, ErrorContent("Registration Error", e.message)))
         }
+    }
+
+    /**
+     * Extract column name from SQL exception message.
+     */
+    fun extractColumnFromMessage(message: String?): String? {
+        val pattern = "entry '(.+)' for key".toRegex()
+        val matchResult = pattern.find(message ?: "")
+        return matchResult?.groups?.get(1)?.value
     }
 
     /**

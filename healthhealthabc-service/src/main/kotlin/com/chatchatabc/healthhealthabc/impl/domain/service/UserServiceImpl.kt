@@ -54,10 +54,10 @@ class UserServiceImpl(
             // Add role of user
             roles.add(roleRepository.findRoleByName(roleName))
         }.let {
-            // Send Email Confirmation
-            eventPublisher.publishEvent(UserCreatedEvent(user, confirmationId, this))
             // Save user to database
             userRepository.save(it)
+            // Send Email Confirmation
+            eventPublisher.publishEvent(UserCreatedEvent(user, confirmationId, this))
             return modelMapper.map(it, UserDTO::class.java)
         }
     }

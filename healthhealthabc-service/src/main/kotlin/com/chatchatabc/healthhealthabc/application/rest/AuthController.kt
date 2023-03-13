@@ -83,48 +83,7 @@
 //        }
 //    }
 //
-//    /**
-//     * Register a new user either doctor or patient.
-//     */
-//    @PostMapping("/register/{roleParams}")
-//    fun register(@RequestBody user: UserRegistrationDTO, @PathVariable roleParams: String): ResponseEntity<RegisterResponse> {
-//        try {
-//            var roleName = "ROLE_PATIENT"
-//            if (roleParams == "doctor") {
-//                roleName = "ROLE_DOCTOR"
-//            }
-//            val registeredUser: UserDTO = userService.register(user, roleName)
-//            val registerResponse = RegisterResponse(registeredUser, null)
-//            return ResponseEntity.status(HttpStatus.CREATED).body(registerResponse)
-//        } catch (e: DataIntegrityViolationException) {
-//            val cause = e.cause
-//            var column: String? = null
-//            var message: String? = null
-//            var errorContent: ErrorContent? = null
-//            if (cause is ConstraintViolationException) {
-//                val sqlException = cause.cause as? SQLIntegrityConstraintViolationException
-//                if (sqlException != null) {
-//                    val sqlMessage = sqlException.message
-//                    column = extractColumnFromMessage(sqlMessage)
-//                    message = "is already taken"
-//                    errorContent = column?.let { ErrorContent(it, message) }
-//                }
-//            }
-//            val registerResponse = RegisterResponse(null, errorContent)
-//            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(registerResponse)
-//        } catch (e: Exception) {
-//            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null)
-//        }
-//    }
-//
-//    /**
-//     * Extract column name from SQL exception message.
-//     */
-//    fun extractColumnFromMessage(message: String?): String? {
-//        val pattern = "entry '(.+)' for key".toRegex()
-//        val matchResult = pattern.find(message ?: "")
-//        return matchResult?.groups?.get(1)?.value
-//    }
+
 //
 //    /**
 //     * Confirm a change email request.
@@ -143,22 +102,7 @@
 //    }
 //
 //
-//    /**
-//     * Confirm email using email confirmation id.
-//     */
-//    @GetMapping("/confirm-email/{emailConfirmationId}")
-//    fun confirmEmail(@PathVariable emailConfirmationId: String): ResponseEntity<EmailConfirmationResponse> {
-//        return try {
-//            println("emailConfirmationId: $emailConfirmationId")
-//            val user: UserDTO = userService.confirmRegistration(emailConfirmationId)
-//            val emailConfirmationResponse = EmailConfirmationResponse(user, null)
-//            ResponseEntity.status(HttpStatus.OK).body(emailConfirmationResponse)
-//        } catch (e: Exception) {
-//            val errorContent = ErrorContent("Email Confirmation Error", e.message)
-//            val emailConfirmationResponse = EmailConfirmationResponse(null, errorContent)
-//            ResponseEntity.status(HttpStatus.BAD_REQUEST).body(emailConfirmationResponse)
-//        }
-//    }
+
 //
 //    /**
 //     * Create recovery code and send to email to reset password.
