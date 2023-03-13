@@ -10,13 +10,15 @@ import jakarta.servlet.http.HttpServletRequest
 import org.apache.dubbo.config.annotation.DubboReference
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
+import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping("/api/auth")
 class AuthController(
     @DubboReference
-    private val userService: UserService
+    private val userService: UserService,
+    private val passwordEncoder: PasswordEncoder
 ) {
 
     @GetMapping("/hello")
@@ -50,6 +52,8 @@ class AuthController(
     @PostMapping("/register")
     fun register(@RequestBody registerData: AuthRegisterRequest): ResponseEntity<AuthRegisterResponse> {
         return try {
+            // TODO: Transfer to a service
+            registerData.password = passwordEncoder.encode(registerData.password)
             val registeredUser = userService.register(registerData, "ROLE_PATIENT")
             ResponseEntity.ok(AuthRegisterResponse(registeredUser, null))
         } catch (e: Exception) {
