@@ -3,8 +3,7 @@ package com.chatchatabc.healthhealthabc.impl.domain.service
 import com.auth0.jwt.JWT
 import com.auth0.jwt.JWTVerifier
 import com.auth0.jwt.algorithms.Algorithm
-import com.chatchatabc.healthhealthabc.domain.model.User
-import com.chatchatabc.healthhealthabc.domain.service.JwtService
+import com.chatchatabc.api.domain.service.JwtService
 import com.chatchatabc.healthhealthabc.domain.service.log.user.LoginLogService
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Service
@@ -27,13 +26,14 @@ class JwtServiceImpl(
     /**
      * Generate a token for the given user
      */
-    override fun generateToken(user: User, ipAddress: String): String {
+    override fun generateToken(username: String, ipAddress: String): String {
         // Save to log in logs with successful login
-        val sessionId = loginLogService.createLog(user, true, user.email, ipAddress)
+//        val sessionId = loginLogService.createLog(user, true, user.email, ipAddress)
+        // TODO: Search for user here and use that
 
         return JWT.create()
-            .withSubject(user.id)
-            .withClaim("sessionId", sessionId)
+//            .withSubject(user.id)
+//            .withClaim("sessionId", sessionId)
             .withExpiresAt(Date.from(Instant.now().plusSeconds(expiration.toLong())))
             .sign(hmac512)
     }
