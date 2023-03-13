@@ -1,6 +1,6 @@
 //package com.chatchatabc.healthhealthabc.application.rest
 //
-//import com.chatchatabc.api.domain.dto.user.UserDTO
+//import com.chatchatabc.api.application.dto.user.UserDTO
 //import com.chatchatabc.api.domain.dto.user.UserRegistrationDTO
 //import com.chatchatabc.api.domain.service.UserService
 //import com.chatchatabc.healthhealthabc.application.dto.ErrorContent

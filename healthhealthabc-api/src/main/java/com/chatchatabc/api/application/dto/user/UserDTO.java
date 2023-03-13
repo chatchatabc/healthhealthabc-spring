@@ -1,4 +1,4 @@
-package com.chatchatabc.api.domain.dto.user;
+package com.chatchatabc.api.application.dto.user;
 
 import lombok.Data;
 

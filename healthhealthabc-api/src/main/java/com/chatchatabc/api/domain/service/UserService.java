@@ -1,7 +1,7 @@
 package com.chatchatabc.api.domain.service;
 
-import com.chatchatabc.api.domain.dto.user.UserDTO;
-import com.chatchatabc.api.domain.dto.user.UserRegistrationDTO;
+import com.chatchatabc.api.application.dto.user.UserDTO;
+import com.chatchatabc.api.application.dto.auth.AuthRegisterRequest;
 
 public interface UserService {
 
@@ -13,7 +13,7 @@ public interface UserService {
      * @param roleName
      * @return
      */
-    UserDTO register(UserRegistrationDTO userDTO, String roleName);
+    UserDTO register(AuthRegisterRequest userDTO, String roleName);
 
     /**
      * Confirm registration

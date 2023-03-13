@@ -1,6 +1,6 @@
 package com.chatchatabc.patient.application.rest
 
-import com.chatchatabc.api.domain.dto.user.UserRegistrationDTO
+import com.chatchatabc.api.application.dto.auth.AuthRegisterRequest
 import com.chatchatabc.api.domain.service.UserService
 import com.chatchatabc.patient.application.dto.ErrorContent
 import com.chatchatabc.patient.application.dto.auth.AuthRegisterResponse
@@ -29,9 +29,8 @@ class AuthController(
     }
 
     @PostMapping("/register")
-    fun register(@RequestBody registerData: UserRegistrationDTO): ResponseEntity<AuthRegisterResponse> {
+    fun register(@RequestBody registerData: AuthRegisterRequest): ResponseEntity<AuthRegisterResponse> {
         return try {
-            println(registerData)
             val registeredUser = userService.register(registerData, "ROLE_PATIENT")
             ResponseEntity.ok(AuthRegisterResponse(registeredUser, null))
         } catch (e: Exception) {

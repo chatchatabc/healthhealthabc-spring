@@ -1,7 +1,7 @@
 package com.chatchatabc.healthhealthabc.impl.domain.service
 
-import com.chatchatabc.api.domain.dto.user.UserDTO
-import com.chatchatabc.api.domain.dto.user.UserRegistrationDTO
+import com.chatchatabc.api.application.dto.user.UserDTO
+import com.chatchatabc.api.application.dto.auth.AuthRegisterRequest
 import com.chatchatabc.api.domain.service.UserService
 import com.chatchatabc.healthhealthabc.domain.event.user.UserChangeEmailEvent
 import com.chatchatabc.healthhealthabc.domain.event.user.UserChangePasswordEvent
@@ -39,8 +39,7 @@ class UserServiceImpl(
         return value
     }
 
-    override fun register(userDTO: UserRegistrationDTO, roleName: String): UserDTO {
-        println(userDTO)
+    override fun register(userDTO: AuthRegisterRequest, roleName: String): UserDTO {
         val user = modelMapper.map(userDTO, User::class.java)
 
         // Generate UUID for Confirmation ID

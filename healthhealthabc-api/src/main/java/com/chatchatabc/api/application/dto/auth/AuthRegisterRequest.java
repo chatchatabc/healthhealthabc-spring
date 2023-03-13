@@ -1,4 +1,4 @@
-package com.chatchatabc.api.domain.dto.user;
+package com.chatchatabc.api.application.dto.auth;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -9,7 +9,7 @@ import java.io.Serializable;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserRegistrationDTO implements Serializable {
+public class AuthRegisterRequest implements Serializable {
     private String email;
     private String username;
     private String password;
