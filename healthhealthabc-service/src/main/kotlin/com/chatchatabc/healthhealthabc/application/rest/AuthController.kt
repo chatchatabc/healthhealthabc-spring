@@ -42,46 +42,6 @@
 //        return ResponseEntity.ok("Hello, World!")
 //    }
 //
-//    @PostMapping("/login")
-//    fun login(request: HttpServletRequest, @RequestBody loginRequest: LoginRequest): ResponseEntity<LoginResponse> {
-//        var queriedUser: Optional<User>? = null
-//        try {
-//            queriedUser = userRepository.findByUsername(loginRequest.username)
-//            authenticationManager.authenticate(
-//                UsernamePasswordAuthenticationToken(
-//                    loginRequest.username,
-//                    loginRequest.password
-//                )
-//            )
-//
-//            if (queriedUser.isEmpty) {
-//                throw Exception("User not found")
-//            }
-//            // TODO: Uncomment after email confirmation is implemented by Bon
-////            if (queriedUser.get().emailConfirmedAt == null) {
-////                throw Exception("Email not confirmed")
-////            }
-//            val ipAddress: String = request.remoteAddr
-//            val token: String = jwtService.generateToken(queriedUser.get(), ipAddress)
-//            val userDTO = modelMapper.map(queriedUser.get(), UserDTO::class.java)
-//            val loginResponse = LoginResponse(userDTO, null)
-//            val headers = HttpHeaders()
-//            headers.set("X-Access-Token", token)
-//
-//            return ResponseEntity.ok().headers(headers).body(loginResponse)
-//        } catch (e: Exception) {
-//            e.printStackTrace()
-//            // Save to log in logs with failed login
-//            // TODO: Transfer logic to JwtService?
-//            if (queriedUser != null && queriedUser.isPresent) {
-//                loginLogService.createLog(queriedUser.get(), false, queriedUser.get().email, request.remoteAddr)
-//            }
-//            // Get error message
-//            val errorContent = ErrorContent("Login Error", e.message)
-//            val loginResponse = LoginResponse(null, errorContent)
-//            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(loginResponse)
-//        }
-//    }
 //
 
 //
