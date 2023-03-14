@@ -34,13 +34,6 @@
 //) {
 //    val modelMapper = ModelMapper()
 //
-//    /**
-//     * Test endpoint.
-//     */
-//    @GetMapping("/hello")
-//    fun hello(): ResponseEntity<String> {
-//        return ResponseEntity.ok("Hello, World!")
-//    }
 //
 //
 
@@ -119,22 +112,4 @@
 //        }
 //    }
 //
-//    /**
-//     * Check if username is taken by another user.
-//     */
-//    @PostMapping("/check-username")
-//    fun checkUsername(@RequestBody user: User): ResponseEntity<CheckUsernameResponse> {
-//        return try {
-//            val queriedUser = userRepository.findByUsername(user.username!!)
-//            if (queriedUser.isPresent) {
-//                throw Exception("Username already taken")
-//            }
-//            val checkUsernameResponse = CheckUsernameResponse(false, null)
-//            ResponseEntity.status(HttpStatus.OK).body(checkUsernameResponse)
-//        } catch (e: Exception) {
-//            val errorContent = ErrorContent("Check Username Error", e.message)
-//            val checkUsernameResponse = CheckUsernameResponse(true, errorContent)
-//            ResponseEntity.status(HttpStatus.BAD_REQUEST).body(checkUsernameResponse)
-//        }
-//    }
 //}

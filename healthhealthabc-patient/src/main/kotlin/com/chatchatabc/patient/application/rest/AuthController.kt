@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*
 @RequestMapping("/api/auth")
 class AuthController(
     @DubboReference
-    private val userService: UserService
+    private val userService: UserService,
 ) {
 
     @GetMapping("/hello")
@@ -94,6 +94,20 @@ class AuthController(
             e.printStackTrace()
             ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(AuthEmailConfirmationResponse(null, ErrorContent("Confirmation Error", e.message)))
+        }
+    }
+
+    /**
+     * Check if username is taken by another user
+     */
+    @PostMapping("/check-username")
+    fun checkUsername(@RequestBody user: UserDTO): ResponseEntity<AuthUsernameCheckResponse> {
+        return try {
+            val isTaken = userService.checkUsername(user.username)
+            ResponseEntity.ok(AuthUsernameCheckResponse(isTaken, null))
+        } catch (e: Exception) {
+            ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(AuthUsernameCheckResponse(true, ErrorContent("Check Username Error", e.message)))
         }
     }
 }

@@ -254,6 +254,14 @@ class UserServiceImpl(
         }
     }
 
+    /**
+     * Check if username is taken
+     */
+    override fun checkUsername(username: String?): Boolean {
+        val user = userRepository.findByUsername(username)
+        return !user.isEmpty
+    }
+
 //    /**
 //     * Load a user by their username.
 //     */
