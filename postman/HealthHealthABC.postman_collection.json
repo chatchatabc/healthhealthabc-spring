@@ -6,43 +6,44 @@
 	},
 	"item": [
 		{
-			"name": "Auth",
+			"name": "Patient",
 			"item": [
 				{
-					"name": "Confirm User",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{address}}/api/auth/confirm-email/0c4d94d5-ab96-423e-ae52-0a5fb88c3c6a",
-							"host": [
-								"{{address}}"
-							],
-							"path": [
-								"api",
-								"auth",
-								"confirm-email",
-								"0c4d94d5-ab96-423e-ae52-0a5fb88c3c6a"
-							]
+					"name": "Login Patient",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var token = pm.response.headers.get('X-Access-Token');\r",
+									"pm.environment.set('token', token);\r",
+									""
+								],
+								"type": "text/javascript"
+							}
 						}
-					},
-					"response": []
-				},
-				{
-					"name": "Confirm Change Email",
+					],
 					"request": {
-						"method": "GET",
+						"method": "POST",
 						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"Raphile\",\r\n    \"password\": \"123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
 						"url": {
-							"raw": "{{address}}/api/auth/confirm-change-email/e3d444a7-a95b-4fb1-9fda-eb9cb6cc01a5",
+							"raw": "{{address_patient}}/api/auth/login",
 							"host": [
-								"{{address}}"
+								"{{address_patient}}"
 							],
 							"path": [
 								"api",
 								"auth",
-								"confirm-change-email",
-								"e3d444a7-a95b-4fb1-9fda-eb9cb6cc01a5"
+								"login"
 							]
 						}
 					},
@@ -63,15 +64,154 @@
 							}
 						},
 						"url": {
-							"raw": "{{address}}/api/auth/register/patient",
+							"raw": "{{address_patient}}/api/auth/register",
+							"host": [
+								"{{address_patient}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Check if Email is Taken",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"rllddalangin@gmail.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{address_patient}}/api/auth/check-email",
+							"host": [
+								"{{address_patient}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"check-email"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Check if Username is Taken",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"Raphile\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{address_patient}}/api/auth/check-username",
+							"host": [
+								"{{address_patient}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"check-username"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Confirm User",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{address_patient}}/api/auth/confirm-email/0a676553-46f1-4f38-8225-426341fc2f54",
+							"host": [
+								"{{address_patient}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"confirm-email",
+								"0a676553-46f1-4f38-8225-426341fc2f54"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "test",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{address_patient}}/api/auth/hello",
+							"host": [
+								"{{address_patient}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"hello"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "Confirm User",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{address}}/api/auth/confirm-email/a633dec0-92a3-4486-a292-26eab3873954",
 							"host": [
 								"{{address}}"
 							],
 							"path": [
 								"api",
 								"auth",
-								"register",
-								"patient"
+								"confirm-email",
+								"a633dec0-92a3-4486-a292-26eab3873954"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Confirm Change Email",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{address}}/api/auth/confirm-change-email/a633dec0-92a3-4486-a292-26eab3873954",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"confirm-change-email",
+								"a633dec0-92a3-4486-a292-26eab3873954"
 							]
 						}
 					},
@@ -101,47 +241,6 @@
 								"auth",
 								"register",
 								"doctor"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Login Patient",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"var token = pm.response.headers.get('X-Access-Token');\r",
-									"pm.environment.set('token', token);\r",
-									""
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"username\": \"Raphile\",\r\n    \"password\": \"123\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{address}}/api/auth/login",
-							"host": [
-								"{{address}}"
-							],
-							"path": [
-								"api",
-								"auth",
-								"login"
 							]
 						}
 					},
