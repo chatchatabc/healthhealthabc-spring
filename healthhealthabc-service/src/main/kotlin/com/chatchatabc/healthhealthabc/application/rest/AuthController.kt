@@ -93,23 +93,5 @@
 //        }
 //    }
 //
-//    /**
-//     * Check if email is taken by another user.
-//     */
-//    @PostMapping("/check-email")
-//    fun checkEmail(@RequestBody user: User): ResponseEntity<CheckEmailResponse> {
-//        return try {
-//            val queriedUser = userRepository.findByEmail(user.email)
-//            if (queriedUser.isPresent) {
-//                throw Exception("Email already taken")
-//            }
-//            val checkEmailResponse = CheckEmailResponse(false, null)
-//            ResponseEntity.status(HttpStatus.OK).body(checkEmailResponse)
-//        } catch (e: Exception) {
-//            val errorContent = ErrorContent("Check Email Error", e.message)
-//            val checkEmailResponse = CheckEmailResponse(true, errorContent)
-//            ResponseEntity.status(HttpStatus.BAD_REQUEST).body(checkEmailResponse)
-//        }
-//    }
 //
 //}

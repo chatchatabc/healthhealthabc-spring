@@ -255,6 +255,14 @@ class UserServiceImpl(
     }
 
     /**
+     * Check if email is taken
+     */
+    override fun checkEmail(email: String?): Boolean {
+        val user = userRepository.findByEmail(email)
+        return !user.isEmpty
+    }
+
+    /**
      * Check if username is taken
      */
     override fun checkUsername(username: String?): Boolean {

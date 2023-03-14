@@ -98,6 +98,20 @@ class AuthController(
     }
 
     /**
+     * Check if email is taken by another user
+     */
+    @PostMapping("/check-email")
+    fun checkEmail(@RequestBody user: UserDTO): ResponseEntity<AuthEmailCheckResponse> {
+        return try {
+            val isTaken = userService.checkEmail(user.email)
+            ResponseEntity.ok(AuthEmailCheckResponse(isTaken, null))
+        } catch (e: Exception) {
+            ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(AuthEmailCheckResponse(true, ErrorContent("Check Email Error", e.message)))
+        }
+    }
+
+    /**
      * Check if username is taken by another user
      */
     @PostMapping("/check-username")

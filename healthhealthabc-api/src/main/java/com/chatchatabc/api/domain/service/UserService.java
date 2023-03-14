@@ -62,6 +62,11 @@ public interface UserService {
     UserDTO confirmEmailChange(String emailConfirmationId);
 
     /**
+     * Check if email is taken
+     */
+    Boolean checkEmail(String email);
+
+    /**
      * Check if username is taken
      */
     Boolean checkUsername(String username);
