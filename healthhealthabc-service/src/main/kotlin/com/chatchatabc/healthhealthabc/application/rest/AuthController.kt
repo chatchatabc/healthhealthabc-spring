@@ -34,45 +34,6 @@
 //) {
 //    val modelMapper = ModelMapper()
 //
-//
-//
-
-//
-//    /**
-//     * Confirm a change email request.
-//     */
-//    @GetMapping("/confirm-change-email/{emailConfirmationId}")
-//    fun confirmChangeEmail(@PathVariable emailConfirmationId: String): ResponseEntity<EmailConfirmationResponse> {
-//        return try {
-//            val user: UserDTO = userService.confirmEmailChange(emailConfirmationId)
-//            val emailConfirmationResponse = EmailConfirmationResponse(user, null)
-//            ResponseEntity.status(HttpStatus.OK).body(emailConfirmationResponse)
-//        } catch (e: Exception) {
-//            val errorContent = ErrorContent("Email Confirmation Error", e.message)
-//            val emailConfirmationResponse = EmailConfirmationResponse(null, errorContent)
-//            ResponseEntity.status(HttpStatus.BAD_REQUEST).body(emailConfirmationResponse)
-//        }
-//    }
-//
-//
-
-//
-//    /**
-//     * Create recovery code and send to email to reset password.
-//     */
-//    @PostMapping("/forgot-password")
-//    fun forgotPassword(@RequestBody user: User): ResponseEntity<ForgotPasswordResponse> {
-//        return try {
-//            userService.forgotPassword(user.email)
-//            val forgotPasswordResponse = ForgotPasswordResponse(null)
-//            ResponseEntity.status(HttpStatus.OK).body(forgotPasswordResponse)
-//        } catch (e: Exception) {
-//            val errorContent = ErrorContent("Forgot Password Error", e.message)
-//            val forgotPasswordResponse = ForgotPasswordResponse(errorContent)
-//            ResponseEntity.status(HttpStatus.BAD_REQUEST).body(forgotPasswordResponse)
-//        }
-//    }
-//
 //    /**
 //     * Reset password using recovery code and email.
 //     */

@@ -98,6 +98,34 @@ class AuthController(
     }
 
     /**
+     * Confirm a change email request
+     */
+    @GetMapping("/confirm-change-email/{emailConfirmationId}")
+    fun confirmChangeEmail(@PathVariable emailConfirmationId: String): ResponseEntity<AuthEmailConfirmationResponse> {
+        return try {
+            val user: UserDTO = userService.confirmEmailChange(emailConfirmationId)
+            ResponseEntity.status(HttpStatus.OK).body(AuthEmailConfirmationResponse(user, null))
+        } catch (e: Exception) {
+            ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(AuthEmailConfirmationResponse(null, ErrorContent("Confirmation Error", e.message)))
+        }
+    }
+
+    /**
+     * Create recovery code and send to email to reset password
+     */
+    @PostMapping("/forgot-password")
+    fun forgotPassword(@RequestBody user: UserDTO): ResponseEntity<AuthForgotPasswordResponse> {
+        return try {
+            userService.forgotPassword(user.email)
+            ResponseEntity.ok(AuthForgotPasswordResponse(null))
+        } catch (e: Exception) {
+            ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(AuthForgotPasswordResponse(ErrorContent("Forgot Password Error", e.message)))
+        }
+    }
+
+    /**
      * Check if email is taken by another user
      */
     @PostMapping("/check-email")
