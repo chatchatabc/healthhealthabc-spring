@@ -126,6 +126,24 @@ class AuthController(
     }
 
     /**
+     * Reset password using recovery code and email
+     */
+    @PostMapping("/reset-password")
+    fun resetPassword(@RequestBody resetPasswordData: AuthResetPasswordRequest): ResponseEntity<AuthResetPasswordResponse> {
+        return try {
+            val user = userService.resetPassword(
+                resetPasswordData.email,
+                resetPasswordData.recoveryCode,
+                resetPasswordData.password
+            )
+            ResponseEntity.ok(AuthResetPasswordResponse(user.email, user.username, null))
+        } catch (e: Exception) {
+            ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(AuthResetPasswordResponse(null, null, ErrorContent("Reset Password Error", e.message)))
+        }
+    }
+
+    /**
      * Check if email is taken by another user
      */
     @PostMapping("/check-email")
