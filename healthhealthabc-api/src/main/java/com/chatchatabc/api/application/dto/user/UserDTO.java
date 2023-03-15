@@ -1,11 +1,16 @@
 package com.chatchatabc.api.application.dto.user;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.time.Instant;
+import java.util.Set;
 
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class UserDTO implements Serializable {
     private String id;
     private String email;
@@ -13,5 +18,5 @@ public class UserDTO implements Serializable {
     private Instant createdAt;
     private Instant updatedAt;
     private Instant emailConfirmedAt;
-    // TODO: RoleDTO
+    private Set<RoleDTO> roles;
 }
