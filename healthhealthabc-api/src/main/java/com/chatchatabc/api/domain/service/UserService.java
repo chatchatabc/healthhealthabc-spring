@@ -27,6 +27,11 @@ public interface UserService {
     Optional<UserDTO> getUserByUsername(String username);
 
     /**
+     * Get user by Id
+     */
+    Optional<UserDTO> getUserById(String id);
+
+    /**
      * Confirm registration
      */
     UserDTO confirmRegistration(String emailConfirmationId);
@@ -45,6 +50,11 @@ public interface UserService {
      * Change password
      */
     void changePassword(String id, String oldPassword, String newPassword);
+
+    /**
+     * Get User Profile
+     */
+    UserDTO getProfile(String id);
 
     /**
      * Update user profile

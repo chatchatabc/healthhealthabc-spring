@@ -31,7 +31,9 @@ class UserServiceImpl(
     private val jwtService: JwtService,
 
     @Value("\${user.recoverycode.expiration}")
-    private var recoveryCodeExpiration: Long
+    private var recoveryCodeExpiration: Long,
+
+    private val userModelMapper: ModelMapper
 ) : UserService {
 
     private val modelMapper = ModelMapper()
@@ -62,7 +64,7 @@ class UserServiceImpl(
             userRepository.save(it)
             // Send Email Confirmation
             eventPublisher.publishEvent(UserCreatedEvent(user, confirmationId, this))
-            return modelMapper.map(it, UserDTO::class.java)
+            return userModelMapper.map(it, UserDTO::class.java)
         }
     }
 
@@ -71,6 +73,7 @@ class UserServiceImpl(
      */
     override fun login(authLoginRequest: AuthLoginRequest?, ipAddress: String?): AuthLoginServiceResponse {
         val user = userRepository.findByUsername(authLoginRequest?.username)
+        println(user.get().roles)
         if (user.isEmpty) {
             throw Exception("User not found")
         }
@@ -84,10 +87,7 @@ class UserServiceImpl(
         // Generate JWT here
         val token = jwtService.generateToken(user.get().id, ipAddress)
         // Map user to UserDTO
-        return AuthLoginServiceResponse(
-            token,
-            modelMapper.map(user.get(), UserDTO::class.java)
-        )
+        return AuthLoginServiceResponse(token, userModelMapper.map(user.get(), UserDTO::class.java))
     }
 
     /**
@@ -96,9 +96,18 @@ class UserServiceImpl(
     override fun getUserByUsername(username: String?): Optional<UserDTO> {
         val queriedUser = userRepository.findByUsername(username)
         return if (queriedUser.isPresent) {
-            Optional.of(modelMapper.map(queriedUser.get(), UserDTO::class.java))
+            Optional.of(userModelMapper.map(queriedUser.get(), UserDTO::class.java))
         } else {
             Optional.empty()
+        }
+    }
+
+    /**
+     * Get user by Id
+     */
+    override fun getUserById(id: String): Optional<UserDTO> {
+        return userRepository.findById(id).map {
+            userModelMapper.map(it, UserDTO::class.java)
         }
     }
 
@@ -121,7 +130,7 @@ class UserServiceImpl(
             // Delete key value pair from Redis since it is already confirmed
             jedisService.delete("email_confirmation_${emailConfirmationId}")
             userRepository.save(it)
-            return modelMapper.map(it, UserDTO::class.java)
+            return userModelMapper.map(it, UserDTO::class.java)
         }
     }
 
@@ -142,7 +151,7 @@ class UserServiceImpl(
         jedisService.setTTL("password_recovery_${email}", recoveryCode, recoveryCodeExpiration)
         eventPublisher.publishEvent(UserForgotPasswordEvent(user.get(), recoveryCode, this))
         user.get()
-        return modelMapper.map(user.get(), UserDTO::class.java)
+        return userModelMapper.map(user.get(), UserDTO::class.java)
     }
 
     /**
@@ -164,7 +173,7 @@ class UserServiceImpl(
             // Jedis delete key value pair
             jedisService.delete("password_recovery_${email}")
             userRepository.save(it)
-            return modelMapper.map(it, UserDTO::class.java)
+            return userModelMapper.map(it, UserDTO::class.java)
         }
     }
 
@@ -191,6 +200,17 @@ class UserServiceImpl(
     }
 
     /**
+     * Get User Profile
+     */
+    override fun getProfile(id: String): UserDTO {
+        val user: Optional<User> = userRepository.findById(id)
+        if (user.isEmpty) {
+            throw Exception("User not found")
+        }
+        return userModelMapper.map(user.get(), UserDTO::class.java)
+    }
+
+    /**
      * Update user's profile.
      */
     override fun updateProfile(id: String, user: UserDTO): UserDTO {
@@ -208,7 +228,7 @@ class UserServiceImpl(
             // TODO: Add more if more fields are added
         }.let {
             userRepository.save(it)
-            return modelMapper.map(it, UserDTO::class.java)
+            return userModelMapper.map(it, UserDTO::class.java)
         }
     }
 
@@ -228,7 +248,7 @@ class UserServiceImpl(
         // Publish event to send email
         eventPublisher.publishEvent(UserChangeEmailEvent(newEmail, user.get().username, confirmationId, this))
         user.get()
-        return modelMapper.map(user.get(), UserDTO::class.java)
+        return userModelMapper.map(user.get(), UserDTO::class.java)
     }
 
     /**
@@ -250,7 +270,7 @@ class UserServiceImpl(
             jedisService.delete("email_change_original_${emailConfirmationId}")
             jedisService.delete("email_change_new_${emailConfirmationId}")
             userRepository.save(it)
-            return modelMapper.map(it, UserDTO::class.java)
+            return userModelMapper.map(it, UserDTO::class.java)
         }
     }
 
