@@ -5,12 +5,12 @@ import com.auth0.jwt.JWTVerifier
 import com.auth0.jwt.algorithms.Algorithm
 import com.chatchatabc.api.domain.service.JwtService
 import com.chatchatabc.healthhealthabc.domain.service.log.user.LoginLogService
+import org.apache.dubbo.config.annotation.DubboService
 import org.springframework.beans.factory.annotation.Value
-import org.springframework.stereotype.Service
 import java.time.Instant
 import java.util.*
 
-@Service
+@DubboService
 class JwtServiceImpl(
     @Value("\${jwt.secret}")
     private var secret: String,
